@@ -1,0 +1,67 @@
+import { SplitView } from "./Library/UX/SplitView.js"
+import { View } from "./Library/UX/View.js"
+import { Panel } from "./Library/UX/Panel.js"
+export class Main extends View {
+  public connectedCallback () {
+    let rootSplitView = new SplitView()
+
+    let leftPanel = document.createElement("deacon-panel") as Panel
+    let rightPanel = document.createElement("deacon-panel") as Panel
+
+    leftPanel.style.backgroundColor = "pink"
+    rightPanel.style.backgroundColor = "blue"
+
+    let leftLabel = document.createElement("h1")
+    let rightLabel = document.createElement("h1")
+
+    leftLabel.innerText = "Left"
+    rightLabel.innerText = "Right"
+
+    leftPanel.appendChild(leftLabel)
+    rightPanel.appendChild(rightLabel)
+
+    rootSplitView.appendChild(leftPanel)
+    rootSplitView.appendChild(rightPanel)
+
+    rootSplitView.orientation = "horizontal"
+    rootSplitView.resizeable = true
+
+    rootSplitView.sizes = this.getStoredValue("sizes", [0.5, 0.5])
+
+    let weakReference = this
+    rootSplitView.RegisterEventListener("splitresize", (event: Event) => {
+      weakReference.setStoredValue("sizes", rootSplitView.sizes)
+    })
+
+    window.addEventListener("resize", (event: Event) => {
+      View.Layout()
+    })
+
+    this.RegisterEventListener("mousemove", (event: Event) => {
+      console.log("Bob Jones")
+    })
+
+    document.body.appendChild(rootSplitView)
+  }
+
+  public getStoredValue(key: string, defaultValue: any) {
+    // Retrieve the stored value from localStorage
+    let storedValue = localStorage.getItem(key)
+    if (storedValue == null) {
+      return defaultValue
+    }
+    return JSON.parse(storedValue)
+  }
+
+  public setStoredValue(key: string, value: any) {
+    localStorage.setItem(key, JSON.stringify(value))
+  }
+}
+
+customElements.define("deacon-main", Main)
+
+let mains = document.querySelector("deacon-main")
+if (!mains) {
+  mains = document.createElement("deacon-main") as Main
+  document.body.appendChild(mains)
+}

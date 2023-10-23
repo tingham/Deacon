@@ -1,0 +1,6 @@
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.124-alpha">
+  <ItemGroup>
+  <Folder Include="Documentation" />
+  <Folder Include="Assets" />
+  </ItemGroup>
+</Project>

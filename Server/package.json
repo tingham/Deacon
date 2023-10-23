@@ -1,0 +1,33 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build",
+    "postbuild": "cd ../Editor && npm install && npm run build",
+    "generate-api-server": "npx openapi-generator-cli generate -i ./Schema/API/V1/Deacon.yaml -o generated/server -g typescript-node",
+    "generate-api-client": "npx openapi-generator-cli generate -i ./Schema/API/V1/Deacon.yaml -o generated/server -g typescript-fetch",
+    "generate-api-documentation": "npx openapi-generator-cli generate -i ./Schema/API/V1/Deacon.yaml -o generated/server -g html2",
+    "generate-api": "npm run generate-api-server && npm run generate-api-client && npm run generate-api-documentation",
+    "clean": "tsc --build --clean"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.7.0",
+    "@types/express": "^4.17.20",
+    "@types/node": "^20.8.7",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "eslint": "^8.51.0",
+    "openapi-typescript": "^6.7.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
+  }
+}

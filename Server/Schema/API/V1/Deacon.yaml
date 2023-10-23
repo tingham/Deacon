@@ -1,0 +1,198 @@
+openapi: 3.0.3
+info:
+  title: Deacon
+  version: 1.0.0
+  description: Deacon API
+servers:
+  - url: http://localhost:8080
+    description: Local server
+paths:
+  /scene:
+    get:
+      summary: Get scene
+      description: Get scene
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scene'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of the user.
+        name:
+          type: string
+          description: The name of the user.
+        email:
+          type: string
+          description: The email of the user.
+        password:
+          type: string
+          description: The password of the user.
+        created:
+          type: string
+          format: date-time
+          description: The date and time the user was created.
+        updated:
+          type: string
+          format: date-time
+          description: The date and time the user was last updated.
+    Thing:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of the thing.
+        name:
+          type: string
+          description: The name of the thing.
+        description:
+          type: string
+          description: The description of the thing.
+        created:
+          type: string
+          format: date-time
+          description: The date and time the thing was created.
+        updated:
+          type: string
+          format: date-time
+          description: The date and time the thing was last updated.
+        authorid:
+          type: string
+          format: uuid
+          description: The unique identifier of the author of the thing.
+    Document:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+      properties:
+        type:
+          type: enum [1d, 2d, 3d]
+          description: The type of the document.
+    Component:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+      properties:
+        ordinal:
+          type: number
+          description: The ordinal of the component.
+    Transform:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Component'
+      properties:
+        x:
+          type: number
+          description: The X position of the transform.
+        y:
+          type: number
+          description: The Y position of the transform.
+        z:
+          type: number
+          description: The Z position of the transform.
+        width:
+          type: number
+          description: The width of the transform.
+        height:
+          type: number
+          description: The height of the transform.
+        depth:
+          type: number
+          description: The depth of the transform.
+        yaw:
+          type: number
+          description: The yaw of the transform.
+        pitch:
+          type: number
+          description: The pitch of the transform.
+        roll:
+          type: number
+          description: The rolle of the transform.
+    Layer:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+      properties:
+        key:
+          type: string
+          description: The key name of the layer
+        value:
+          type: object
+          description: The value of the layer encoded as json
+    Material:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Component'
+      properties:
+        Layers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Layer'
+    Geometry:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Component'
+    PrimitiveGeometry:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Geometry'
+      properties:
+        prototype:
+          type: enum [box, sphere, cylinder, cone, torus, plane, circle, ring, triangle, quad]
+          description: The type of the primitive.
+    ArbitraryGeometry:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Geometry'
+      properties:
+        vertices:
+          type: array
+          items:
+            type: number
+          description: The vertices of the geometry.
+        normals:
+          type: array
+          items:
+            type: number
+          description: The normals of the geometry.
+        uvs:
+          type: array
+          items:
+            type: number
+          description: The uvs of the geometry.
+        indices:
+          type: array
+          items:
+            type: number
+          description: The indices of the geometry.
+    Element:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+      properties:
+        transform:
+          $ref: '#/components/schemas/Transform'
+        material:
+          $ref: '#/components/schemas/Material'
+        geometry:
+          $ref: '#/components/schemas/Geometry'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Element'
+    Scene:
+      type: object
+      properties:
+        elements: 
+          type: array
+          items:
+            $ref: '#/components/schemas/Element'
