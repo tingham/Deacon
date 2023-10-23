@@ -1,6 +1,8 @@
-﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.124-alpha">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
   <ItemGroup>
   <Folder Include="Documentation" />
-  <Folder Include="Assets" />
   </ItemGroup>
 </Project>
