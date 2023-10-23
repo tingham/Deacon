@@ -8,14 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 const readFile = require("fs").promises.readFile;
 const express = require("express");
 const join = require("path").join;
 const resolve = require("path").resolve;
 const nodemon = require("nodemon");
-let v = { id: "BOB" };
-console.log(v);
 //import express from "express"
 //import { join } from "path"
 const app = express();
