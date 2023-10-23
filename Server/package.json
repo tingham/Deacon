@@ -7,10 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --build",
     "postbuild": "cd ../Editor && npm install && npm run build",
-    "generate-api-server": "npx openapi-generator-cli generate -i ./Schema/API/V1/Deacon.yaml -o generated/server -g typescript-node",
-    "generate-api-client": "npx openapi-generator-cli generate -i ./Schema/API/V1/Deacon.yaml -o generated/server -g typescript-fetch",
-    "generate-api-documentation": "npx openapi-generator-cli generate -i ./Schema/API/V1/Deacon.yaml -o generated/server -g html2",
-    "generate-api": "npm run generate-api-server && npm run generate-api-client && npm run generate-api-documentation",
+    "generate": "npm run generate-api && npm run generate-docs",
+    "generate-api": "npx openapi-generator-cli generate --generator-key client && npx openapi-generator-cli --generator-key server",
+    "generate-docs": "npx openapi-generator-cli generate --generator-key docs",
     "clean": "tsc --build --clean"
   },
   "keywords": [],

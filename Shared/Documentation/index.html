@@ -897,26 +897,44 @@ ul.nav-tabs {
     defs["Document"] = {
   "type" : "object",
   "properties" : {
-    "type" : {
-      "type" : "enum [1d, 2d, 3d]",
-      "description" : "The type of the document."
+    "prototype" : {
+      "$ref" : "#/components/schemas/DocumentType"
+    },
+    "scenes" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/Scene"
+      }
     }
   },
   "allOf" : [ {
     "$ref" : "#/components/schemas/Thing"
   } ]
 };
+    defs["DocumentType"] = {
+  "type" : "string",
+  "enum" : [ "1d", "2d", "3d" ]
+};
     defs["Element"] = {
   "type" : "object",
   "properties" : {
-    "transform" : {
-      "$ref" : "#/components/schemas/Transform"
-    },
-    "material" : {
-      "$ref" : "#/components/schemas/Material"
-    },
-    "geometry" : {
-      "$ref" : "#/components/schemas/Geometry"
+    "components" : {
+      "type" : "array",
+      "items" : {
+        "anyOf" : [ {
+          "$ref" : "#/components/schemas/Transform"
+        }, {
+          "$ref" : "#/components/schemas/Material"
+        }, {
+          "$ref" : "#/components/schemas/Geometry"
+        }, {
+          "$ref" : "#/components/schemas/PrimitiveGeometry"
+        }, {
+          "$ref" : "#/components/schemas/ArbitraryGeometry"
+        }, {
+          "$ref" : "#/components/schemas/Component"
+        } ]
+      }
     },
     "children" : {
       "type" : "array",
@@ -969,13 +987,16 @@ ul.nav-tabs {
   "type" : "object",
   "properties" : {
     "prototype" : {
-      "type" : "enum [box, sphere, cylinder, cone, torus, plane, circle, ring, triangle, quad]",
-      "description" : "The type of the primitive."
+      "$ref" : "#/components/schemas/PrimitiveType"
     }
   },
   "allOf" : [ {
     "$ref" : "#/components/schemas/Geometry"
   } ]
+};
+    defs["PrimitiveType"] = {
+  "type" : "string",
+  "enum" : [ "box", "sphere", "cylinder", "cone", "torus", "plane", "circle", "ring", "triangle", "quad" ]
 };
     defs["Scene"] = {
   "type" : "object",
@@ -986,7 +1007,10 @@ ul.nav-tabs {
         "$ref" : "#/components/schemas/Element"
       }
     }
-  }
+  },
+  "allOf" : [ {
+    "$ref" : "#/components/schemas/Thing"
+  } ]
 };
     defs["Thing"] = {
   "type" : "object",
@@ -1116,8 +1140,11 @@ ul.nav-tabs {
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
                   <li class="nav-header" data-group="Default"><a href="#api-Default">API Methods - Default</a></li>
-                    <li data-group="Default" data-name="sceneGet" class="">
-                      <a href="#api-Default-sceneGet">sceneGet</a>
+                    <li data-group="Default" data-name="getDocument" class="">
+                      <a href="#api-Default-getDocument">getDocument</a>
+                    </li>
+                    <li data-group="Default" data-name="updateDocument" class="">
+                      <a href="#api-Default-updateDocument">updateDocument</a>
                     </li>
           </ul>
         </nav>
@@ -1142,46 +1169,46 @@ ul.nav-tabs {
         <div id="sections">
                 <section id="api-Default">
                   <h1>Default</h1>
-                    <div id="api-Default-sceneGet">
-                      <article id="api-Default-sceneGet-0" data-group="User" data-name="sceneGet" data-version="0">
+                    <div id="api-Default-getDocument">
+                      <article id="api-Default-getDocument-0" data-group="User" data-name="getDocument" data-version="0">
                         <div class="pull-left">
-                          <h1>sceneGet</h1>
-                          <p>Get scene</p>
+                          <h1>getDocument</h1>
+                          <p></p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked">Get scene</p>
+                        <p class="marked">Get document</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/scene</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/document/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-sceneGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-sceneGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-sceneGet-0-dart">Dart</a></li>
-                          <li class=""><a href="#examples-Default-sceneGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-sceneGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-sceneGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-sceneGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-sceneGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-sceneGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-sceneGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-sceneGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-sceneGet-0-python">Python</a></li>
-                          <li class=""><a href="#examples-Default-sceneGet-0-rust">Rust</a></li>
+                          <li class="active"><a href="#examples-Default-getDocument-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-getDocument-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-getDocument-0-dart">Dart</a></li>
+                          <li class=""><a href="#examples-Default-getDocument-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-getDocument-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-getDocument-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-getDocument-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-getDocument-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-getDocument-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-getDocument-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-getDocument-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-getDocument-0-python">Python</a></li>
+                          <li class=""><a href="#examples-Default-getDocument-0-rust">Rust</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-sceneGet-0-curl">
+                          <div class="tab-pane active" id="examples-Default-getDocument-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://localhost:8080/scene"
+ "http://localhost:8080/document/{id}"
 </code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-sceneGet-0-java">
+                          <div class="tab-pane" id="examples-Default-getDocument-0-java">
                             <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
 import org.openapitools.client.auth.*;
 import org.openapitools.client.model.*;
@@ -1195,12 +1222,13 @@ public class DefaultApiExample {
 
         // Create an instance of the API class
         DefaultApi apiInstance = new DefaultApi();
+        UUID id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | The unique identifier of the document.
 
         try {
-            Scene result = apiInstance.sceneGet();
+            Document result = apiInstance.getDocument(id);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#sceneGet");
+            System.err.println("Exception when calling DefaultApi#getDocument");
             e.printStackTrace();
         }
     }
@@ -1208,52 +1236,54 @@ public class DefaultApiExample {
 </code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-sceneGet-0-dart">
+                          <div class="tab-pane" id="examples-Default-getDocument-0-dart">
                             <pre class="prettyprint"><code class="language-dart">import 'package:openapi/api.dart';
 
 final api_instance = DefaultApi();
 
+final UUID id = new UUID(); // UUID | The unique identifier of the document.
 
 try {
-    final result = await api_instance.sceneGet();
+    final result = await api_instance.getDocument(id);
     print(result);
 } catch (e) {
-    print('Exception when calling DefaultApi->sceneGet: $e\n');
+    print('Exception when calling DefaultApi->getDocument: $e\n');
 }
 
 </code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-sceneGet-0-android">
+                          <div class="tab-pane" id="examples-Default-getDocument-0-android">
                             <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.DefaultApi;
 
 public class DefaultApiExample {
     public static void main(String[] args) {
         DefaultApi apiInstance = new DefaultApi();
+        UUID id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | The unique identifier of the document.
 
         try {
-            Scene result = apiInstance.sceneGet();
+            Document result = apiInstance.getDocument(id);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#sceneGet");
+            System.err.println("Exception when calling DefaultApi#getDocument");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-sceneGet-0-groovy">
+  <div class="tab-pane" id="examples-Default-getDocument-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-sceneGet-0-objc">
+                            <div class="tab-pane" id="examples-Default-getDocument-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">
 
 // Create an instance of the API class
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
+UUID *id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // The unique identifier of the document. (default to null)
 
-// Get scene
-[apiInstance sceneGetWithCompletionHandler: 
-              ^(Scene output, NSError* error) {
+[apiInstance getDocumentWith:id
+              completionHandler: ^(Document output, NSError* error) {
     if (output) {
         NSLog(@"%@", output);
     }
@@ -1264,11 +1294,13 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-sceneGet-0-javascript">
+                            <div class="tab-pane" id="examples-Default-getDocument-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var Deacon = require('deacon');
 
 // Create an instance of the API class
 var api = new Deacon.DefaultApi()
+var id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // {UUID} The unique identifier of the document.
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1276,14 +1308,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.sceneGet(callback);
+api.getDocument(id, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-sceneGet-0-angular">
+                            <!--<div class="tab-pane" id="examples-Default-getDocument-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-sceneGet-0-csharp">
+                            <div class="tab-pane" id="examples-Default-getDocument-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using Org.OpenAPITools.Api;
@@ -1292,20 +1324,20 @@ using Org.OpenAPITools.Model;
 
 namespace Example
 {
-    public class sceneGetExample
+    public class getDocumentExample
     {
         public void main()
         {
 
             // Create an instance of the API class
             var apiInstance = new DefaultApi();
+            var id = 38400000-8cf0-11bd-b23e-10b96e4ef00d;  // UUID | The unique identifier of the document. (default to null)
 
             try {
-                // Get scene
-                Scene result = apiInstance.sceneGet();
+                Document result = apiInstance.getDocument(id);
                 Debug.WriteLine(result);
             } catch (Exception e) {
-                Debug.Print("Exception when calling DefaultApi.sceneGet: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.getDocument: " + e.Message );
             }
         }
     }
@@ -1313,40 +1345,42 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-sceneGet-0-php">
+                            <div class="tab-pane" id="examples-Default-getDocument-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Create an instance of the API class
 $api_instance = new OpenAPITools\Client\Api\DefaultApi();
+$id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | The unique identifier of the document.
 
 try {
-    $result = $api_instance->sceneGet();
+    $result = $api_instance->getDocument($id);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->sceneGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DefaultApi->getDocument: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-sceneGet-0-perl">
+                            <div class="tab-pane" id="examples-Default-getDocument-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::OPenAPIClient::Configuration;
 use WWW::OPenAPIClient::DefaultApi;
 
 # Create an instance of the API class
 my $api_instance = WWW::OPenAPIClient::DefaultApi->new();
+my $id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | The unique identifier of the document.
 
 eval {
-    my $result = $api_instance->sceneGet();
+    my $result = $api_instance->getDocument(id => $id);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->sceneGet: $@\n";
+    warn "Exception when calling DefaultApi->getDocument: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-sceneGet-0-python">
+                            <div class="tab-pane" id="examples-Default-getDocument-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import openapi_client
@@ -1355,22 +1389,23 @@ from pprint import pprint
 
 # Create an instance of the API class
 api_instance = openapi_client.DefaultApi()
+id = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | The unique identifier of the document. (default to null)
 
 try:
-    # Get scene
-    api_response = api_instance.scene_get()
+    api_response = api_instance.get_document(id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DefaultApi->sceneGet: %s\n" % e)</code></pre>
+    print("Exception when calling DefaultApi->getDocument: %s\n" % e)</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-sceneGet-0-rust">
+                            <div class="tab-pane" id="examples-Default-getDocument-0-rust">
                               <pre class="prettyprint"><code class="language-rust">extern crate DefaultApi;
 
 pub fn main() {
+    let id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID
 
     let mut context = DefaultApi::Context::default();
-    let result = client.sceneGet(&context).wait();
+    let result = client.getDocument(id, &context).wait();
 
     println!("{:?}", result);
 }
@@ -1385,29 +1420,62 @@ pub fn main() {
 
                           <h2>Parameters</h2>
 
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+<td>
+
+
+    <div id="d2e199_getDocument_id">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    UUID
+                </span>
+                    <span class="format">
+                        (uuid)
+                    </span>
+
+                    <div class="inner description marked">
+The unique identifier of the document.
+                    </div>
+            </div>
+                <div class="inner required">
+                    Required
+                </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
 
 
 
 
 
                           <h2>Responses</h2>
-                            <h3 id="examples-Default-sceneGet-title-200"></h3>
-                            <p id="examples-Default-sceneGet-description-200" class="marked"></p>
+                            <h3 id="examples-Default-getDocument-title-200"></h3>
+                            <p id="examples-Default-getDocument-description-200" class="marked"></p>
                             <script>
                               var responseDefault200_description = `OK`;
                               var responseDefault200_description_break = responseDefault200_description.indexOf('\n');
                               if (responseDefault200_description_break == -1) {
-                                $("#examples-Default-sceneGet-title-200").text("Status: 200 - " + responseDefault200_description);
+                                $("#examples-Default-getDocument-title-200").text("Status: 200 - " + responseDefault200_description);
                               } else {
-                                $("#examples-Default-sceneGet-title-200").text("Status: 200 - " + responseDefault200_description.substring(0, responseDefault200_description_break));
-                                $("#examples-Default-sceneGet-description-200").html(responseDefault200_description.substring(responseDefault200_description_break));
+                                $("#examples-Default-getDocument-title-200").text("Status: 200 - " + responseDefault200_description.substring(0, responseDefault200_description_break));
+                                $("#examples-Default-getDocument-description-200").html(responseDefault200_description.substring(responseDefault200_description_break));
                               }
                             </script>
 
 
-                            <ul id="responses-detail-Default-sceneGet-200" class="nav nav-tabs nav-tabs-examples" >
+                            <ul id="responses-detail-Default-getDocument-200" class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-Default-sceneGet-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-Default-getDocument-200-schema">Schema</a>
                                 </li>
 
 
@@ -1416,9 +1484,9 @@ pub fn main() {
                             </ul>
 
 
-                            <div class="tab-content" id="responses-Default-sceneGet-200-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-Default-sceneGet-200-schema">
-                                  <div id="responses-Default-sceneGet-schema-200" class="exampleStyle">
+                            <div class="tab-content" id="responses-Default-getDocument-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Default-getDocument-200-schema">
+                                  <div id="responses-Default-getDocument-schema-200" class="exampleStyle">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = ;
@@ -1443,14 +1511,456 @@ pub fn main() {
                                         }
 
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-Default-sceneGet-200-schema-data').val(JSON.stringify(schema));
-                                        var result = $('#responses-Default-sceneGet-schema-200');
+                                        $('#responses-Default-getDocument-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Default-getDocument-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-Default-sceneGet-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-Default-getDocument-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-updateDocument">
+                      <article id="api-Default-updateDocument-0" data-group="User" data-name="updateDocument" data-version="0">
+                        <div class="pull-left">
+                          <h1>updateDocument</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Update document</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/document/{id}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-updateDocument-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-updateDocument-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-updateDocument-0-dart">Dart</a></li>
+                          <li class=""><a href="#examples-Default-updateDocument-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-updateDocument-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-updateDocument-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-updateDocument-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-updateDocument-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-updateDocument-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-updateDocument-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-updateDocument-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-updateDocument-0-python">Python</a></li>
+                          <li class=""><a href="#examples-Default-updateDocument-0-rust">Rust</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-updateDocument-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X POST \
+ -H "Accept: application/json" \
+ -H "Content-Type: application/json" \
+ "http://localhost:8080/document/{id}" \
+ -d '{
+  &quot;scenes&quot; : [ {
+    &quot;elements&quot; : [ {
+      &quot;components&quot; : [ &quot;&quot;, &quot;&quot; ],
+      &quot;children&quot; : [ null, null ]
+    }, {
+      &quot;components&quot; : [ &quot;&quot;, &quot;&quot; ],
+      &quot;children&quot; : [ null, null ]
+    } ]
+  }, {
+    &quot;elements&quot; : [ {
+      &quot;components&quot; : [ &quot;&quot;, &quot;&quot; ],
+      &quot;children&quot; : [ null, null ]
+    }, {
+      &quot;components&quot; : [ &quot;&quot;, &quot;&quot; ],
+      &quot;children&quot; : [ null, null ]
+    } ]
+  } ]
+}'
+</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-updateDocument-0-java">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.model.*;
+import org.openapitools.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+    public static void main(String[] args) {
+
+        // Create an instance of the API class
+        DefaultApi apiInstance = new DefaultApi();
+        UUID id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | The unique identifier of the document.
+        Document document = {"id":"123e4567-e89b-12d3-a456-426655440000","name":"New Document Name","description":"Document Description","created":"2022-01-01T00:00:00Z","updated":"2022-01-01T00:00:00Z","authorid":"123e4567-e89b-12d3-a456-426655440000","prototype":"3d"}; // Document | 
+
+        try {
+            Document result = apiInstance.updateDocument(id, document);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#updateDocument");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-updateDocument-0-dart">
+                            <pre class="prettyprint"><code class="language-dart">import 'package:openapi/api.dart';
+
+final api_instance = DefaultApi();
+
+final UUID id = new UUID(); // UUID | The unique identifier of the document.
+final Document document = new Document(); // Document | 
+
+try {
+    final result = await api_instance.updateDocument(id, document);
+    print(result);
+} catch (e) {
+    print('Exception when calling DefaultApi->updateDocument: $e\n');
+}
+
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-updateDocument-0-android">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.DefaultApi;
+
+public class DefaultApiExample {
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+        UUID id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | The unique identifier of the document.
+        Document document = {"id":"123e4567-e89b-12d3-a456-426655440000","name":"New Document Name","description":"Document Description","created":"2022-01-01T00:00:00Z","updated":"2022-01-01T00:00:00Z","authorid":"123e4567-e89b-12d3-a456-426655440000","prototype":"3d"}; // Document | 
+
+        try {
+            Document result = apiInstance.updateDocument(id, document);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#updateDocument");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-updateDocument-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-updateDocument-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+
+// Create an instance of the API class
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+UUID *id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // The unique identifier of the document. (default to null)
+Document *document = {"id":"123e4567-e89b-12d3-a456-426655440000","name":"New Document Name","description":"Document Description","created":"2022-01-01T00:00:00Z","updated":"2022-01-01T00:00:00Z","authorid":"123e4567-e89b-12d3-a456-426655440000","prototype":"3d"}; // 
+
+[apiInstance updateDocumentWith:id
+    document:document
+              completionHandler: ^(Document output, NSError* error) {
+    if (output) {
+        NSLog(@"%@", output);
+    }
+    if (error) {
+        NSLog(@"Error: %@", error);
+    }
+}];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-updateDocument-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var Deacon = require('deacon');
+
+// Create an instance of the API class
+var api = new Deacon.DefaultApi()
+var id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // {UUID} The unique identifier of the document.
+var document = {"id":"123e4567-e89b-12d3-a456-426655440000","name":"New Document Name","description":"Document Description","created":"2022-01-01T00:00:00Z","updated":"2022-01-01T00:00:00Z","authorid":"123e4567-e89b-12d3-a456-426655440000","prototype":"3d"}; // {Document} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.updateDocument(id, document, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-updateDocument-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-updateDocument-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using Org.OpenAPITools.Api;
+using Org.OpenAPITools.Client;
+using Org.OpenAPITools.Model;
+
+namespace Example
+{
+    public class updateDocumentExample
+    {
+        public void main()
+        {
+
+            // Create an instance of the API class
+            var apiInstance = new DefaultApi();
+            var id = 38400000-8cf0-11bd-b23e-10b96e4ef00d;  // UUID | The unique identifier of the document. (default to null)
+            var document = new Document(); // Document | 
+
+            try {
+                Document result = apiInstance.updateDocument(id, document);
+                Debug.WriteLine(result);
+            } catch (Exception e) {
+                Debug.Print("Exception when calling DefaultApi.updateDocument: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-updateDocument-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Create an instance of the API class
+$api_instance = new OpenAPITools\Client\Api\DefaultApi();
+$id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | The unique identifier of the document.
+$document = {"id":"123e4567-e89b-12d3-a456-426655440000","name":"New Document Name","description":"Document Description","created":"2022-01-01T00:00:00Z","updated":"2022-01-01T00:00:00Z","authorid":"123e4567-e89b-12d3-a456-426655440000","prototype":"3d"}; // Document | 
+
+try {
+    $result = $api_instance->updateDocument($id, $document);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->updateDocument: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-updateDocument-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::OPenAPIClient::Configuration;
+use WWW::OPenAPIClient::DefaultApi;
+
+# Create an instance of the API class
+my $api_instance = WWW::OPenAPIClient::DefaultApi->new();
+my $id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | The unique identifier of the document.
+my $document = WWW::OPenAPIClient::Object::Document->new(); # Document | 
+
+eval {
+    my $result = $api_instance->updateDocument(id => $id, document => $document);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->updateDocument: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-updateDocument-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import openapi_client
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Create an instance of the API class
+api_instance = openapi_client.DefaultApi()
+id = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | The unique identifier of the document. (default to null)
+document = {"id":"123e4567-e89b-12d3-a456-426655440000","name":"New Document Name","description":"Document Description","created":"2022-01-01T00:00:00Z","updated":"2022-01-01T00:00:00Z","authorid":"123e4567-e89b-12d3-a456-426655440000","prototype":"3d"} # Document | 
+
+try:
+    api_response = api_instance.update_document(id, document)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->updateDocument: %s\n" % e)</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-updateDocument-0-rust">
+                              <pre class="prettyprint"><code class="language-rust">extern crate DefaultApi;
+
+pub fn main() {
+    let id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID
+    let document = {"id":"123e4567-e89b-12d3-a456-426655440000","name":"New Document Name","description":"Document Description","created":"2022-01-01T00:00:00Z","updated":"2022-01-01T00:00:00Z","authorid":"123e4567-e89b-12d3-a456-426655440000","prototype":"3d"}; // Document
+
+    let mut context = DefaultApi::Context::default();
+    let result = client.updateDocument(id, document, &context).wait();
+
+    println!("{:?}", result);
+}
+</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Scopes</h2>
+                          <table>
+                            
+                          </table>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+<td>
+
+
+    <div id="d2e199_updateDocument_id">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    UUID
+                </span>
+                    <span class="format">
+                        (uuid)
+                    </span>
+
+                    <div class="inner description marked">
+The unique identifier of the document.
+                    </div>
+            </div>
+                <div class="inner required">
+                    Required
+                </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">document <span style="color:red;">*</span></td>
+<td>
+<p class="marked">The document to update.</p>
+<script>
+$(document).ready(function() {
+  var schemaWrapper = {
+  "description" : "The document to update.",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Document"
+      },
+      "example" : {
+        "id" : "123e4567-e89b-12d3-a456-426655440000",
+        "name" : "New Document Name",
+        "description" : "Document Description",
+        "created" : "2022-01-01T00:00:00Z",
+        "updated" : "2022-01-01T00:00:00Z",
+        "authorid" : "123e4567-e89b-12d3-a456-426655440000",
+        "prototype" : "3d"
+      }
+    }
+  },
+  "required" : true
+};
+
+  var schema = findNode('schema',schemaWrapper).schema;
+  if (!schema) {
+    schema = schemaWrapper.schema;
+  }
+  if (schema.$ref != null) {
+    schema = defsParser.$refs.get(schema.$ref);
+  } else {
+    schemaWrapper.definitions = Object.assign({}, defs);
+    $RefParser.dereference(schemaWrapper).catch(function(err) {
+      console.log(err);
+    });
+  }
+
+  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+  var result = $('#d2e199_updateDocument_document');
+  result.empty();
+  result.append(view.render());
+});
+</script>
+<div id="d2e199_updateDocument_document"></div>
+</td>
+</tr>
+
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3 id="examples-Default-updateDocument-title-200"></h3>
+                            <p id="examples-Default-updateDocument-description-200" class="marked"></p>
+                            <script>
+                              var responseDefault200_description = `OK`;
+                              var responseDefault200_description_break = responseDefault200_description.indexOf('\n');
+                              if (responseDefault200_description_break == -1) {
+                                $("#examples-Default-updateDocument-title-200").text("Status: 200 - " + responseDefault200_description);
+                              } else {
+                                $("#examples-Default-updateDocument-title-200").text("Status: 200 - " + responseDefault200_description.substring(0, responseDefault200_description_break));
+                                $("#examples-Default-updateDocument-description-200").html(responseDefault200_description.substring(responseDefault200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Default-updateDocument-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Default-updateDocument-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Default-updateDocument-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Default-updateDocument-200-schema">
+                                  <div id="responses-Default-updateDocument-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                          Object.keys(schema.properties).forEach( (item) => {
+                                            if (schema.properties[item].$ref != null) {
+                                              schema.properties[item] = defsParser.$refs.get(schema.properties[item].$ref);
+                                            }
+                                          });
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Default-updateDocument-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Default-updateDocument-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Default-updateDocument-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
                         </article>
