@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.124-alpha">
   <ItemGroup>
-    <Folder Include="dist\" />
     <Folder Include="Library\Data\Interface\" />
     <Folder Include="Library\System\" />
   </ItemGroup>
