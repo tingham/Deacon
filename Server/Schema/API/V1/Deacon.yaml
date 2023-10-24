@@ -215,24 +215,16 @@ components:
         - $ref: '#/components/schemas/Geometry'
       properties:
         vertices:
-          type: array
-          items:
-            type: number
+          type: string
           description: The vertices of the geometry.
         normals:
-          type: array
-          items:
-            type: number
+          type: string
           description: The normals of the geometry.
         uvs:
-          type: array
-          items:
-            type: number
+          type: string
           description: The uvs of the geometry.
         indices:
-          type: array
-          items:
-            type: number
+          type: string
           description: The indices of the geometry.
     Element:
       type: object
@@ -240,13 +232,11 @@ components:
         - $ref: '#/components/schemas/Thing'
       properties:
         components:
-            type: array
+            type: virtual
             items:
                 $ref: '#/components/schemas/Component'
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/Element'
+        parentid:
+          type: string
     Scene:
       type: object
       allOf:

@@ -2,7 +2,7 @@
 {{#models}}
 {{#model}}
 import { RequestFile } from './models';
-import { Entity, Column } from 'typeorm'
+import { EntitySchema } from 'typeorm'
 {{#tsImports}}
 import { {{classname}} } from '{{filename}}';
 {{/tsImports}}
@@ -13,8 +13,25 @@ import { {{classname}} } from '{{filename}}';
 */
 {{/description}}
 {{^isEnum}}
-@Entity()
-export class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{
+export interface {{classname}} {
+  {{#vars}}
+  {{name}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}}{{#defaultValue}} = {{#isEnum}}{{classname}}.{{/isEnum}}{{{.}}}{{/defaultValue}};
+  {{/vars}}
+}
+export const {{classname}}Entity = new EntitySchema<{{classname}}>({
+  name: "{{classname}}",
+columns: {
+    {{#vars}}
+    {{name}}: {
+      type: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}},
+      {{#isNullable}}nullable: true,{{/isNullable}}
+      {{#defaultValue}}default: {{#isEnum}}{{classname}}.{{/isEnum}}{{{.}}}{{/defaultValue}}
+    },
+    {{/vars}}
+  }
+})
+
+export class Api{{classname}}{{#parent}}extends {{{.}}} {{/parent}}{
 {{#vars}}
 {{#description}}
     /**
@@ -56,7 +73,7 @@ export class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{
 }
 
 {{#hasEnums}}
-export namespace {{classname}} {
+export namespace Api{{classname}} {
 {{#vars}}
 {{#isEnum}}
     export enum {{enumName}} {

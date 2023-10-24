@@ -921,19 +921,7 @@ ul.nav-tabs {
     "components" : {
       "type" : "array",
       "items" : {
-        "anyOf" : [ {
-          "$ref" : "#/components/schemas/Transform"
-        }, {
-          "$ref" : "#/components/schemas/Material"
-        }, {
-          "$ref" : "#/components/schemas/Geometry"
-        }, {
-          "$ref" : "#/components/schemas/PrimitiveGeometry"
-        }, {
-          "$ref" : "#/components/schemas/ArbitraryGeometry"
-        }, {
-          "$ref" : "#/components/schemas/Component"
-        } ]
+        "$ref" : "#/components/schemas/Component"
       }
     },
     "children" : {
@@ -1565,18 +1553,34 @@ The unique identifier of the document.
  -d '{
   &quot;scenes&quot; : [ {
     &quot;elements&quot; : [ {
-      &quot;components&quot; : [ &quot;&quot;, &quot;&quot; ],
+      &quot;components&quot; : [ {
+        &quot;ordinal&quot; : 0.8008281904610115
+      }, {
+        &quot;ordinal&quot; : 0.8008281904610115
+      } ],
       &quot;children&quot; : [ null, null ]
     }, {
-      &quot;components&quot; : [ &quot;&quot;, &quot;&quot; ],
+      &quot;components&quot; : [ {
+        &quot;ordinal&quot; : 0.8008281904610115
+      }, {
+        &quot;ordinal&quot; : 0.8008281904610115
+      } ],
       &quot;children&quot; : [ null, null ]
     } ]
   }, {
     &quot;elements&quot; : [ {
-      &quot;components&quot; : [ &quot;&quot;, &quot;&quot; ],
+      &quot;components&quot; : [ {
+        &quot;ordinal&quot; : 0.8008281904610115
+      }, {
+        &quot;ordinal&quot; : 0.8008281904610115
+      } ],
       &quot;children&quot; : [ null, null ]
     }, {
-      &quot;components&quot; : [ &quot;&quot;, &quot;&quot; ],
+      &quot;components&quot; : [ {
+        &quot;ordinal&quot; : 0.8008281904610115
+      }, {
+        &quot;ordinal&quot; : 0.8008281904610115
+      } ],
       &quot;children&quot; : [ null, null ]
     } ]
   } ]

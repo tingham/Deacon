@@ -6,19 +6,31 @@
     "generators": {
       "docs": {
         "inputSpec": "./Schema/API/V1/Deacon.yaml",
-        "generatorName": "html2",
-        "output": "../Shared/Documentation"
+        "generatorName": "docs-html2",
+        "output": "../Shared/Documentation/html2"
+      },
+      "docs-cwiki": {
+        "inputSpec": "./Schema/API/V1/Deacon.yaml",
+        "generatorName": "cwiki",
+        "output": "../Shared/Documentation/cwiki"
+      },
+      "docs-markdown": {
+        "inputSpec": "./Schema/API/V1/Deacon.yaml",
+        "generatorName": "markdown",
+        "output": "../Shared/Documentation/markdown"
       },
       "client": {
         "inputSpec": "./Schema/API/V1/Deacon.yaml",
         "generatorName": "typescript-fetch",
-        "output": "../Editor/Api/"
+        "output": "../Editor/Api/",
+        "enablePostProcessFile": true
       },
       "server": {
         "inputSpec": "./Schema/API/V1/Deacon.yaml",
         "generatorName": "typescript-node",
         "output": "../Server/Api",
-        "templateDir": "./Schema/openapi-generator-typescript-node"
+        "templateDir": "./Schema/openapi-generator-typescript-node",
+        "enablePostProcessFile": true
       }
     }
   }
