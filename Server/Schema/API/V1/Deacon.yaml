@@ -242,13 +242,7 @@ components:
         components:
             type: array
             items:
-                anyOf:
-                    - $ref: '#/components/schemas/Transform'
-                    - $ref: '#/components/schemas/Material'
-                    - $ref: '#/components/schemas/Geometry'
-                    - $ref: '#/components/schemas/PrimitiveGeometry'
-                    - $ref: '#/components/schemas/ArbitraryGeometry'
-                    - $ref: '#/components/schemas/Component'
+                $ref: '#/components/schemas/Component'
         children:
           type: array
           items:

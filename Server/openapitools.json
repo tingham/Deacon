@@ -17,7 +17,8 @@
       "server": {
         "inputSpec": "./Schema/API/V1/Deacon.yaml",
         "generatorName": "typescript-node",
-        "output": "../Server/Api"
+        "output": "../Server/Api",
+        "templateDir": "./Schema/openapi-generator-typescript-node"
       }
     }
   }

@@ -4,6 +4,8 @@ const join = require("path").join
 const resolve = require("path").resolve
 const nodemon = require("nodemon")
 
+const api = require("./Api/api")
+
 //import express from "express"
 //import { join } from "path"
 

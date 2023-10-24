@@ -2,21 +2,15 @@ import { Tree } from "./Library/UX/Tree.js"
 import { Panel } from "./Library/UX/Panel.js"
 import { SplitView } from "./Library/UX/SplitView.js"
 import { View } from "./Library/UX/View.js"
-
-import "reflect-metadata"
-import {LocalDatabase} from "./Library/Data/LocalDatabase.js"
-import { Cube } from "./Library/Data/Model/Cube.js"
+import * as Deacon from "./Api/index.js"
 
 export class Main extends View {
 
   public connectedCallback () {
-    
-    LocalDatabase.EntityRegistry.push(Cube)
-    LocalDatabase.initialize().then(() => {
-      let local = LocalDatabase.Instance
-      console.log(local)
-    })
 
+    let deacon = new Deacon.DefaultApi()
+    console.log(deacon)
+    
     let rootSplitView = new SplitView()
 
     let leftPanel = document.createElement("deacon-panel") as Panel
