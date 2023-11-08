@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "name": "Witch",
+  "compilerOptions": {
+    "rootDir": "../",
+    "outDir": "../dist/Witch",
+    "composite": true,
+  },
+}

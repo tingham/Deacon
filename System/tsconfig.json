@@ -1,0 +1,13 @@
+{
+  /**
+   * TSConfig for Pulpit - A routing library
+   */
+  "extends": "../tsconfig.json",
+  "name": "System",
+  "compilerOptions": {
+    "rootDir": "../",
+    "outDir": "../dist/System",
+    "composite": true,
+    "tsBuildInfoFile": "../cache/system.tsbuildinfo"
+  }
+}

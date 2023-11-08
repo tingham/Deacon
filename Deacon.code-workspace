@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{"path": ".vscode"},
+		{"path": "Fanatic"},
+		{"path": "Heretic"},
+		{"path": "Pulpit"},
+		{"path": "System"},
+		{"path": "Witch"},
+		{"path": "./", "name": "All Files"}
+	],
+	"settings": {
+		"typescript.autoClosingTags": false,
+		"editor.fontFamily": "'Source Code Pro'",
+		"window.zoomLevel": 1.25,
+		"editor.fontSize": 14.13799,
+		"editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+		"editor.guides.highlightActiveBracketPair": false,
+		"editor.guides.bracketPairsHorizontal": false,
+		"editor.guides.bracketPairs": false,
+		"fonted.font": "Source Sans 3",
+	}
+}
