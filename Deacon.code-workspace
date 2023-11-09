@@ -1,12 +1,31 @@
 {
 	"folders": [
-		{"path": ".vscode"},
-		{"path": "Fanatic"},
-		{"path": "Heretic"},
-		{"path": "Pulpit"},
-		{"path": "System"},
-		{"path": "Witch"},
-		{"path": "./", "name": "All Files"}
+		{
+			"name": "test",
+			"path": "../../haxe/test"
+		},
+		{
+			"path": ".vscode"
+		},
+		{
+			"path": "Fanatic"
+		},
+		{
+			"path": "Heretic"
+		},
+		{
+			"path": "Pulpit"
+		},
+		{
+			"path": "System"
+		},
+		{
+			"path": "Witch"
+		},
+		{
+			"path": "./",
+			"name": "All Files"
+		}
 	],
 	"settings": {
 		"typescript.autoClosingTags": false,
