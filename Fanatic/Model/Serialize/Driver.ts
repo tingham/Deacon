@@ -1,4 +1,4 @@
-import { Log } from "../../../System/Log"
+import { Log } from "../../../Sword/Log"
 import { LogLevel } from "../../Enumerations"
 import { Connection, createConnection, RowDataPacket } from "mysql2/promise"
 

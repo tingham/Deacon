@@ -1,5 +1,5 @@
 import { Turnstyle } from "./Pew"
-import { MaskedPath, PathMaskStyle } from "./Processing"
+import { MaskedPath, PathElement, PathMaskStyle } from "./Processing"
 import { Request } from "./Request"
 import { Response } from "./Response"
 
@@ -16,16 +16,25 @@ export abstract class AbstractRoute {
 export class Route extends AbstractRoute {
   // A symbolic template for the path of the route
   public Path: string = ""
-  public Mask: MaskedPath = new MaskedPath("", PathMaskStyle.NONE)
+  public MaskedPathInstance: MaskedPath = new MaskedPath("", PathMaskStyle.NONE)
   // A hierarchical collection of sub-routes
   public Handlers: RouteHandler[] = []
+
+  // Takes a string, which is simple, and easy to understand; or a structured object and returns a Map of PathElements
+  public Mask(token: string): any {
+    // Get the value of the path element from the maskedpath instance if it exists
+    let pathElement = this.MaskedPathInstance.MappedElements.get(token)
+    if (pathElement) {
+      return pathElement.Value
+    }
+  }
 
   // Produces a new route to which handlers can be added for a given method
   public static Generate (path: string, maskStyle: PathMaskStyle): Route {
     let maskedPath = new MaskedPath(path, maskStyle)
     let result: Route = new class extends Route {
       public Path: string = path
-      public Mask: MaskedPath = maskedPath
+      public MaskedPathInstance: MaskedPath = maskedPath
       public Handlers: RouteHandler[] = []
     }
     return result

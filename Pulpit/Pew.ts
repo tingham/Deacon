@@ -3,7 +3,7 @@
  import { Request } from "./Request"
  import { Response } from "./Response"
  import { PathMaskStyle } from "./Processing"
- import { Log } from "../System/Log"
+ import { Log } from "../Sword/Log"
 
  export enum Turnstyle {
         Continue = 0,
@@ -62,7 +62,7 @@ export class Pew {
         let allRoutes = Array.from(this.routingTable.values())
         for (const route of allRoutes) {
             // If the comparison of the requested route and the template of this route line up
-            if (route?.Mask?.Test(actualUrl)) {
+            if (route?.MaskedPathInstance?.Test(actualUrl)) {
                 // Add to the list of processable routes
                 result.push(route)
             }
@@ -84,7 +84,7 @@ export class Pew {
         for (let route of routes) {
             for (let handler of route.Handlers) {
                 if (handler.Method === request.Method) {
-                    let mappedMask = route.Mask.Match(actualUrl)
+                    let mappedMask = route.MaskedPathInstance.Match(actualUrl)
                     let turn = await handler.handle(request, response, route)
                     if (turn === Turnstyle.Stop) {
                         response.End()

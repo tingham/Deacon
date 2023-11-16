@@ -1,5 +1,5 @@
 import { ServerResponse, IncomingMessage } from "http"
-import { Log } from "../System/Log"
+import { Log } from "../Sword/Log"
 
 // Response
 // A wrapper of native http.ServerResponse that is extended to provide additional functionality

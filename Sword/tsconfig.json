@@ -3,11 +3,15 @@
    * TSConfig for Pulpit - A routing library
    */
   "extends": "../tsconfig.json",
-  "name": "System",
+  "name": "Sword",
   "compilerOptions": {
     "rootDir": "../",
-    "outDir": "../dist/System",
+    "outDir": "../dist/Sword",
     "composite": true,
-    "tsBuildInfoFile": "../cache/system.tsbuildinfo"
-  }
+    "tsBuildInfoFile": "../cache/sword.tsbuildinfo"
+  },
+  "files": [
+    "Errors/Exception.ts",
+    "String.ts"
+  ]
 }

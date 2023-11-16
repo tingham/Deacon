@@ -11,6 +11,6 @@
     "tsBuildInfoFile": "../cache/fanatic.tsbuildinfo"
   },
   "include": [
-    "../System/**/*"
+    "../sword/**/*"
   ]
 }

@@ -10,7 +10,7 @@
       "runtimeArgs": ["--import=extensionless/register"],
       "preLaunchTask": "Heretic-Build",
       "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal"
+      "console": "externalTerminal"
     }
   ]
 }

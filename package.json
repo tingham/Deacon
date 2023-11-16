@@ -6,13 +6,14 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --build",
+    "build": "tsc --build Heretic/tsconfig.json",
     "clean": "tsc --build --clean"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/ejs": "^3.1.5",
     "@types/node": "^20.8.10",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
@@ -21,6 +22,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "ejs": "^3.1.9",
     "mysql2": "^3.6.3",
     "winston": "^3.11.0",
     "winston-loki": "^6.0.8"

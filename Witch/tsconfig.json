@@ -5,5 +5,13 @@
     "rootDir": "../",
     "outDir": "../dist/Witch",
     "composite": true,
+    "tsBuildInfoFile": "../cache/witch.tsbuildinfo"
   },
+  "include": [
+    "./**/*",
+    "../Sword/**/*"
+  ],
+  "files": [
+    "./*.ts"
+  ]
 }
