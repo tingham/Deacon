@@ -6,7 +6,7 @@
 
 export * from "./Witch"
 export * from "./VTCH"
-export * from "./Element"
+export * from "./ViewModelEntities/Element"
 export * from "./Imprint"
 export * from "./Utility"
 export * from "./Action"

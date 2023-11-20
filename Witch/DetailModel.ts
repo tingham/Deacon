@@ -1,5 +1,5 @@
 ﻿import { InvalidInstance } from "../Sword/Errors/Exception";
-import { Element } from "./Element";
+import { Element } from "./ViewModelEntities/Element";
 import { ViewModel } from "./ViewModel";
 import { IModelInstanceObserver } from "./ModelInstanceObserver";
 

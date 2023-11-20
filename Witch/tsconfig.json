@@ -12,6 +12,6 @@
     "../Sword/**/*"
   ],
   "files": [
-    "./*.ts"
+    "./*.ts", "./ViewModelEntities/ViewModelEntity.ts", "./ViewModelEntities/ElementGroup.ts"
   ]
 }
