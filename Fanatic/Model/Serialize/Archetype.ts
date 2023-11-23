@@ -1,4 +1,4 @@
-﻿import { InvalidTypeAssignmentException, NotImplementedException } from "../../Exception";
+﻿import { InvalidTypeAssignmentException, NotImplementedException } from "../../../Sword/Errors/Exception";
 import { Archetypist } from "../../Decorator/Archetypist";
 import { Field } from "../../Decorator/Field";
 import { SerializingField } from "./SerializingField";

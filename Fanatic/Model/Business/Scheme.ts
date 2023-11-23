@@ -1,6 +1,6 @@
 ﻿import "reflect-metadata"
 import { Archetype } from "../Serialize/Archetype"
-import { NotImplementedException } from "../../Exception"
+import { NotImplementedException } from "../../../Sword/Errors/Exception";
 import { WhereOption } from "./WhereOption"
 import { CompoundOperator } from "../../Enumerations"
 

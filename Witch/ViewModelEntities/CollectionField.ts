@@ -4,4 +4,10 @@ import { Field } from "./Field"
 
 export class CollectionField extends Field {
   public Collection: List<Element> = new List<Element>();
+
+  constructor() {
+    super();
+  }
+
+
 }

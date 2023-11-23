@@ -1,6 +1,6 @@
  import { IncomingMessage, ServerResponse, Server } from "http"
  import { Route } from "./Routing"
- import { Request } from "./Request"
+ import { MemorySessionManager, Request } from "./Request"
  import { Response } from "./Response"
  import { PathMaskStyle } from "./Processing"
  import { Log } from "../Sword/Log"
@@ -71,30 +71,35 @@ export class Pew {
     }
 
     // Retrieve the matching routes for the given template and method and execute them in order until we receive a stop code
-    public async ExecuteRoute(actualUrl: string, request: Request, response: Response): Promise<Turnstyle> {
-        // Look at the routing table to find routes that match the actual request url scheme
-        // What are the characteristics of a matching route as fulfilled by the Mask.MappedElements?
-        // TODO: Add a variable match predicate
-        let routes = this.GetApplicableRoutes(actualUrl)
-        if (!routes || routes.length === 0) {
-            // No route assigned to this url
-            return Turnstyle.Missing
-        }
-
-        for (let route of routes) {
-            for (let handler of route.Handlers) {
-                if (handler.Method === request.Method) {
-                    let mappedMask = route.MaskedPathInstance.Match(actualUrl)
-                    let turn = await handler.handle(request, response, route)
-                    if (turn === Turnstyle.Stop) {
-                        response.End()
-                        return Turnstyle.Stop
-                    }
-                }
-            }
-        }
-        return Turnstyle.Stop
+  public async ExecuteRoute(actualUrl: string, request: Request, response: Response): Promise<Turnstyle> {
+    if (!(MemorySessionManager.Instance.Has(request))) {
+      MemorySessionManager.Instance.Create(request, response)
+    } else {
+      MemorySessionManager.Instance.Merge(request, response)
     }
+    // Look at the routing table to find routes that match the actual request url scheme
+    // What are the characteristics of a matching route as fulfilled by the Mask.MappedElements?
+    // TODO: Add a variable match predicate
+    let routes = this.GetApplicableRoutes(actualUrl)
+    if (!routes || routes.length === 0) {
+      // No route assigned to this url
+      return Turnstyle.Missing
+    }
+
+    for (let route of routes) {
+      for (let handler of route.Handlers) {
+        if (handler.Method === request.Method) {
+          let mappedMask = route.MaskedPathInstance.Match(actualUrl)
+          let turn = await handler.handle(request, response, route)
+          if (turn === Turnstyle.Stop) {
+            response.End()
+            return Turnstyle.Stop
+          }
+        }
+      }
+    }
+    return Turnstyle.Stop
+  }
 
     public async Start(): Promise<void> {
         // Curried reference to this

@@ -10,9 +10,6 @@ export * from "./Decorator/Schemer"
 export * from "./Decorator/SchemeRoot"
 export * from "./Decorator/Subscriber"
 
-// Export all from ./Exception"
-export * from "./Exception"
-
 // Export all from ./Enum"
 export * from "./Enumerations"
 

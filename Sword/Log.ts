@@ -21,6 +21,9 @@ if (!this.instance) {
   }
 
   public static info(location: string, message: any): void {
+    if (typeof message === 'object') {
+      message = JSON.stringify(message, null, 2)
+    }
     this.Instance.Root.info(`${chalk.cyan(location)}: ${message}`)
   }
 

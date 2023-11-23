@@ -11,6 +11,7 @@ export class Response  {
     result.OriginalResponse = response
     return result
   }
+
   public async Write (data: string): Promise<void> {
     if (this.Ended) {
       Log.warn("Response", "Attempted to write to a response that has already ended")

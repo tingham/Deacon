@@ -1,5 +1,6 @@
 ﻿<Project Title="Fanatic" Name="Fanatic" Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.94-alpha">
   <ItemGroup>
+    <Folder Include="Data\HTML\" />
     <Folder Include="dist\" />
   </ItemGroup>
   <ItemGroup>

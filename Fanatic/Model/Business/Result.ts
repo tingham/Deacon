@@ -1,7 +1,7 @@
 ﻿
 // A class that wraps scheme instances in a list
 
-import { BeginResultException, EndResultException } from "../../Exception"
+import { BeginResultException, EndResultException } from "../../../Sword/Errors/Exception"
 export class Result<T> extends Array {
   public FirstOrDefault(): T | null {
     if (this[0]) {

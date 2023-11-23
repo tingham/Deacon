@@ -1,6 +1,7 @@
 import { Archetypist } from "../Fanatic/Decorator/Archetypist"
 import { Field } from "../Fanatic/Decorator/Field"
 import { Archetype } from "../Fanatic/Model/Serialize/Archetype"
+import { VTCHNode } from "../Witch/Stock"
 
 // The User Archetype
 @Archetypist("User", "id")
@@ -82,4 +83,11 @@ export enum PrimitiveType {
 export class Primitive extends Component {
   @Field(`ENUM(${Object.values(PrimitiveType).map(v => `'${v}'`).join("'")})`)
   public Type?: PrimitiveType
+}
+
+export class ActivityNode {
+}
+
+export class ApplicationModel extends Archetype {
+
 }

@@ -10,7 +10,7 @@ One simple example of the separation of concerns is demonstrated here in a code 
 import { Archetype } from "./Serialize/Archetype"
 import { IDriver } from "./Serialize/Driver"
 import { CompoundOperator, Operator } from "../Enumerations"
-import { DriverNotConnectedException, Exception, InvalidArgumentsException, InvalidDriverException } from "../Exception"
+import { DriverNotConnectedException, Exception, InvalidArgumentsException, InvalidDriverException } from "../../Sword/Errors/Exception"
 import { ManagedQueryOptions } from "./Serialize/ManagedQueryOptions"
 import { Result } from "./Business/Result"
 import { WhereOption } from "./Business/WhereOption"

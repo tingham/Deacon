@@ -10,9 +10,10 @@
  * <canvas data-action="|await ImprintActionInstance.Action()|">|ImprintActionInstance.Label|</canvas>
  **/
 export class Action {
-    public ControllerPath: string = "";
-    public MethodPath: string = "";
-    public Identity: string = "";
+    // public ControllerPath: string = "";
+    // public MethodPath: string = "";
+    // public Identity: string = "";
+
     // Produces the final output of an action with the base class capable of producing standardized output based on known-parameters
     public async Coalesce(): Promise<string> {
         // If controller, method and identity are defined, we can produce a url.
@@ -35,4 +36,7 @@ export class Action {
         // If only the identity is defined we cannot produce a url and need to throw an error because this is a misconfiguration
         throw new ImprintIdentityOrphaned(`An ImprintAction cannot have an identity (${this.Identity}) without a controller or method.`);
     }
+
+  constructor(public ControllerPath: string = "", public MethodPath: string = "", public Identity: string = "") {
+  }
 }
