@@ -10,7 +10,16 @@ export function Children(childType: typeof Archetype, loadingRule: HydrationRule
         let Type = target.constructor;
         // Get the type of the property
         // Provision `Add${property}` method
+      Type.prototype[`Add${property}`] = async function (...params: any[]) {
+      };
+
         // Provision `Remove${property}` method
+      Type.prototype[`Remove${property}`] = async function (...params: any[]) {
+      };
+
         // Provision `Get${property}` method
+      Type.prototype[`Get${property}`] = async function (...params: any[]) {
+      };
+
     };
 }

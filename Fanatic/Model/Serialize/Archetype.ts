@@ -1,4 +1,6 @@
-﻿import { InvalidTypeAssignmentException, NotImplementedException } from "../../../Sword/Errors/Exception";
+﻿import { Scheme } from "../..";
+import { InvalidTypeAssignmentException, NotImplementedException } from "../../../Sword/Errors/Exception";
+import { Log } from "../../../Sword/Log";
 import { Archetypist } from "../../Decorator/Archetypist";
 import { Field } from "../../Decorator/Field";
 import { SerializingField } from "./SerializingField";
@@ -37,10 +39,34 @@ class ArchetypeStatic {
   public static Statements?: any
 }
 
+export interface IMagicMethodable {
+  [key: `Add${string}`]: (...params: any[]) => any
+}
+
+// A decorator for a class that mixes in the IMagicMethodable interface so that collections within a Scheme get `Set${target.constructor.Plural}` and `Get${target.constructor.Plural}` methods
+export function Magic(itemType: typeof Archetype) {
+  return function (target: any, context?: ClassDecoratorContext) {
+    target.prototype[`Add${itemType.Plural}`] = function (...params: any[]) {
+      if (params.length === 1 && params[0] instanceof Array) {
+        for (const item of params[0]) {
+          Log.info("Magic.Set", { item })
+        }
+      } else {
+        for (const item of params) {
+          Log.info("Magic.Set", { item })
+        }
+      }
+    };
+  }
+}
+
 // A base class definition so that @Archetype can be used as a class decorator
 // It also grants @Archetype the ability to attach a standard field set to the table/class (CreatedAt, UpdatedAt, Deleted, etc.)
 // curiously recurring template pattern
 export class Archetype extends ArchetypeStatic {
+  public static Singular: string = "Archetype"
+  public static Plural: string = "Archetypes"
+
   // The date on which the record was created in database time
   public CreatedAt?: Date
   // The date on which the record was last updated in database time

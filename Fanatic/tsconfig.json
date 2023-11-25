@@ -2,15 +2,30 @@
   /**
    * TSConfig for Pulpit - A routing library
    */
-  "extends": "../tsconfig.json",
-  "name": "Fanatic",
+  "extends": "../tsconfig.options.json",
   "compilerOptions": {
     "rootDir": "../",
-    "outDir": "../dist/Fanatic",
     "composite": true,
+    "outDir": "../dist",
     "tsBuildInfoFile": "../cache/fanatic.tsbuildinfo"
   },
   "include": [
-    "../sword/**/*"
+    "**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../Sword"
+    }
   ]
+  //"extends": "../tsconfig.json",
+  //"name": "Fanatic",
+  //"compilerOptions": {
+  //  "rootDir": "../",
+  //  "outDir": "../dist/Fanatic",
+  //  "composite": true,
+  //  "tsBuildInfoFile": "../cache/fanatic.tsbuildinfo"
+  //},
+  //"include": [
+  //  "../sword/**/*"
+  //]
 }

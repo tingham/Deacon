@@ -1,0 +1,11 @@
+/** A container that encapsulates arbitrary content and allows it to flow in a grid */
+vtch-panel {
+  background-color: hsl(var(--v-bg-hue), var(--v-bg-sat), calc(var(--v-bg-lit) + (100% - var(--v-bg-lit)) * 0.0125));
+  color: hsl(var(--v-fg-hue), calc(var(--v-fg-sat) + (100% - var(--v-fg-sat)) * 0.125), calc(var(--v-fg-sat) + (100% - var(--v-fg-sat)) * 0.0125));
+  border-color: hsl(var(--v-bg-hue), var(--v-bg-sat), calc(var(--v-bg-lit) + (0% - var(--v-bg-lit)) * 0.5));
+  border-radius: 0.25rem;
+  border-width: 0.125rem;
+  border-style: solid;
+  border-collapse: collapse;
+  padding: 0.5rem;
+}

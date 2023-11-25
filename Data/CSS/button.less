@@ -1,0 +1,35 @@
+vtch-button {
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+
+  --local-button-bg: var(--v-neutral-bg-color);
+  --local-button-fg: var(--v-neutral-fg-color);
+
+  border: 1px solid var(--local-button-bg);
+  background-color: var(--local-button-bg);
+  color: var(--local-button-fg);
+
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+
+  &:hover, &:active, &:focus {
+    border-color: hsl(from var(--local-button-bg) h s ~"calc(l + (100% - l) * 0.25)");
+    background-color: hsl(from var(--local-button-bg) h s ~"calc(l + (100% - l) * 0.25)");
+    color: hsl(from var(--local-button-fg) h s ~"calc(l + (0% - l) * 0.25)"); 
+  }
+
+  &.primary {
+    --local-button-bg: var(--v-primary-color);
+    --local-button-fg: var(--v-primary-inverse);
+  }
+
+  &.secondary {
+    --local-button-bg: var(--v-secondary-color);
+    --local-button-fg: var(--v-secondary-inverse);
+  }
+
+  &.tertiary {
+    --local-button-bg: var(--v-tertiary-color);
+    --local-button-fg: var(--v-tertiary-inverse);
+  }
+}

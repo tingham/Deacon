@@ -4,9 +4,23 @@
       "ecmaVersion": "latest",
       "sourceType": "module"
   },
-  "plugins": [ "@typescript-eslint" ],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "root": true,
+  "ignorePatterns": [ "node_modules/*" ],
   "rules": {
     // Add rules here
-  }
+    "n/no-extraneous-import": [
+      "error",
+      {
+        "allowModules": ["less", "@types/less"],
+        "resolvePaths": ["../Sword/*.ts"]
+      }
+    ]
+  },
+  "extends": [
+    "plugin:css/standard",
+    "stylelint"
+  ]
 }

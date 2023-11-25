@@ -74,11 +74,3 @@ textarea, select {
 :target {
   scroll-margin-block: 5ex;
 }
-
-/* Set a decent font family */
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
-}
-pre, code {
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-}

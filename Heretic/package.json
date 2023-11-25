@@ -8,6 +8,13 @@
     "build": "tsc --build tsconfig.json",
     "clean": "tsc --build tsconfig.json --clean"
   },
+  "files": [
+    "../Sword/*.ts",
+    "../Sword/**/*.ts",
+    "../Fanatic/**/*.ts",
+    "../Pulpit/**/*.ts",
+    "../Witch/**/*.ts"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC"

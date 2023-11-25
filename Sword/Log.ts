@@ -28,6 +28,8 @@ if (!this.instance) {
   }
 
   public static error(errorObject: Error): void {
-    this.Instance.Root.error(errorObject)
+    const orange = chalk.hex('#cc9900')
+    this.Instance.Root.error(`${chalk.red(errorObject.name)}: ${orange(errorObject.message)}`)
+    this.Instance.Root.error(`${chalk.red(errorObject.name)}:\n${errorObject.stack}`)
   }
 }

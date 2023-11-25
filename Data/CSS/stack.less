@@ -1,0 +1,74 @@
+/** A container that forces children to flow vertically or horizontally based on data-orientation **/
+vtch-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  /** Vertical **/
+  &[data-orientation="vertical"] {
+    flex-direction: row;
+  }
+  /** Horizontal **/
+  &[data-orientation="horizontal"] {
+    flex-direction: column;
+  }
+
+  .header h1 {
+    margin: auto;
+  }
+  /** Any children of a stack should fill the stack */
+  & > * {
+    flex: 1 1 auto;
+    /** data-stack-weight is a number that determines how much space a panel will take up in a stack, set on direct descendents */
+    & > [data-stack-weight="1"] {
+      flex: 1 1 auto;
+    }
+
+    & > [data-stack-weight="2"] {
+      flex: 2 2 auto;
+    }
+
+    & > [data-stack-weight="3"] {
+      flex: 3 3 auto;
+    }
+
+    & > [data-stack-weight="4"] {
+      flex: 4 4 auto;
+    }
+
+    & > [data-stack-weight="5"] {
+      flex: 5 5 auto;
+    }
+
+    & > [data-stack-weight="6"] {
+      flex: 6 6 auto;
+    }
+
+    & > [data-stack-weight="7"] {
+      flex: 7 7 auto;
+    }
+
+    & > [data-stack-weight="8"] {
+      flex: 8 8 auto;
+    }
+
+    & > [data-stack-weight="9"] {
+      flex: 9 9 auto;
+    }
+
+    & > [data-stack-weight="10"] {
+      flex: 10 10 auto;
+    }
+
+    & > [data-stack-weight="11"] {
+      flex: 11 11 auto;
+    }
+
+    & > [data-stack-weight="12"] {
+      flex: 12 12 auto;
+    }
+
+    & > [data-stack-weight="13"] {
+      flex: 13 13 auto;
+    }
+  }
+}

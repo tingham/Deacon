@@ -2,8 +2,7 @@
   /**
    * TSConfig for Pulpit - A routing library
    */
-  "extends": "../tsconfig.json",
-  "name": "Pulpit",
+  "extends": "../tsconfig.options.json",
   "compilerOptions": {
     "rootDir": "../",
     "outDir": "../dist",
@@ -11,8 +10,23 @@
     "tsBuildInfoFile": "../cache/pulpit.tsbuildinfo"
   },
   "include": [
-    "./**/*",
-    "../Sword/**/*"
+    "**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../Sword"
+    }
   ]
+  //"name": "Pulpit",
+  //"compilerOptions": {
+  //  "rootDir": "../",
+  //  "outDir": "../dist",
+  //  "composite": true,
+  //  "tsBuildInfoFile": "../cache/pulpit.tsbuildinfo"
+  //},
+  //"include": [
+  //  "./**/*",
+  //  "../Sword/**/*"
+  //]
 
 }

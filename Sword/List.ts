@@ -206,7 +206,7 @@ export class List<T> extends AbstractList<T> implements IList<T> {
 
   Mean(Keypath: string): number {
     let result = 0
-    let uniqueValues = Array.from(new Set<number>(...(this.Collection.map(item => item?.Value?.hasOwnProperty(Keypath) && (item.Value as any)[Keypath] instanceof Number ? (item.Value as any)[Keypath] : 0)));
+    let uniqueValues = Array.from(new Set<number>(...(this.Collection.map(item => item?.Value?.hasOwnProperty(Keypath) && (item.Value as any)[Keypath] instanceof Number ? (item.Value as any)[Keypath] : 0))));
     for (const item of uniqueValues) {
       result += item
     }

@@ -1,17 +1,14 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../tsconfig.options.json",
   "name": "Witch",
   "compilerOptions": {
     "rootDir": "../",
-    "outDir": "../dist/Witch",
-    "composite": true,
+    "outDir": "../dist",
     "tsBuildInfoFile": "../cache/witch.tsbuildinfo"
   },
   "include": [
-    "./**/*",
-    "../Sword/**/*"
+    "**/*.ts",
+    "../Sword/**/*.ts"
   ],
-  "files": [
-    "./*.ts", "./ViewModelEntities/ViewModelEntity.ts", "./ViewModelEntities/ElementGroup.ts"
-  ]
+  "files": []
 }

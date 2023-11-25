@@ -1,0 +1,63 @@
+input, textarea, select {
+  // Zero out margin and padding
+  padding: 0;
+  margin: 0;
+  // For controls to occupy the same height
+  min-height: 2rem;
+  // Remove chrome and borders from controls
+  border: none;
+  // Set transition on background color, color, and border color
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+input[type=checkbox], input[type=radio] {
+}
+
+input[type=text], textarea {
+  // Inset text within boxes a bit
+  padding: 0.25rem;
+  // Make text more readable
+  color: var(--vtch-theme-color);
+  // And the background the inverse cosin of the text
+  --effect: 0.8;
+  background-color: hsl(var(--v-bg-hue), calc(var(--v-bg-sat) + (0% - var(--v-bg-sat)) * var(--effect)), calc(var(--v-bg-lit) + (100% - var(--v-bg-lit)) * var(--effect)));
+  border: 0.1rem solid transparent;
+  border-color: hsl(var(--v-bg-hue), var(--v-bg-sat), calc(var(--v-bg-lit) + (0% - var(--v-bg-lit)) * 0.5));
+  border-radius: 0.25rem;
+
+  &:focus {
+    outline: none;
+    --effect: 0.875;
+    background-color: hsl(var(--v-bg-hue), calc(var(--v-bg-sat) + (0% - var(--v-bg-sat)) * var(--effect)), calc(var(--v-bg-lit) + (100% - var(--v-bg-lit)) * var(--effect)));
+    color: hsl(var(--v-fg-hue), var(--v-fg-sat), calc(100% - var(--v-fg-lit)));
+  }
+}
+
+select {
+
+  &, option {
+    // --v-x-*-color
+    background-color: hsl(var(--v-x-bg-hue), var(--v-x-bg-sat), var(--v-x-bg-lit));
+    color: hsl(var(--v-x-fg-hue), var(--v-x-fg-sat), var(--v-x-fg-lit));
+    line-height: 2rem;
+  }
+
+  option {
+    zoom: 1.01;
+
+    &[divider] {
+      max-height: 0.1rem;
+      font-size: 0.1rem;
+      background-color: hsl(var(--v-x-bg-hue), var(--v-x-bg-sat), calc(var(--v-x-bg-lit) + calc(0% - var(--v-x-bg-lit)) * 0.5));
+    }
+    &[header] {
+      background-color: hsl(var(--v-x-bg-hue), var(--v-x-bg-sat), calc(var(--v-x-bg-lit) + (100% - var(--v-x-bg-lit)) * 0.5));
+      color: hsl(var(--v-x-bg-hue), var(--v-x-bg-sat), calc(var(--v-x-bg-lit) + calc(0% - var(--v-x-bg-lit)) * 0.625));
+      font-weight: bold;
+    }
+    // Disabled and not divider
+    &:disabled:not([divider]):not(:header) {
+      color: #ccc;
+    }
+  }
+}

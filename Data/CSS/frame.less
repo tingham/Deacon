@@ -1,0 +1,36 @@
+
+/** A component that fills the window and allows its contents to also fill the available space. */
+vtch-frame {
+  // A color generated from averaging 0.5 0.5 0.5 and the background color
+  // lerp (a, b, t) = a + (b - a) * t
+  --v-neutral-bg-color: hsl(var(--v-neu-bg-hue), var(--v-neu-bg-sat), var(--v-neu-bg-lit));
+  --v-neutral-fg-color: hsl(var(--v-fg-hue), var(--v-fg-sat), var(--v-fg-lit));
+
+  --v-x-bg-color: hsl(var(--v-x-bg-hue) var(--v-x-bg-sat) var(--v-x-bg-lit));
+  --v-x-fg-color: hsl(var(--v-x-fg-hue) var(--v-x-fg-sat) var(--v-x-fg-lit));
+
+  // TODO: Make these from constituent parts
+  --v-primary-color: hsl(var(--v-primary-hue), var(--v-primary-sat), var(--v-primary-lit));
+  --v-primary-inverse: hsl(calc(var(--v-primary-hue) + 180deg), var(--v-primary-sat), calc(100% - var(--v-primary-lit)));
+
+  --v-secondary-color: hsl(var(--v-secondary-hue), var(--v-secondary-sat), var(--v-secondary-lit));
+  --v-secondary-inverse: hsl(calc(var(--v-secondary-hue) + 180deg), var(--v-secondary-sat), calc(100% - var(--v-secondary-lit)));
+
+  --v-tertiary-color: hsl(var(--v-tertiary-hue), var(--v-tertiary-sat), var(--v-tertiary-lit));
+  --v-tertiary-inverse: hsl(calc(var(--v-tertiary-hue) + 180deg), var(--v-tertiary-sat), calc(100% - var(--v-tertiary-lit)));
+
+  min-height: 100vh;
+  min-width: 100vw;
+  margin: 0;
+  padding: 0.5rem;
+  /** Children should fill the frame */
+  display: flex;
+  flex-direction: column;
+  // Uniform color definitions
+  background-color: var(--vtch-background-color);
+  color: var(--vtch-inverse-background-color);
+
+  & > * {
+    flex: 1 1 auto;
+  }
+}

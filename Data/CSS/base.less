@@ -1,0 +1,188 @@
+// Initial Values are Light Mode
+@property --vtch-bg-hue { syntax: "<angle>"; inherits: false; }
+@property --vtch-bg-saturation { syntax: "<percentage>"; inherits: false; }
+@property --vtch-bg-lightness { syntax: "<percentage>"; inherits: false; }
+
+@property --vtch-fg-hue { syntax: "<angle>"; inherits: false; initial-value: 1turn; }
+@property --vtch-fg-saturation { syntax: "<percentage>"; inherits: false; }
+@property --vtch-fg-lightness { syntax: "<percentage>"; inherits: false; }
+
+@property --vtch-primary-hue { syntax: "<angle>"; inherits: false; }
+@property --vtch-secondary-hue { syntax: "<angle>"; inherits: false; }
+@property --vtch-tertiary-hue { syntax: "<angle>"; inherits: false; }
+
+html {
+  color-scheme: dark;
+}
+
+// The light theme is moderately bright and desaturated but warm and cozy
+@LLightOverrides: {
+  --vtch-bg-hue: 90deg;
+  --vtch-primary-hue: calc(var(--vtch-bg-hue) - 45deg);
+  --vtch-primary-hue: calc(var(--vtch-bg-hue) - 135deg);
+  --vtch-primary-hue: calc(var(--vtch-bg-hue) - 180deg);
+  --vtch-bg-saturation: 5%;
+  --vtch-bg-lightness: 95%;
+  --vtch-fg-hue: 0.66turn;
+  --vtch-fg-saturation: 95%;
+  --vtch-fg-lightness: 17.7%;
+}
+
+// The dark theme is slightly blue-green in hue and has a lower saturation and lightness
+@LDarkOverrides: {
+  --vtch-bg-hue: 180deg;
+  --vtch-primary-hue: calc(var(--vtch-bg-hue) + 45deg);
+  --vtch-secondary-hue: calc(var(--vtch-bg-hue) + 135deg);
+  --vtch-tertiary-hue: calc(var(--vtch-bg-hue) + 180deg);
+  --vtch-bg-saturation: 17%;
+  --vtch-bg-lightness: 8%;
+  --vtch-fg-hue: 0.33turn;
+  --vtch-fg-saturation: 10%;
+  --vtch-fg-lightness: 90%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+  padding: 0;
+  margin: 0;
+
+  @LLightOverrides();
+
+  @media (prefers-color-scheme: dark) {
+    color-scheme: dark;
+    @LDarkOverrides();
+  }
+
+  &[data-theme="dark"] {
+    color-scheme: dark;
+    @LDarkOverrides();
+  }
+
+  /**
+    Assign the consumable color components
+  **/ 
+
+  // The primary backgound color
+  // We are assigning these because previously we were using doubles and converting them
+  // to degrees and percentages using a calc. It seems like coupling calculations 
+  // together makes the browser unhappy.
+  // We might need to do more lifting when it comes to the transfer colors and analogs
+  // because those depend on further calculations. Maybe using less for that isn't such
+  // a bad idea.
+  //
+  --v-bg-hue: 180deg; // var(--vtch-bg-hue);
+  --v-bg-sat: var(--vtch-bg-saturation);
+  --v-bg-lit: var(--vtch-bg-lightness);
+
+  // The primary foreground color
+  --v-fg-hue: var(--vtch-fg-hue);
+  --v-fg-sat: var(--vtch-fg-saturation);
+  --v-fg-lit: var(--vtch-fg-lightness);
+
+  // The neutral color for default controls and chrome
+  --v-neu-bg-hue: calc(var(--v-bg-hue));
+  --v-neu-bg-sat: clamp(0%, calc(calc(var(--v-bg-sat) + 12.5%) / 2), 100%);
+  --v-neu-bg-lit: clamp(0%, calc(calc(var(--v-bg-lit) + 50%) / 2), 100%);
+
+  --v-neu-fg-hue: calc(var(--v-fg-hue));
+  --v-neu-fg-sat: clamp(0%, calc(calc(var(--v-fg-sat) + 87.5%) / 2), 100%);
+  --v-neu-fg-lit: clamp(0%, calc(calc(var(--v-fg-lit) + 25%) / 2), 100%);
+
+  // @type Lerp T value
+  --v-control-brighten: 0.5;
+  // @type Lerp T value
+  --v-control-enrichen: 0.75;
+  // @type Rotation value
+  --v-primary-turn: 90deg;
+  --v-secondary-turn: 180deg;
+  --v-tertiary-turn: 270deg;
+
+  // The complementary color for accenting elements on the background
+  --v-x-bg-hue: calc(var(--v-fg-hue) + 180deg);
+  --v-x-bg-sat: var(--v-fg-sat);
+  --v-x-bg-lit: var(--v-fg-lit);
+
+  --v-x-fg-hue: calc(var(--v-bg-hue) + 180deg);
+  --v-x-fg-sat: var(--v-bg-sat);
+  --v-x-fg-lit: var(--v-bg-lit);
+
+ // This is supposed to be a modulus without using `mod()` (which doesn't appear to work.) calc((var(--v-bg-hue) + var(--v-primary-turn)) - 360deg * ((var(--v-bg-hue) + var(--v-primary-turn)) / 360deg));
+  --v-primary-hue: var(--vtch-primary-hue);
+  --v-primary-sat: calc(var(--v-bg-sat) + (100% - var(--v-bg-sat)) * var(--v-control-enrichen));
+  --v-primary-lit: calc(var(--v-bg-lit) + (100% - var(--v-bg-lit)) * var(--v-control-brighten));
+
+  --v-secondary-hue: var(--vtch-secondary-hue);
+  --v-secondary-sat: calc(var(--v-bg-sat) + (100% - var(--v-bg-sat)) * var(--v-control-brighten));
+  --v-secondary-lit: calc(var(--v-bg-lit) + (100% - var(--v-bg-lit)) * var(--v-control-enrichen));
+
+  --v-tertiary-hue: var(--vtch-tertiary-hue);
+  --v-tertiary-sat: calc(var(--v-bg-sat) + (100% - var(--v-bg-sat)) * var(--v-control-brighten));
+  --v-tertiary-lit: calc(var(--v-bg-lit) + (100% - var(--v-bg-lit)) * var(--v-control-enrichen));
+
+  // Uniform color definitions
+  --v-background-color: hsl(var(--v-bg-hue), var(--v-bg-sat), var(--v-bg-lit));
+  --v-foreground-color: hsl(var(--v-fg-hue), var(--v-fg-sat), var(--v-fg-lit));
+
+  background-color: var(--v-background-color);
+}
+body, body * {
+  color: var(--v-foreground-color);
+}
+
+pre, code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+@import "./frame.less";
+@import "./panel.less";
+@import "./button.less";
+@import "./stack.less";
+@import "./navigation.less";
+@import "./input.less";
+
+vtch-stack {
+  &.bone {
+    background-color: white;
+  }
+
+  vtch-panel {
+    &.foundation {
+      background-color: var(--vtch-background-color);
+      color: var(--vtch-foreground-color);
+    }
+
+    &.gossamer, &.gossamer > * {
+      background-color: var(--vtch-inverse-background-color);
+      color: var(--vtch-inverse-foreground-color);
+    }
+
+    &.primary {
+      background-color: var(--vtch-primary-color);
+
+      .invert {
+        background-color: var(--vtch-inverse-primary-color);
+      }
+    }
+
+    &.secondary {
+      background-color: var(--vtch-secondary-color);
+
+      .invert {
+        background-color: var(--vtch-inverse-secondary-color);
+      }
+    }
+
+    &.tertiary {
+      background-color: var(--vtch-tertiary-color);
+
+      .invert {
+        background-color: var(--vtch-inverse-tertiary-color);
+      }
+    }
+
+    .invert {
+      display: flex;
+      padding: 1rem;
+    }
+  }
+}

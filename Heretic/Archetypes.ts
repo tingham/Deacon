@@ -1,6 +1,7 @@
 import { Archetypist } from "../Fanatic/Decorator/Archetypist"
 import { Field } from "../Fanatic/Decorator/Field"
-import { Archetype } from "../Fanatic/Model/Serialize/Archetype"
+import { Archetype, IMagicMethodable } from "../Fanatic/Model/Serialize/Archetype"
+import { Log } from "../Sword/Log"
 import { VTCHNode } from "../Witch/Stock"
 
 // The User Archetype
@@ -24,6 +25,8 @@ export class Document extends Archetype {
 // The Scene Archetype
 @Archetypist("Scene", "id")
 export class Scene extends Archetype {
+  public static Plural = "Scenes"
+  public static Singular = "Scene"
   @Field("VARCHAR(255)")
   public Name?: string
   @Field("TEXT")

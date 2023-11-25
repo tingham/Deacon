@@ -1,95 +1,66 @@
-import { Archetype, Scheme } from "../Fanatic";
+import { Archetype, Children, HydrationRule, IMagicMethodable, Magic, Scheme, SchemeManager, Schemer } from "../Fanatic";
+import { Document, Scene } from "./Archetypes";
 import { Log } from "../Sword/Log";
-import { Action, VTCH } from "../Witch";
-import { ApplicationModel } from "./Archetypes";
-import { MainImprint, ApplicationActivityImprint } from "./Imprints";
-import { DataLoader } from "./Loader";
 
-export class ApplicationScheme extends Scheme {
-  public Root?: Archetype | undefined;
+@Magic(Scene)
+export class DocumentScheme extends Scheme implements IFaulting<DocumentScheme> {
+  public FaultingKeypaths: Set<keyof DocumentScheme> = new Set<keyof DocumentScheme>(["Root", "Name", "Description", "Scenes"])
 
-  private ApplicationViewClass?: typeof VTCH
-  private ApplicationImprintInstance?: MainImprint
+  public Root?: Document | undefined;
+  public IsDirty = false;
 
-  /**
-   * @discussion
-   * The application scheme is esssentially a "controller" for the web application. It has methods that, while don't map to routes, are
-   * called by route handlers to provide output back to the response.
-   * 
-   * Each session that comes into the application could have its own instance of the application scheme; or there could be a single instance
-   * of the application scheme that maintains global state for all users. This is the decision of the implementing developer.
-   * 
-   * In the example application, our application scheme is a single instance; and there is a property on the application that maps an integer
-   * to a user session. This is a very simple example of how to maintain state for our application.
-  **/
-
-  private StatMap: Map<string, number> = new Map<string, number>()
-
-
-  constructor() {
-    super()
-    this.Initialize()
+  public get Name(): string | undefined {
+    return this.Root?.Name
   }
-
-  private async Initialize(): Promise<void> {
-    await this.SetupApplicationModel()
-    await this.SetupApplicationImprint()
-  }
-
-  private async SetupApplicationModel(): Promise<void> {
-    // ostensibly fetch the application model from the database
-    this.Root = new ApplicationModel()
-  }
-
-  // Sets up the view class for the application; and the model instance that will be used to render the view
-  private async SetupApplicationImprint(): Promise<void> {
-    this.ApplicationViewClass = VTCH.Factory(MainImprint, DataLoader.LoadTemplate("main-layout.ejs"))
-
-    this.ApplicationImprintInstance = new MainImprint()
-    let resetCSS = DataLoader.LoadCSS("reset.css")
-    let exampleHTML = DataLoader.LoadHTML("lorum-ipsum.html")
-
-    this.ApplicationImprintInstance.CSS = resetCSS
-    this.ApplicationImprintInstance.HTML = exampleHTML
-
-    // e.g. if (this.Root.CanOpenDocument) { 
-    // e.g. this.ApplicationImprintInstance.BackgroundColor = this.Root.Colors.Background
-    // and so forth
-
-    let openDocument = new ApplicationActivityImprint()
-    openDocument.Name = "Open Document"
-    openDocument.Description = "Opens a document"
-    openDocument.ActivityAction = new Action("Activity", "Open", "~")
-
-    let newDocument = new ApplicationActivityImprint()
-    newDocument.Name = "New Document"
-    newDocument.Description = "Creates a new document"
-    newDocument.ActivityAction = new Action("Activity", "New")
-
-    let viewUsers = new ApplicationActivityImprint()
-    viewUsers.Name = "View Users"
-    viewUsers.Description = "Views a list of users"
-    viewUsers.ActivityAction = new Action("Activity", "View", "Users")
-
-    this.ApplicationImprintInstance.Items = [openDocument, newDocument, viewUsers]
-  }
-
-  public async Index(userId: string): Promise<string> {
-    if (!(this.ApplicationImprintInstance)) {
-      await this.Initialize()
+  public set Name(value: string) {
+    if (this.Root) {
+      this.Root.Name = value
+      this.IsDirty = true
     }
+  }
 
-    if (!(this.ApplicationImprintInstance)) {
-      throw new Error("Application Imprint is not initialized")
+  public get Description(): string | undefined {
+    return this.Root?.Description
+  }
+  public set Description(value: string) {
+    if (this.Root) {
+      this.Root.Description = value
+      this.IsDirty = true
     }
+  }
 
-    this.ApplicationImprintInstance.Counter = this.StatMap.has(userId) ? this.StatMap.get(userId)! : 0
-    this.ApplicationImprintInstance.Counter += 1
-    this.StatMap.set(userId, this.ApplicationImprintInstance.Counter)
+  public get Scenes(): Array<Scene> | undefined {
+    if (this.scenes == undefined) {
+      this.Fault(["Scenes"])
+    }
+    return this.scenes
+  }
 
-    Log.info("Application", { userId, counter: this.ApplicationImprintInstance.Counter })
+  @Children(Scene, HydrationRule.Lazy)
+  private scenes?: Array<Scene>
 
-    let view = new (this.ApplicationViewClass!)()
-    return await view.Render(this.ApplicationImprintInstance!)
+  public async Fault(keypath: (keyof DocumentScheme)[]): Promise<void> {
+    return
   }
 }
+
+@Schemer(DocumentScheme)
+export class Documents extends SchemeManager {
+
+}
+
+
+// Defines an interface that means that an implementing class has properties that can be null; and if they are null when accessed, they will be loaded from an external source.
+export interface IFaulting<T> {
+  // A list of keys that may produce faults
+  FaultingKeypaths: Set<keyof T>
+  Fault(keypath: Array<keyof T>): Promise<void>
+}
+
+// A watcher may be attached to a faulting object to watch for changes to the object
+export interface IFaultingObserver<T> {
+  FaultRaised(keypath: Array<keyof T>): void
+  FaultResolved(keypath: Array<keyof T>, withData: any): void
+}
+
+

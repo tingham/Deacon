@@ -1,9 +1,14 @@
 ﻿<Project Title="Fanatic" Name="Fanatic" Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.94-alpha">
+  <PropertyGroup>
+    <StartupCommandWorkingDirectory>Heretic</StartupCommandWorkingDirectory>
+  </PropertyGroup>
   <ItemGroup>
     <Folder Include="Data\HTML\" />
-    <Folder Include="dist\" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".vscode\tasks.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptConfiguration Include="tsconfig.options.json" />
   </ItemGroup>
 </Project>

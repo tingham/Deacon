@@ -1,14 +1,16 @@
 import { Request, Response, Route, RouteMethod, PathMaskStyle, Pew, Turnstyle} from '../Pulpit/index';
 import { VTCH, DetailModel, IndexDetailModel, Action, Element, IndexDetailFlag } from '../Witch/index';
-import { Scheme } from "../Fanatic/index"
-import { ApplicationModel } from "./Archetypes"
-import { ApplicationScheme } from "./Schemes"
+import { IMagicMethodable, Scheme } from "../Fanatic/index"
+import { ApplicationModel, Component, Document, Scene } from "./Archetypes"
+import { ApplicationScheme } from "./ApplicationScheme";
 import {Log} from "../Sword/Log"
 import { VTCHNode } from '../Witch/Stock';
 import { GenerateRandomInstance } from '../Sword/Generator';
+import { DocumentScheme, Documents } from './Schemes';
 
 export class Application  extends Pew {
   public Schemes: Array<Scheme> = new Array<Scheme>()
+  public AppDocumentScheme: DocumentScheme & IMagicMethodable = new DocumentScheme() as DocumentScheme & IMagicMethodable
 
   public Scheme?: ApplicationScheme
   constructor() {
@@ -16,6 +18,17 @@ export class Application  extends Pew {
 
     // The application scheme contains the main controller logic for the application
     this.Scheme = new ApplicationScheme()
+
+    this.AppDocumentScheme.Root = new Document()
+
+    this.AppDocumentScheme.AddScenes([new Scene()])
+    // This will error in edit time
+    // this.AppDocumentScheme.BobJones([new Scene(), new Scene()])
+    // This will error in runtime
+    // this.AppDocumentScheme.AddSlaves([new Scene(), new Scene()])
+    Log.info("Application", this.AppDocumentScheme)
+
+    // this.AppDocumentScheme.Addarchetype(this.AppDocumentScheme.Root)
   }
 }
 
@@ -28,35 +41,39 @@ const appInstance = new Application()
 // 3. We need a helper
 
 let index = appInstance.AddRoute("/")
-
 index.Attach(RouteMethod.GET, async (request: Request, response: Response, context: Route): Promise<Turnstyle> => {
   let result = ""
-
   if (appInstance.Scheme) {
     result = await appInstance.Scheme.Index(request.Session?.Id)
   }
-
   response.Write(result)
-
   return Turnstyle.Stop
-
 })
 
 let artifact = appInstance.AddRoute("/artifact/:artifactId")
-
 artifact.Attach(RouteMethod.GET, async (request: Request, response: Response, context: Route):  Promise<Turnstyle> => {
     response.Write(`The message is ${artifact.MaskedPathInstance.MappedElements.get("artifactId")?.Value}`)
     response.Write(`The fancy utility method used to get the message produced ${artifact.Mask("artifactId")}`)
     return Turnstyle.Stop
 })
-
 artifact.Attach(RouteMethod.POST, async (request: Request, response: Response, context: Route):  Promise<Turnstyle> => {
     response.Write(`The message is ${artifact.MaskedPathInstance.MappedElements.get("artifactId")?.Value}`)
-
     let body = await request.Read()
     Log.info("Application", {body})
     response.Write(body? JSON.stringify(body, null, 2) : `Empty Body`)
     return Turnstyle.Stop
+})
+
+let activity = appInstance.AddRoute("/Activity/:activityName/:identity")
+activity.Attach(RouteMethod.GET, async (request: Request, response: Response, context: Route): Promise<Turnstyle> => {
+  let activityName = activity.MaskedPathInstance.MappedElements.get("activityName")?.Value
+  let identity = activity.MaskedPathInstance.MappedElements.get("identity")?.Value
+  Log.info("Application", {activityName, identity})
+  if (activityName == "Open" && identity == "~") {
+    // Open the default document from the database
+    let documentId = 1
+  }
+  return Turnstyle.Stop
 })
 
 appInstance.Start()

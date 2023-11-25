@@ -5,7 +5,91 @@
     <title><%= Title %></title>
     <style type="text/css"><%- CSS %></style>
   </head>
-  <body>
-    <%- HTML %>
+  <body data-theme="dark">
+    <vtch-frame>
+      <vtch-stack data-orientation="horizontal" data-id="vtch.stack.a0">
+        <vtch-stack data-orientation="vertical" data-id="vtch.stack.b0" style="max-height: 2rem;">
+          <div data-stack-weight="1" class="brand">
+            <a href="/"><img src="/resource/brand.png" /></a>
+          </div>
+          <div data-stack-weight="10" class="header"><h1>HERETIC v0.1</h1></div>
+        </vtch-stack>
+        <vtch-stack data-orientation="vertical" data-id="vtch.stack.a1">
+          <vtch-panel data-stack-weight="1">
+            <vtch-stack data-orientation="horizontal">
+              <ul class="navigation" role="menu">
+              <% for (const activityItem of Items) { %>
+                <li>
+                  <a href="<%= await activityItem.ActivityAction.Coalesce() %>" role="menuitem"><%= activityItem.Name %></a>
+                </li>
+              <% } %>
+              </ul>
+            </vtch-stack>
+          </vtch-panel>
+          <vtch-panel data-stack-weight="13">
+            <%- HTML %>
+            &nbsp;
+            <input type="text" />
+            <textarea></textarea>
+            <select>
+              <option header selected disabled>Big Header</option>
+              <option>One</option>
+              <option>Banana</option>
+              <option divider disabled></option>
+              <option>Crab Cakes</option>
+              <option>Stereo Pair</option>
+              <option disabled>Bad Vibes</option>
+              <option>Good Vibes</option>
+            </select>
+          </vtch-panel>
+        </vtch-stack>
+        <vtch-stack data-orientation="horizontal"
+                    class="bone">
+          <vtch-panel class="foundation">
+            <h2>Foundation</h2>
+            <vtch-button class="">Button</vtch-button>
+            <vtch-button class="primary">Button Number Uno</vtch-button>
+            <vtch-button class="secondary">Button #2</vtch-button>
+            <vtch-button class="tertiary">Button Three</vtch-button>
+          </vtch-panel>
+          <vtch-panel class="gossamer">
+            <h2>Gossamer</h2>
+            <div class="invert">
+              <vtch-button class="">Default</vtch-button>
+              <vtch-button class="primary">One</vtch-button>
+              <vtch-button class="secondary">Two</vtch-button>
+              <vtch-button class="tertiary">Three</vtch-button>
+            </div>
+          </vtch-panel>
+          <vtch-panel class="primary">
+            <h2>Primary</h2>
+            <div class="invert">
+              <vtch-button class="">Default</vtch-button>
+              <vtch-button class="primary">One</vtch-button>
+              <vtch-button class="secondary">Two</vtch-button>
+              <vtch-button class="tertiary">Three</vtch-button>
+            </div>
+          </vtch-panel>
+          <vtch-panel class="secondary">
+            <h2>Secondary</h2>
+            <div class="invert">
+              <vtch-button class="">Default</vtch-button>
+              <vtch-button class="primary">One</vtch-button>
+              <vtch-button class="secondary">Two</vtch-button>
+              <vtch-button class="tertiary">Three</vtch-button>
+            </div>
+          </vtch-panel>
+          <vtch-panel class="tertiary">
+            <h2>Tertiary</h2>
+            <div class="invert">
+              <vtch-button class="">Default</vtch-button>
+              <vtch-button class="primary">One</vtch-button>
+              <vtch-button class="secondary">Two</vtch-button>
+              <vtch-button class="tertiary">Three</vtch-button>
+            </div>
+          </vtch-panel>
+        </vtch-stack>
+      </vtch-stack>
+    </vtch-frame>
   </body>
-</html
+</html>

@@ -1,0 +1,38 @@
+ul.navigation, ol.navigation {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  & li a, & li a:visited {
+    color: ~"hsl(from var(--vtch-theme-color) calc(h * 1.1) calc(s * 0.8) calc(l * 0.8))";
+
+    &:hover {
+      background-color: ~"hsl(from var(--vtch-theme-background-color) calc(h * 0.7) calc(s * 0.4) calc(l * 1.75))";
+      color: ~"hsl(from var(--vtch-theme-color) calc(h * 0.9) calc(s * 1.5) calc(l * 1.1))";
+    }
+  }
+
+  &[role=menubar] li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+
+    a {
+      display: block;
+      padding: 0.5em 1em;
+      text-decoration: none;
+    }
+  }
+
+  &[role=menu] li {
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    a {
+      display: block;
+      padding: 0.5em 1em;
+      text-decoration: none;
+    }
+  }
+}
