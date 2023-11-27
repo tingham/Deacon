@@ -11,17 +11,13 @@ vtch-frame {
 
   // TODO: Make these from constituent parts
   --v-primary-color: hsl(var(--v-primary-hue), var(--v-primary-sat), var(--v-primary-lit));
-  --v-primary-inverse-hue: calc(var(--v-primary-hue) + 180deg);
-  // --v-primary-inverse: hsl(var(--v-primary-inverse-hue), var(--v-primary-sat), calc(var(--v-primary-lit) + (0% - var(--v-primary-lit) * 0.75)));
-  --v-primary-inverse: ~"hsl(var(--v-primary-inverse-hue), 85%, 85%)";
+  --v-primary-inverse: ~"hsl(calc(var(--v-primary-hue) + 180deg), 25%, 85%)";
 
   --v-secondary-color: hsl(var(--v-secondary-hue), var(--v-secondary-sat), var(--v-secondary-lit));
-  --v-secondary-inverse-hue: calc(var(--v-secondary-hue) + 180deg);
-  --v-secondary-inverse: hsl(var(--v-secondary-inverse-hue), var(--v-secondary-sat), calc(var(--v-secondary-lit) + (0% - var(--v-secondary-lit) * 0.75)));
+  --v-secondary-inverse: ~"hsl(calc(var(--v-secondary-hue) + 180deg), 25%, 85%)";
 
   --v-tertiary-color: hsl(var(--v-tertiary-hue), var(--v-tertiary-sat), var(--v-tertiary-lit));
-  --v-tertiary-inverse-hue: calc(var(--v-tertiary-hue) + 180deg);
-  --v-tertiary-inverse: hsl(var(--v-tertiary-inverse-hue), var(--v-tertiary-sat), calc(var(--v-tertiary-lit) + (0% - var(--v-tertiary-lit) * 0.75)));
+  --v-tertiary-inverse: ~"hsl(calc(var(--v-tertiary-hue) + 180deg), 85%, 25%)";
 
   min-height: 100vh;
   min-width: 100vw;

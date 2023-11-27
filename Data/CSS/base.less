@@ -57,7 +57,7 @@ html {
   --vtch-tertiary-sat: 90%;
   --vtch-tertiary-lit: 60%;
 
-  --vtch-bg-saturation: 17%;
+  --vtch-bg-saturation: 10%;
   --vtch-bg-lightness: 8%;
   --vtch-fg-hue: 0.33turn;
   --vtch-fg-saturation: 10%;
@@ -103,13 +103,13 @@ body {
   --v-fg-lit: var(--vtch-fg-lightness);
 
   // The neutral color for default controls and chrome
-  --v-neu-bg-hue: calc(var(--v-bg-hue));
-  --v-neu-bg-sat: clamp(0%, calc(calc(var(--v-bg-sat) + 12.5%) / 2), 100%);
-  --v-neu-bg-lit: clamp(0%, calc(calc(var(--v-bg-lit) + 50%) / 2), 100%);
+  --v-neu-bg-hue: var(--v-bg-hue);
+  --v-neu-bg-sat: calc(var(--v-bg-sat) + (0.0% - var(--v-bg-sat)) * 0.9);
+  --v-neu-bg-lit: calc(var(--v-bg-lit) + (100% - var(--v-bg-lit)) * 0.5);
 
   --v-neu-fg-hue: calc(var(--v-fg-hue));
-  --v-neu-fg-sat: clamp(0%, calc(calc(var(--v-fg-sat) + 87.5%) / 2), 100%);
-  --v-neu-fg-lit: clamp(0%, calc(calc(var(--v-fg-lit) + 25%) / 2), 100%);
+  --v-neu-fg-sat: calc(var(--v-fg-sat) + (0.0% - var(--v-fg-sat)) * 0.25);
+  --v-neu-fg-lit: calc(var(--v-fg-lit) + (100% - var(--v-fg-sat)) * 0.75);
 
   // The complementary color for accenting elements on the background
   --v-x-bg-hue: calc(var(--v-fg-hue) + 180deg);
