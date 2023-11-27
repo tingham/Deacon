@@ -1,5 +1,5 @@
 import { Request, Response, Route, RouteMethod, PathMaskStyle, Pew, Turnstyle} from '../Pulpit/index';
-import { VTCH, DetailModel, IndexDetailModel, Action, Element, IndexDetailFlag } from '../Witch/index';
+import { VTCH, DetailModel, IndexDetailModel, Action, Entity, IndexDetailFlag } from '../Witch/index';
 import { IMagicMethodable, Scheme } from "../Fanatic/index"
 import { ApplicationModel, Component, Document, Scene } from "./Archetypes"
 import { ApplicationScheme } from "./ApplicationScheme";

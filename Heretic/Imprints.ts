@@ -1,4 +1,4 @@
-import { Action, DetailModel, Element, IndexDetailModel } from "../Witch";
+import { Action, DetailModel, Entity, IndexDetailModel } from "../Witch";
 import { ActivityNode } from "./Archetypes";
 
 export class ApplicationActivityImprint extends DetailModel<ActivityNode> {
@@ -7,10 +7,10 @@ export class ApplicationActivityImprint extends DetailModel<ActivityNode> {
   public Description: string = ""
   public ActivityAction: Action = new Action()
 
-  public get Fields(): Element[] | undefined {
+  public get Fields(): Entity[] | undefined {
     return [
-      Element.Factory("Name", null),
-      Element.Factory("Description", null)
+      Entity.Factory("Name", null),
+      Entity.Factory("Description", null)
     ]
   }
   public get Title(): string | undefined {
