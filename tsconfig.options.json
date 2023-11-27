@@ -18,6 +18,9 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "sourceMap": true,
+
+    "outDir": "./dist",
+    "rootDir": "./"
   }
   /*
   "compilerOptions": {

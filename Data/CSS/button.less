@@ -1,26 +1,41 @@
 vtch-button {
+  display: inline-flex;
   padding: 0.25rem;
+  margin: 0.25rem 0.25rem 0.25rem 0.25rem;
+  flex-grow: 1;
+  flex-shrink: 0;
   border-radius: 0.25rem;
-
   --local-button-bg: var(--v-neutral-bg-color);
   --local-button-fg: var(--v-neutral-fg-color);
-
   border: 1px solid var(--local-button-bg);
   background-color: var(--local-button-bg);
+  --local-grad-start: hsl(from var(--local-button-bg) h calc(l * 0.9) calc(l * 1.1));
+  --local-grad-end: hsl(from var(--local-button-bg) h calc(l * 1.1) calc(l * 0.9));
+  background: ~"linear-gradient(0deg, var(--local-grad-start), var(--local-grad-end))";
   color: var(--local-button-fg);
-
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: backgroun-color 0.2s ease-in-out, color 0.2s ease-in-out;
 
   &:hover, &:active, &:focus {
-    border-color: hsl(from var(--local-button-bg) h s ~"calc(l + (100% - l) * 0.25)");
-    background-color: hsl(from var(--local-button-bg) h s ~"calc(l + (100% - l) * 0.25)");
-    color: hsl(from var(--local-button-fg) h s ~"calc(l + (0% - l) * 0.25)"); 
+    // Extract the lightness from local button
+    // @less-ignore-eval
+    border-color: ~"hsl(from var(--local-button-bg) h calc(s * 1.2) calc(l * 0.8))";
+    --local-grad-start: ~"hsl(from var(--local-button-bg) h calc(s * 0.8) calc(l * 1.2))";
+    --local-grad-end: ~"hsl(from var(--local-button-bg) h calc(s * 1.2) calc(l * 0.8))";
+    background: ~"linear-gradient(0deg, var(--local-grad-start), var(--local-grad-end))";
+    // linear gradient from local-button - 5% darker to local-button
+    // color: ~"hsl(from var(--local-button-fg) h s calc(l + (0% - l) * 0.25))";
   }
 
   &.primary {
     --local-button-bg: var(--v-primary-color);
     --local-button-fg: var(--v-primary-inverse);
+
+    &:hover, &:active, &:focus {
+      background-color: ~"hsl(var(--v-primary-hue), var(--v-primary-sat), calc(var(--v-primary-lit) + 5%))";
+      border-color: ~"hsl(from var(--v-primary-hue) var(--v-primary-sat) calc(var(--v-primary-lit) + 5%))";
+      // color: ~"hsl(var(--v-primary-hue), var(--v-primary-sat), calc(l + (0% - l) * 0.75))";
+    }
   }
 
   &.secondary {

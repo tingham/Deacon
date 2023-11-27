@@ -8,8 +8,11 @@
 @property --vtch-fg-lightness { syntax: "<percentage>"; inherits: false; }
 
 @property --vtch-primary-hue { syntax: "<angle>"; inherits: false; }
+@property --vtch-primary-sat { syntax: "<percentage>"; inherits: false; }
 @property --vtch-secondary-hue { syntax: "<angle>"; inherits: false; }
+@property --vtch-secondary-sat { syntax: "<percentage>"; inherits: false; }
 @property --vtch-tertiary-hue { syntax: "<angle>"; inherits: false; }
+@property --vtch-tertiary-sat { syntax: "<percentage>"; inherits: false; }
 
 html {
   color-scheme: dark;
@@ -18,9 +21,19 @@ html {
 // The light theme is moderately bright and desaturated but warm and cozy
 @LLightOverrides: {
   --vtch-bg-hue: 90deg;
+
   --vtch-primary-hue: calc(var(--vtch-bg-hue) - 45deg);
-  --vtch-primary-hue: calc(var(--vtch-bg-hue) - 135deg);
-  --vtch-primary-hue: calc(var(--vtch-bg-hue) - 180deg);
+  --vtch-primary-sat: 90%;
+  --vtch-primary-lit: 50%;
+
+  --vtch-secondary-hue: calc(var(--vtch-bg-hue) - 105deg);
+  --vtch-secondary-sat: 80%;
+  --vtch-secondary-lit: 55%;
+
+  --vtch-tertiary-hue: calc(var(--vtch-bg-hue) - 165deg);
+  --vtch-tertiary-sat: 75%;
+  --vtch-tertiary-lit: 50%;
+
   --vtch-bg-saturation: 5%;
   --vtch-bg-lightness: 95%;
   --vtch-fg-hue: 0.66turn;
@@ -30,10 +43,20 @@ html {
 
 // The dark theme is slightly blue-green in hue and has a lower saturation and lightness
 @LDarkOverrides: {
-  --vtch-bg-hue: 180deg;
+  --vtch-bg-hue: 165deg;
+
   --vtch-primary-hue: calc(var(--vtch-bg-hue) + 45deg);
-  --vtch-secondary-hue: calc(var(--vtch-bg-hue) + 135deg);
-  --vtch-tertiary-hue: calc(var(--vtch-bg-hue) + 180deg);
+  --vtch-primary-sat: 90%;
+  --vtch-primary-lit: 50%;
+
+  --vtch-secondary-hue: calc(var(--vtch-bg-hue) + 180deg);
+  --vtch-secondary-sat: 90%;
+  --vtch-secondary-lit: 60%;
+
+  --vtch-tertiary-hue: calc(var(--vtch-bg-hue) + 225deg);
+  --vtch-tertiary-sat: 90%;
+  --vtch-tertiary-lit: 60%;
+
   --vtch-bg-saturation: 17%;
   --vtch-bg-lightness: 8%;
   --vtch-fg-hue: 0.33turn;
@@ -88,15 +111,6 @@ body {
   --v-neu-fg-sat: clamp(0%, calc(calc(var(--v-fg-sat) + 87.5%) / 2), 100%);
   --v-neu-fg-lit: clamp(0%, calc(calc(var(--v-fg-lit) + 25%) / 2), 100%);
 
-  // @type Lerp T value
-  --v-control-brighten: 0.5;
-  // @type Lerp T value
-  --v-control-enrichen: 0.75;
-  // @type Rotation value
-  --v-primary-turn: 90deg;
-  --v-secondary-turn: 180deg;
-  --v-tertiary-turn: 270deg;
-
   // The complementary color for accenting elements on the background
   --v-x-bg-hue: calc(var(--v-fg-hue) + 180deg);
   --v-x-bg-sat: var(--v-fg-sat);
@@ -108,16 +122,16 @@ body {
 
  // This is supposed to be a modulus without using `mod()` (which doesn't appear to work.) calc((var(--v-bg-hue) + var(--v-primary-turn)) - 360deg * ((var(--v-bg-hue) + var(--v-primary-turn)) / 360deg));
   --v-primary-hue: var(--vtch-primary-hue);
-  --v-primary-sat: calc(var(--v-bg-sat) + (100% - var(--v-bg-sat)) * var(--v-control-enrichen));
-  --v-primary-lit: calc(var(--v-bg-lit) + (100% - var(--v-bg-lit)) * var(--v-control-brighten));
+  --v-primary-sat: var(--vtch-primary-sat);
+  --v-primary-lit: var(--vtch-primary-lit);
 
   --v-secondary-hue: var(--vtch-secondary-hue);
-  --v-secondary-sat: calc(var(--v-bg-sat) + (100% - var(--v-bg-sat)) * var(--v-control-brighten));
-  --v-secondary-lit: calc(var(--v-bg-lit) + (100% - var(--v-bg-lit)) * var(--v-control-enrichen));
+  --v-secondary-sat: var(--vtch-secondary-sat);
+  --v-secondary-lit: var(--vtch-secondary-lit);
 
   --v-tertiary-hue: var(--vtch-tertiary-hue);
-  --v-tertiary-sat: calc(var(--v-bg-sat) + (100% - var(--v-bg-sat)) * var(--v-control-brighten));
-  --v-tertiary-lit: calc(var(--v-bg-lit) + (100% - var(--v-bg-lit)) * var(--v-control-enrichen));
+  --v-tertiary-sat: var(--vtch-tertiary-sat);
+  --v-tertiary-lit: var(--vtch-tertiary-lit);
 
   // Uniform color definitions
   --v-background-color: hsl(var(--v-bg-hue), var(--v-bg-sat), var(--v-bg-lit));

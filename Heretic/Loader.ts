@@ -38,7 +38,7 @@ export class DataLoader {
 async function ProduceLessOutput(input: string, filename: string) {
   try {
     const lessRender = Less.render
-    let output = await lessRender(input, { filename, math: "always", sourceMap: { sourceMapFileInline: true, outputSourceFiles: true } as Less.SourceMapOption } as Less.Options)
+    let output = await lessRender(input, { filename, math: "strict", sourceMap: { sourceMapFileInline: true, outputSourceFiles: true } as Less.SourceMapOption } as Less.Options)
 
     return (output as any).css
   } catch (error: any) {

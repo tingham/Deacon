@@ -1,5 +1,6 @@
 /** A container that encapsulates arbitrary content and allows it to flow in a grid */
 vtch-panel {
+  display: block;
   background-color: hsl(var(--v-bg-hue), var(--v-bg-sat), calc(var(--v-bg-lit) + (100% - var(--v-bg-lit)) * 0.0125));
   color: hsl(var(--v-fg-hue), calc(var(--v-fg-sat) + (100% - var(--v-fg-sat)) * 0.125), calc(var(--v-fg-sat) + (100% - var(--v-fg-sat)) * 0.0125));
   border-color: hsl(var(--v-bg-hue), var(--v-bg-sat), calc(var(--v-bg-lit) + (0% - var(--v-bg-lit)) * 0.5));
@@ -8,4 +9,58 @@ vtch-panel {
   border-style: solid;
   border-collapse: collapse;
   padding: 0.5rem;
+}
+
+// Clear h1-h6 margins and padding, and set font size
+vtch-panel h1, vtch-panel h2, vtch-panel h3, vtch-panel h4, vtch-panel h5, vtch-panel h6, vtch-panel p, vtch-panel blockquote {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+vtch-panel h1, vtch-panel h2, vtch-panel h3, vtch-panel h4, vtch-panel h5, vtch-panel h6 {
+  font-weight: bold;
+
+  --local-first-child-bottom-margin: 0.125rem;
+  // When any header is the first child of a panel, it should have bottom margin
+  &:first-child {
+    margin-bottom: var(--local-first-child-bottom-margin);
+  }
+}
+
+vtch-panel h6 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  --local-first-child-bottom-margin: 1rem;
+}
+
+vtch-panel h5 {
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  --local-first-child-bottom-margin: 1rem;
+}
+
+vtch-panel h4 {
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  --local-first-child-bottom-margin: 1rem;
+}
+
+vtch-panel h3 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  --local-first-child-bottom-margin: 1rem;
+}
+
+vtch-panel h2 {
+  font-size: 2rem;
+  line-height: 3rem;
+  --local-first-child-bottom-margin: 1rem;
+}
+
+vtch-panel h1 {
+  font-size: 3rem;
+  line-height: 3rem;
+  --local-first-child-bottom-margin: 1rem;
 }

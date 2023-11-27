@@ -45,49 +45,71 @@
         </vtch-stack>
         <vtch-stack data-orientation="horizontal"
                     class="bone">
-          <vtch-panel class="foundation">
+          <vtch-stack data-orientation="vertical" class="foundation">
             <h2>Foundation</h2>
             <vtch-button class="">Button</vtch-button>
             <vtch-button class="primary">Button Number Uno</vtch-button>
             <vtch-button class="secondary">Button #2</vtch-button>
             <vtch-button class="tertiary">Button Three</vtch-button>
-          </vtch-panel>
-          <vtch-panel class="gossamer">
+          </vtch-stack>
+          <vtch-stack data-orientation="horizontal" class="gossamer">
             <h2>Gossamer</h2>
-            <div class="invert">
               <vtch-button class="">Default</vtch-button>
               <vtch-button class="primary">One</vtch-button>
               <vtch-button class="secondary">Two</vtch-button>
               <vtch-button class="tertiary">Three</vtch-button>
-            </div>
-          </vtch-panel>
-          <vtch-panel class="primary">
-            <h2>Primary</h2>
-            <div class="invert">
-              <vtch-button class="">Default</vtch-button>
-              <vtch-button class="primary">One</vtch-button>
-              <vtch-button class="secondary">Two</vtch-button>
-              <vtch-button class="tertiary">Three</vtch-button>
-            </div>
-          </vtch-panel>
-          <vtch-panel class="secondary">
-            <h2>Secondary</h2>
-            <div class="invert">
-              <vtch-button class="">Default</vtch-button>
-              <vtch-button class="primary">One</vtch-button>
-              <vtch-button class="secondary">Two</vtch-button>
-              <vtch-button class="tertiary">Three</vtch-button>
-            </div>
-          </vtch-panel>
-          <vtch-panel class="tertiary">
-            <h2>Tertiary</h2>
-            <div class="invert">
-              <vtch-button class="">Default</vtch-button>
-              <vtch-button class="primary">One</vtch-button>
-              <vtch-button class="secondary">Two</vtch-button>
-              <vtch-button class="tertiary">Three</vtch-button>
-            </div>
-          </vtch-panel>
+          </vtch-stack>
+          <vtch-stack data-orientation="vertical">
+
+            <vtch-stack data-orientation="vertical">
+              <vtch-panel class="primary">
+                <h2>Primary</h2>
+                  <vtch-button class="">Default</vtch-button>
+                  <vtch-button class="primary">One</vtch-button>
+                  <vtch-button class="secondary">Two</vtch-button>
+                  <vtch-button class="tertiary">Three</vtch-button>
+              </vtch-panel>
+              <vtch-panel class="secondary">
+                <h2>Secondary</h2>
+                  <vtch-button class="">Default</vtch-button>
+                  <vtch-button class="primary">One</vtch-button>
+                  <vtch-button class="secondary">Two</vtch-button>
+                  <vtch-button class="tertiary">Three</vtch-button>
+              </vtch-panel>
+              <vtch-panel class="tertiary">
+                <h2>Tertiary</h2>
+                  <vtch-button class="">Default</vtch-button>
+                  <vtch-button class="primary">One</vtch-button>
+                  <vtch-button class="secondary">Two</vtch-button>
+                  <vtch-button class="tertiary">Three</vtch-button>
+              </vtch-panel>
+            </vtch-stack>
+
+            <vtch-stack data-orientation="vertical">
+              <vtch-panel class="primary invert">
+                <h2>Primary Inverse</h2>
+                  <vtch-button class="">Default</vtch-button>
+                  <vtch-button class="primary">One</vtch-button>
+                  <vtch-button class="secondary">Two</vtch-button>
+                  <vtch-button class="tertiary">Three</vtch-button>
+              </vtch-panel>
+              <vtch-panel class="secondary invert">
+                <h2>Secondary Inverse</h2>
+                  <vtch-button class="">Default</vtch-button>
+                  <vtch-button class="primary">One</vtch-button>
+                  <vtch-button class="secondary">Two</vtch-button>
+                  <vtch-button class="tertiary">Three</vtch-button>
+              </vtch-panel>
+              <vtch-panel class="tertiary invert">
+                <h2>Tertiary Inverse</h2>
+                  <vtch-button class="">Default</vtch-button>
+                  <vtch-button class="primary">One</vtch-button>
+                  <vtch-button class="secondary">Two</vtch-button>
+                  <vtch-button class="tertiary">Three</vtch-button>
+              </vtch-panel>
+            </vtch-stack>
+
+          </vtch-stack>
         </vtch-stack>
       </vtch-stack>
     </vtch-frame>

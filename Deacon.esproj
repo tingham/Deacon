@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Data\HTML\" />
+    <Folder Include="dist\" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".vscode\tasks.json" />
