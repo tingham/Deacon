@@ -1,0 +1,16 @@
+<vtch-checkbox-group data-id="<%= Name %>">
+  <label for="<%= Name %>-group"><%= Label %></label>
+  <div id="<%= Name %>-group">
+    <% for (const field of Fields) { %>
+    <div>
+      <label for="<%= Field?.Name %>"><%= Field?.Label %></label>
+      <input type="checkbox"
+             id="<%= Field?.Name %>"
+             name="<%= Field?.Name %>"
+             value="<%= Field?.Value %>"
+             <% for (const attr in Object.entries(Field?.Attributes)) { %><%= attr?.[0] %>="<%= Field?.Attributes?.[attr]?.[1] %>"<% } %> />
+    </div>
+    <% } %>
+  </div>
+  <%- include("./Empty.ejs") %>
+</vtch-checkbox-group>

@@ -159,15 +159,15 @@ vtch-stack {
     background-color: white;
   }
 
-  vtch-panel {
+  vtch-stack {
     &.foundation {
-      background-color: var(--vtch-background-color);
-      color: var(--vtch-foreground-color);
+      background-color: var(--v-background-color);
+      color: var(--v-foreground-color);
     }
 
     &.gossamer, &.gossamer > * {
-      background-color: var(--vtch-inverse-background-color);
-      color: var(--vtch-inverse-foreground-color);
+      background-color: var(--v-foreground-color);
+      color: var(--v-background-color);
     }
 
     &.primary {
@@ -199,4 +199,15 @@ vtch-stack {
       padding: 1rem;
     }
   }
+}
+
+.onscreen, .offscreen {
+  opacity: inherit;
+  transition: all 0.5s;
+}
+.offscreen {
+  opacity: 0.0;
+}
+.onscreen {
+  opacity: 1.0;
 }

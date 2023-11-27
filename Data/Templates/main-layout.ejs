@@ -113,5 +113,49 @@
         </vtch-stack>
       </vtch-stack>
     </vtch-frame>
+    <script type="module">
+      import { Whalebone } from "/jonah/213/bundle.js";
+
+      Whalebone.Instance.Initialize().then(async () => {
+        window.Whalebone = Whalebone;
+
+        // A collection of loosely defined entities to put in .foundation
+        const abstractControls = [
+          { Name: "SomeField", "Label": "Bob Jones", Collection: [{ Name: "BobField", Label: "A Label", Value: "1", Attributes: [] }] },
+          { Name: "SomeField2", "Label": "Nancy Drew", Collection: [{ Name: "NancyField", Label: "Another Label", Value: "1", Attributes: [] }] }
+        ]
+
+        let foundation = document.querySelector(".foundation")
+        let index = 0
+        for (const entity of abstractControls) {
+          let newItem = await Whalebone.Instance.RenderDOM(entity, "HTMLComponent/CheckboxField.ejs")
+          let actor = Whalebone.Instance.Perform(newItem, foundation)
+          actor
+            .Act("setup", index, (performer) => {
+              performer.ReplaceClass("onscreen,offscreen")
+              performer.Append()
+            })
+            .Act("removeClass", 0.00, (performer) => {
+              performer.ReplaceClass("offscreen,onscreen")
+            })
+            .Act("hide", 2.5, (performer) => {
+              performer.ReplaceClass("onscreen,offscreen")
+            })
+            .Act("remove", 10.0, (performer) => {
+              performer.Remove()
+            })
+          actor.Play()
+          index++
+        }
+
+      });
+
+      async function GlobalDelay(wait) {
+        return new Promise(function (resolve, reject) {
+          setTimeout(resolve, wait)
+        });
+      }
+
+    </script>
   </body>
 </html>

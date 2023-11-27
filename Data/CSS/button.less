@@ -2,20 +2,21 @@ vtch-button {
   display: inline-flex;
   padding: 0.25rem;
   margin: 0.25rem 0.25rem 0.25rem 0.25rem;
+  max-height: 2.25rem;
+  justify-content: center;
   flex-grow: 1;
   flex-shrink: 0;
   border-radius: 0.25rem;
   --local-button-bg: var(--v-neutral-bg-color);
   --local-button-fg: var(--v-neutral-fg-color);
-
   border: 1px solid var(--local-button-bg);
-
   --local-grad-start: hsl(from var(--local-button-bg) h calc(s * 0.9) calc(l * 1.1));
   --local-grad-end: hsl(from var(--local-button-bg) h calc(s * 1.1) calc(l * 0.9));
+  background-color: var(--local-grad-end);
   background: ~"linear-gradient(0deg, var(--local-grad-start), var(--local-grad-end))";
   color: var(--local-button-fg);
   cursor: pointer;
-  transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.7s ease-in-out, color 0.2s ease-in-out, opacity 0.3s ease-out, cursor 3s ease-in-out;
 
   &:hover, &:active, &:focus {
     // Extract the lightness from local button
