@@ -1,4 +1,4 @@
-﻿import { Element } from "./ViewModelEntities/Element";
+﻿import { Entity } from "./ViewModelEntities/Entity";
 import { ViewModel } from "./ViewModel";
 import { IModelInstanceObserver } from "./ModelInstanceObserver";
 
@@ -12,7 +12,7 @@ import { IModelInstanceObserver } from "./ModelInstanceObserver";
 export abstract class IndexModel<T> extends ViewModel {
     // The list of items to display in the view.
     protected items: Array<T> = new Array<T>();
-    protected columns: Array<Element> = new Array<Element>();
+    protected columns: Array<Entity> = new Array<Entity>();
 
     public Observers: Array<IModelInstanceObserver> = new Array<IModelInstanceObserver>();
     public get Items(): Array<T> {

@@ -1,26 +1,29 @@
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-      "ecmaVersion": "latest",
-      "sourceType": "module"
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": [ "./tsconfig.json", "./Heretic/tsconfig.json", "./Fanatic/tsconfig.json", "./Sword/tsconfig.json", "./Witch/tsconfig.json", "./Pulpit/tsconfig.json" ]
   },
   "plugins": [
     "@typescript-eslint"
   ],
   "root": true,
   "ignorePatterns": [ "node_modules/*" ],
-  "rules": {
-    // Add rules here
-    "n/no-extraneous-import": [
-      "error",
-      {
-        "allowModules": ["less", "@types/less"],
-        "resolvePaths": ["../Sword/*.ts"]
-      }
-    ]
-  },
   "extends": [
-    "plugin:css/standard",
-    "stylelint"
-  ]
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked",
+    "plugin:css/standard"
+  ],
+  "rules": {
+    "node/no-extraneous-import": [ "off", "always" ],
+    "node/no-missing-import": [ "off", "always" ],
+    "sort-imports": "off",
+    "no-unused-vars": "off",
+    "no-dupe-class-members": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unsafe-member-access": "warn",
+    "@typescript-eslint/no-unused-vars": "error"
+  }
 }

@@ -14,6 +14,8 @@ export class ExpectationFailure extends Exception { }
 export class ImprintIdentityOrphaned extends Exception { }
 export class InvalidInstance extends Exception { }
 export class UnregisteredRenderer extends Exception { }
+export class EntityRenderError extends Exception { }
+
 export class ViewRenderError extends Exception {
   public static FromError(type: string, error: Error): ViewRenderError {
     let viewRenderError = new ViewRenderError(

@@ -21,7 +21,7 @@ export class VTCH {
   public set ViewModelClass(T: typeof ViewModel) {
     this.viewModelClass = T;
   }
-  public AddHelper(name: string, helper: Function): void {
+  public AddHelper(name: string, helper: any): void {
     Helpers.Instance.Register(name, helper);
   }
 

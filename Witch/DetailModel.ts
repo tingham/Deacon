@@ -1,5 +1,5 @@
 ﻿import { InvalidInstance } from "../Sword/Errors/Exception";
-import { Element } from "./ViewModelEntities/Element";
+import { Entity } from "./ViewModelEntities/Entity";
 import { ViewModel } from "./ViewModel";
 import { IModelInstanceObserver } from "./ModelInstanceObserver";
 
@@ -29,5 +29,5 @@ export abstract class DetailModel<T> extends ViewModel {
             });
         }
     }
-    public abstract get Fields(): Array<Element> | undefined;
+    public abstract get Fields(): Entity[] | undefined;
 }

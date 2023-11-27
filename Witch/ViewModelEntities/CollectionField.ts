@@ -1,9 +1,9 @@
 import { List } from "../../Sword/List"
-import { Element } from "./Element"
+import { Entity } from "./Entity"
 import { Field } from "./Field"
 
 export class CollectionField extends Field {
-  public Collection: List<Element> = new List<Element>();
+  public Collection: List<Entity> = new List<Entity>();
 
   constructor() {
     super();

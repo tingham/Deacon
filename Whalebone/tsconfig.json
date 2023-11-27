@@ -1,0 +1,30 @@
+{
+  "extends": "../tsconfig.options.json",
+  "description": "This project builds code for distribution in the browser",
+  "compilerOptions": {
+    "sourceRoot": "./Source",
+    "outDir": "../dist/Data/Public",
+    "declaration": true,
+    "declarationDir": "../dist/Data/Public",
+    "module": "es6",
+    "target": "es6",
+    "lib": [ "es6", "dom" ],
+    "sourceMap": true,
+    "removeComments": true,
+    "inlineSources": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "tslib": [ "node_modules/tslib/tslib.d.ts" ]
+    }
+  },
+  "include": [
+    "Source/**/*",
+    "../Witch/*"
+  ],
+  "references": [
+    { "path": "../Witch" }
+  ]
+}
