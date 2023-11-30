@@ -1,4 +1,4 @@
-﻿import { Scheme } from "../Model/Business/Scheme";
+﻿import { Scheme } from "../Model/Scheme";
 
 // Schemer
 // Automates method implementations for SchemeManager concrete classes

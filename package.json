@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node Script/spell.js && cd Heretic && tsc --build ./tsconfig.json --verbose",
+    "build": "node Script/spell.js # && cd Heretic && tsc --build ./tsconfig.json --verbose",
     "clean": "tsc --build --clean"
   },
   "keywords": [],

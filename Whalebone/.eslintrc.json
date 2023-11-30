@@ -1,4 +1,7 @@
 {
+  "settings": {
+    "disableLanguages": ["javascript", "javascriptreact", "typescript"]
+  },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
       "ecmaVersion": "latest",

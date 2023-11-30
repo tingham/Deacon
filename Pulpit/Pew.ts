@@ -125,7 +125,7 @@ export class Pew {
     let privateRoute = this.AddRoute("/jonah/:timestamp/:asset")
     privateRoute.Attach(RouteMethod.GET, async (request, response, route) : Promise<Turnstyle> => {
       let asset = privateRoute.MaskedPathInstance.MappedElements.get("asset")?.Value
-      let root = `${process.cwd()}/dist/Data/Public`
+      let root = `${process.cwd()}/../dist/Data/Public`
       if (asset && existsSync(`${root}/${asset}`)) {
         let data = readFileSync(`${root}/${asset}`, 'utf8')
         response.SetContentTypeForAsset(asset)

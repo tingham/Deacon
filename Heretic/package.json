@@ -5,8 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --build tsconfig.json",
-    "clean": "tsc --build tsconfig.json --clean"
+    "build": "cd ../ && node ./Script/spell.js && cd ./Heretic && tsc -b tsconfig.json --verbose",
+    "clean": "tsc -b tsconfig.json --clean"
   },
   "files": [
     "../Sword/*.ts",

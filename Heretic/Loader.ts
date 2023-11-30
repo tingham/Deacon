@@ -1,29 +1,40 @@
 import { CSSError } from "../Sword/Errors/Exception"
 import Less from "less"
-import { readFileSync } from "fs"
+import { existsSync, readFile, readFileSync } from "fs"
 
 import { Log } from "../Sword/Log"
 
 export class DataLoader {
+  private static LoadFile(filepath: string) {
+    let finalPath = this.ResolvePath(filepath)
+    return readFileSync(finalPath, 'utf8')
+  }
+
+  private static ResolvePath(filepath: string) {
+    let index = 0
+    while (!existsSync(filepath) && index < 3) {
+      filepath = `../${filepath}`
+      index++
+    }
+    return filepath
+  }
+
   public static async LoadHTML(filepath: string) {
     let finalPath = `Data/HTML/${filepath}`
-    let data = readFileSync(finalPath, 'utf8')
-
+    let data = this.LoadFile(finalPath)
     return data
   }
 
   // File paths are relative to the "../Data/Templates" directory
   public static async LoadTemplate(filepath: string) {
     let finalPath = `Data/Templates/${filepath}`
-    let data = readFileSync(finalPath, 'utf8')
-
+    let data = this.LoadFile(finalPath)
     return data
   }
 
   public static async LoadCSS(filepath: string) {
-    let finalPath = `Data/CSS/${filepath}`
-    let data = readFileSync(finalPath, 'utf8')
-
+    let finalPath = this.ResolvePath(`Data/CSS/${filepath}`)
+    let data = this.LoadFile(finalPath)
     // TODO: If the file is .scss, we need to compile it
     // TODO: If the file is .less, we need to compile it
     if (filepath.endsWith(".less")) {

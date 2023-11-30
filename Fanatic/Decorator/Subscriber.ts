@@ -1,4 +1,4 @@
-﻿import { Archetype } from "../Model/Serialize/Archetype";
+﻿import { Archetype } from "../Model/Archetype";
 import { HydrationRule } from "../Enumerations";
 
 // Many to Many with a join table

@@ -1,13 +1,13 @@
-<vtch-checkbox-group data-id="<%= Name? %>">
-  <label for="<%= Name? %>-group"><%= Label? %></label>
-  <div id="<%= Name? %>-group">
-    <% for (const entity of Collection?) { %>
+<vtch-checkbox-group data-id="<%= Name %>">
+  <label for="<%= Name %>-group"><%= Label %></label>
+  <div id="<%= Name %>-group">
+    <% for (const entity of Collection) { %>
     <div>
-      <label for="<%= entity?.Name? %>"><%= entity?.Label? %></label>
+      <label for="<%= entity?.Name %>"><%= entity?.Label %></label>
       <input type="checkbox"
-             id="<%= entity?.Name? %>"
-             name="<%= entity?.Name? %>"
-             value="<%= entity?.Value? %>"
+             id="<%= entity?.Name %>"
+             name="<%= entity?.Name %>"
+             value="<%= entity?.Value %>"
              <% for (const attr in Object.entries(entity?.Attributes)) { %><%= attr?.[0] %>="<%= entity?.Attributes?.[attr]?.[1] %>"<% } %> />
     </div>
     <% } %>

@@ -14,12 +14,12 @@ export * from "./Decorator/Subscriber"
 export * from "./Enumerations"
 
 // Export all from ./Model/Business
-export * from "./Model/Business/Result"
-export * from "./Model/Business/Scheme"
-export * from "./Model/Business/WhereOption"
+export * from "./Model/Result"
+export * from "./Model/Scheme"
+export * from "./Model/WhereOption"
 
 // Export all from ./Model/Serialize
-export * from "./Model/Serialize/Archetype"
-export * from "./Model/Serialize/Driver"
-export * from "./Model/Serialize/ManagedQueryOptions"
-export * from "./Model/Serialize/SerializingField"
+export * from "./Model/Archetype"
+export * from "./Model/Driver"
+export * from "./Model/ManagedQueryOptions"
+export * from "./Model/SerializingField"

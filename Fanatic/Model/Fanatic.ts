@@ -7,13 +7,13 @@ For example a business object such as a "SceneDocument" is made up of raw materi
 One simple example of the separation of concerns is demonstrated here in a code sample representing the creation of a new SceneDocument in the application:
 */
 
-import { Archetype } from "./Serialize/Archetype"
-import { IDriver } from "./Serialize/Driver"
+import { Archetype } from "./Archetype"
+import { IDriver } from "./Driver"
 import { CompoundOperator, Operator } from "../Enumerations"
 import { DriverNotConnectedException, Exception, InvalidArgumentsException, InvalidDriverException } from "../../Sword/Errors/Exception"
-import { ManagedQueryOptions } from "./Serialize/ManagedQueryOptions"
-import { Result } from "./Business/Result"
-import { WhereOption } from "./Business/WhereOption"
+import { ManagedQueryOptions } from "./ManagedQueryOptions"
+import { Result } from "./Result"
+import { WhereOption } from "./WhereOption"
 
 // Fanatic is fucking fanatical about only selecting a single table at a time; joins, while possible, are done elsewhere.
 export abstract class Fanatic {

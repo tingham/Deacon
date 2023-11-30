@@ -1,9 +1,5 @@
-﻿import { Scheme } from "../..";
-import { InvalidTypeAssignmentException, NotImplementedException } from "../../../Sword/Errors/Exception";
-import { Log } from "../../../Sword/Log";
-import { Archetypist } from "../../Decorator/Archetypist";
-import { Field } from "../../Decorator/Field";
-import { SerializingField } from "./SerializingField";
+﻿import { InvalidTypeAssignmentException } from "../../Sword/Errors/Exception";
+import { Log } from "../../Sword/Log";
 
 // Archetype is a class provided to the api by a class decorator labeled @Archetype
 // The Archetype decorator requires the following parameters:
@@ -26,10 +22,6 @@ class ArchetypeStatic {
   protected static set table(value: string) { this._table = value.toLowerCase() }
   public static get Table(): string { return this._table }
   public get Table(): string { return (this.constructor as typeof Archetype).Table }
-
-  public static _metadata: Map<string, [SerializingField]> = new Map<string, [SerializingField]>()
-  public static get Metadata(): Map<string, [SerializingField]> { return this._metadata }
-  public get Metadata(): Map<string, [SerializingField]> { return (this.constructor as any).Metadata }
 
   public static _primaryKey: string
   public static get PrimaryKey(): string { return this._primaryKey }
@@ -66,13 +58,6 @@ export function Magic(itemType: typeof Archetype) {
 export class Archetype extends ArchetypeStatic {
   public static Singular: string = "Archetype"
   public static Plural: string = "Archetypes"
-
-  // The date on which the record was created in database time
-  public CreatedAt?: Date
-  // The date on which the record was last updated in database time
-  public UpdatedAt?: Date
-  // A flag that indicates whether or not the record has been removed from use
-  public Deleted?: boolean
 
   // Takes a field collection with values and sets local properties to the values
   public Populate(fields: Map<string, any>) {
@@ -148,13 +133,13 @@ interface Context {
   metadata: Record<PropertyKey, unknown>
 }
 
-@Archetypist("Hoo", "id")
-class Hoo extends Archetype {
-  @Field("VARCHAR(255)")
-  public Nosey?: string
+//@Archetypist("Hoo", "id")
+//class Hoo extends Archetype {
+//  @Field("VARCHAR(255)")
+//  public Nosey?: string
 
-  @Field("JSON")
-  public Parker?: any
-}
+//  @Field("JSON")
+//  public Parker?: any
+//}
 
-console.log(Hoo.Statements)
+//console.log(Hoo.Statements)

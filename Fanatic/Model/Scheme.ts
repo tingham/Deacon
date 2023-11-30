@@ -1,8 +1,8 @@
 ﻿import "reflect-metadata"
-import { Archetype } from "../Serialize/Archetype"
-import { NotImplementedException } from "../../../Sword/Errors/Exception";
+import { Archetype } from "./Archetype"
+import { NotImplementedException } from "../../Sword/Errors/Exception";
 import { WhereOption } from "./WhereOption"
-import { CompoundOperator } from "../../Enumerations"
+import { CompoundOperator } from "../Enumerations"
 
 export abstract class AbstractScheme {
 }
@@ -12,6 +12,7 @@ export abstract class AbstractScheme {
 // Implementing classes of the Scheme are responsible for implementing the From method that creates instances of the Scheme from a row / rows of data
 // Methods that must be implemented by implementing classes of the Scheme are marked as abstract except for static methods
 export abstract class Scheme extends AbstractScheme {
+  public static RootArchetype: typeof Archetype
   // This is an actual instance, from the database, of whatever stupid thing this scheme is based on
   public abstract Root?: Archetype
 }

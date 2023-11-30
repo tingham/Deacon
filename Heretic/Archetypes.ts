@@ -1,12 +1,31 @@
+import type { Vector3 } from "xyzw/dist/vector3"
 import { Archetypist } from "../Fanatic/Decorator/Archetypist"
 import { Field } from "../Fanatic/Decorator/Field"
-import { Archetype, IMagicMethodable } from "../Fanatic/Model/Serialize/Archetype"
+import { Archetype, IMagicMethodable } from "../Fanatic/Model/Archetype"
 import { Log } from "../Sword/Log"
 import { VTCHNode } from "../Witch/Stock"
 
+class BaseRecordType extends Archetype {
+  // The date on which the record was created in database time
+  @Field("DATETIME")
+  public CreatedAt?: Date
+  // The date on which the record was last updated in database time
+  @Field("DATETIME")
+  public UpdatedAt?: Date
+  // A flag that indicates whether or not the record has been removed from use
+  @Field("BOOLEAN")
+  public Deleted?: boolean
+
+  constructor() {
+    super()
+  }
+}
+
 // The User Archetype
 @Archetypist("User", "id")
-export class User extends Archetype {
+export class User extends BaseRecordType {
+  @Field("VARCHAR(36)")
+  public Id?: string
   @Field("VARCHAR(255)")
   public Email?: string
   @Field("VARCHAR(255)")
@@ -15,7 +34,11 @@ export class User extends Archetype {
 
 // The Document Archetype
 @Archetypist("Document", "id")
-export class Document extends Archetype {
+export class Document extends BaseRecordType {
+  @Field("VARCHAR(36)")
+  public Id?: string
+  @Field("VARCHAR(36)")
+  public UserId?: string
   @Field("VARCHAR(255)")
   public Name?: string
   @Field("TEXT")
@@ -24,18 +47,30 @@ export class Document extends Archetype {
 
 // The Scene Archetype
 @Archetypist("Scene", "id")
-export class Scene extends Archetype {
+export class Scene extends BaseRecordType {
+  @Field("VARCHAR(36)")
+  public Id?: string
+
+  @Field("VARCHAR(36)")
+  public DocumentId?: string
+
   public static Plural = "Scenes"
   public static Singular = "Scene"
   @Field("VARCHAR(255)")
   public Name?: string
   @Field("TEXT")
   public Description?: string
+  @Field("JSON")
+  public Origin?: Vector3
 }
 
 // The Element Archetype
 @Archetypist("Element", "id")
-export class Element extends Archetype {
+export class Element extends BaseRecordType {
+  @Field("VARCHAR(36)")
+  public Id?: string
+  @Field("VARCHAR(36)")
+  public SceneId?: string
   @Field("VARCHAR(255)")
   public Name?: string
   @Field("TEXT")
@@ -43,7 +78,13 @@ export class Element extends Archetype {
 }
 
 // The Component Base Class for Component Archetypes which exists so that we can later build a Scheme for the Component Archetype that knows how to get "All Components" or "Components by Type" etc. from a business logic perspective.
-export class Component extends Archetype {
+export class Component extends BaseRecordType {
+  @Field("VARCHAR(36)")
+  public Id?: string
+  @Field("VARCHAR(36)")
+  public ElementId?: string
+  @Field("int")
+  public Ordinal?: string
 }
 
 // The Transform Component Archetype

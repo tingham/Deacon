@@ -1,4 +1,4 @@
-﻿import { Archetype } from "../Model/Serialize/Archetype";
+﻿import { Archetype } from "../Model/Archetype";
 import { HydrationRule } from "../Enumerations";
 
 // One to One Uni-Directional

@@ -1,18 +1,21 @@
 import { Request, Response, Route, RouteMethod, PathMaskStyle, Pew, Turnstyle} from '../Pulpit/index';
 import { VTCH, DetailModel, IndexDetailModel, Action, Entity, IndexDetailFlag } from '../Witch/index';
-import { IMagicMethodable, Scheme } from "../Fanatic/index"
+import { IDriver, IDriverObserver, IMagicMethodable, MyDriver, Scheme } from "../Fanatic/index"
 import { ApplicationModel, Component, Document, Scene } from "./Archetypes"
 import { ApplicationScheme } from "./ApplicationScheme";
 import {Log} from "../Sword/Log"
 import { VTCHNode } from '../Witch/Stock';
 import { GenerateRandomInstance } from '../Sword/Generator';
 import { DocumentScheme, Documents } from './Schemes';
+import { Fanatic } from '../Fanatic/Model/Fanatic';
+import { Database } from './Database';
 
 export class Application  extends Pew {
+  public db: Database
   public Schemes: Array<Scheme> = new Array<Scheme>()
   public AppDocumentScheme: DocumentScheme & IMagicMethodable = new DocumentScheme() as DocumentScheme & IMagicMethodable
-
   public Scheme?: ApplicationScheme
+
   constructor() {
     super(PathMaskStyle.COLON, 8080, 8081)
 
@@ -28,11 +31,26 @@ export class Application  extends Pew {
     // this.AppDocumentScheme.AddSlaves([new Scene(), new Scene()])
     Log.info("Application", this.AppDocumentScheme)
 
+    this.db = new Database(this)
+
+    this.db.Bless(ApplicationScheme)
+    this.db.Bless(DocumentScheme)
+
     // this.AppDocumentScheme.Addarchetype(this.AppDocumentScheme.Root)
+  }
+
+  public static async Initialize(): Promise<Application> {
+    let app = new Application()
+    await app.db.Driver.connect()
+    return app
+  }
+
+  public DatabaseReady(message: string) {
+    Log.info("Application:DatabaseReady", {message})
   }
 }
 
-const appInstance = new Application()
+const appInstance = await Application.Initialize()
 
 // What do we need to make view output?
 

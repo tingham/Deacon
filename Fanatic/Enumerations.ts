@@ -28,5 +28,12 @@ export enum HydrationRule {
   EagerWithChildren
 }
 
+export enum RelationType {
+  One,
+  OneExclusive,
+  Many,
+  ManyExclusive
+}
+
 export class EnumerationsStub {
 }

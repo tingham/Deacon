@@ -1,4 +1,4 @@
-﻿import { Archetype } from "../Model/Serialize/Archetype";
+﻿import { Archetype } from "../Model/Archetype";
 
 // One to One Bi-Directional
 // @param peerType

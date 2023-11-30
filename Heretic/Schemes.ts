@@ -1,10 +1,11 @@
-import { Archetype, Children, HydrationRule, IMagicMethodable, Magic, Scheme, SchemeManager, Schemer } from "../Fanatic";
+import { Children, HydrationRule, Magic, Scheme, SchemeManager, Schemer } from "../Fanatic";
 import { Document, Scene } from "./Archetypes";
-import { Log } from "../Sword/Log";
 
 @Magic(Scene)
 export class DocumentScheme extends Scheme implements IFaulting<DocumentScheme> {
   public FaultingKeypaths: Set<keyof DocumentScheme> = new Set<keyof DocumentScheme>(["Root", "Name", "Description", "Scenes"])
+
+  public static RootArchetype = Document
 
   public Root?: Document | undefined;
   public IsDirty = false;
