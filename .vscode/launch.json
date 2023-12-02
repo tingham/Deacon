@@ -1,16 +1,16 @@
 {
   "version": "0.2.0",
   "configurations": [
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Heretic",
-      "skipFiles": [ "<node_internals>/**" ],
-      "program": "${workspaceFolder}/dist/Heretic/Application.js",
-      "runtimeArgs": ["--import=extensionless/register"],
-      "preLaunchTask": "Heretic-Build",
-      "cwd": "${workspaceFolder}",
-      "console": "externalTerminal"
-    }
+    //{
+    //  "type": "node",
+    //  "request": "launch",
+    //  "name": "Heretic",
+    //  "skipFiles": [ "<node_internals>/**" ],
+    //  "program": "${workspaceFolder}/dist/Heretic/Application.js",
+    //  "runtimeArgs": ["--import=extensionless/register"],
+    //  "preLaunchTask": "Heretic-Build",
+    //  "cwd": "${workspaceFolder}",
+    //  "console": "externalTerminal"
+    //}
   ]
 }

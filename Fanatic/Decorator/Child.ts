@@ -1,5 +1,5 @@
 ﻿import { Archetype } from "../Model/Archetype";
-import { HydrationRule } from "../Enumerations";
+import { HydrationRule } from "../Enum/HydrationRule";
 
 // One to One Uni-Directional
 // @param childType The type of the target row that is linked to this row

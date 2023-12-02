@@ -1,13 +1,15 @@
 import { Archetype, IDriver, MyDriver, Scheme } from "../Fanatic";
 import { Fanatic } from "../Fanatic/Model/Fanatic";
 import { Relationship } from "../Fanatic/Model/Relationship";
-import { Log } from "../Sword/Log";
+import { Log } from "../Sword/Inspect/Log";
 import { Application } from "./Application";
 
 export class Database extends Fanatic {
   private application: Application | undefined
   public Schemes: typeof Scheme[] = [];
   public Archetypes: typeof Archetype[] = [];
+
+  // TODO: When setting up a database you need to configure the connection properties so they can be reused but we want to ensure we're doing something about keeping them in memory
 
   public set Driver(driver: IDriver) {
     this.driver = driver as MyDriver
@@ -41,7 +43,13 @@ export class Database extends Fanatic {
   // TODO: Tell schemes and archetypes how to talk to the database
   public Bless(scheme: typeof Scheme): void {
     // TODO: Check if the scheme or archetype is already blessed
-    this.Schemes.push(scheme)
+    if (scheme.Database == undefined) {
+      scheme.Database = this
+      this.Schemes.push(scheme)
+    }
+    if (!(scheme.RootArchetype as typeof Archetype)) {
+      throw new Error(`All Schemes must have a root archetype; offending Scheme<${scheme.name}>`)
+    }
     if (scheme.RootArchetype) {
       this.Archetypes.push(scheme.RootArchetype)
     }

@@ -1,6 +1,6 @@
 import { IncomingMessage } from "http"
-import { EmptyBuffer, ExpectationFailure } from "../Sword/Errors/Exception"
-import { Log } from "../Sword/Log"
+import { EmptyBuffer, ExpectationFailure } from "../Sword/Error/Exception"
+import { Log } from "../Sword/Inspect/Log"
 import * as uuid from "uuid"
 import exp from "constants"
 import { Response } from "./Response"

@@ -14,11 +14,11 @@
     "**/*.ts"
   ],
   "files": [
-    "Constant.ts",
-    "Errors/Exception.ts",
-    "Generator.ts",
-    "List.ts",
-    "Log.ts",
-    "String.ts"
+    "Inspect/Constant.ts",
+    "Error/Exception.ts",
+    "Generate/Generator.ts",
+    "Collection/List.ts",
+    "Inspect/Log.ts",
+    "Generate/String.ts"
   ]
 }

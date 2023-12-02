@@ -1,8 +1,8 @@
-import { CSSError } from "../Sword/Errors/Exception"
+import { CSSError } from "../Sword/Error/Exception"
 import Less from "less"
 import { existsSync, readFile, readFileSync } from "fs"
 
-import { Log } from "../Sword/Log"
+import { Log } from "../Sword/Inspect/Log"
 
 export class DataLoader {
   private static LoadFile(filepath: string) {

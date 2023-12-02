@@ -1,4 +1,4 @@
-﻿import { InvalidInstance } from "../Sword/Errors/Exception";
+﻿import { InvalidInstance } from "../Sword/Error/Exception";
 import { Entity } from "./ViewModelEntities/Entity";
 import { ViewModel } from "./ViewModel";
 import { IModelInstanceObserver } from "./ModelInstanceObserver";

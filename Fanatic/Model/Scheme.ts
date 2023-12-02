@@ -1,8 +1,9 @@
 ﻿import "reflect-metadata"
 import { Archetype } from "./Archetype"
-import { NotImplementedException } from "../../Sword/Errors/Exception";
+import { NotImplementedException } from "../../Sword/Error/Exception";
 import { WhereOption } from "./WhereOption"
-import { CompoundOperator } from "../Enumerations"
+import { CompoundOperator } from "../Enum/CompoundOperator";
+import { Fanatic } from "./Fanatic";
 
 export abstract class AbstractScheme {
 }
@@ -13,8 +14,10 @@ export abstract class AbstractScheme {
 // Methods that must be implemented by implementing classes of the Scheme are marked as abstract except for static methods
 export abstract class Scheme extends AbstractScheme {
   public static RootArchetype: typeof Archetype
+  public static Database: Fanatic;
+
   // This is an actual instance, from the database, of whatever stupid thing this scheme is based on
-  public abstract Root?: Archetype
+  public abstract Root: Archetype
 }
 
 // Implementing classes need to implement the methods that populate a Scheme instance

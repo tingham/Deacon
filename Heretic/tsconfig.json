@@ -17,7 +17,7 @@
     "../Witch/**/*.ts",
     "../Pulpit/*.ts",
     "../Pulpit/**/*.ts"
-  ],
+, "../Sword/Inspect/ClassHelper.ts", "../Sword/Collection/List.ts", "../Sword/Inspect/Log.ts", "../Sword/Enum/Scoping.ts", "../Sword/Inspect/Constant.ts"  ],
   "references": [
     { "path": "../Sword" },
     { "path": "../Fanatic" },

@@ -1,3 +1,5 @@
-<Project Title="Sword"
-	 Name="Sword" Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.94-alpha">
+<Project Title="Sword" Name="Sword" Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.94-alpha">
+  <ItemGroup>
+    <Folder Include="Decorator\" />
+  </ItemGroup>
 </Project>

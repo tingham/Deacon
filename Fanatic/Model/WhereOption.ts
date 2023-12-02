@@ -1,5 +1,6 @@
-import { Operator, CompoundOperator } from "../Enumerations"
-import { InvalidLikeValueException } from "../../Sword/Errors/Exception";
+import { Operator } from "../Enum/Operator";
+import { CompoundOperator } from "../Enum/CompoundOperator";
+import { InvalidLikeValueException } from "../../Sword/Error/Exception";
 
 // The template parameter T is the type of the scheme and available so that implementing classes can validate the fields of the scheme
 export class WhereOption<T> {

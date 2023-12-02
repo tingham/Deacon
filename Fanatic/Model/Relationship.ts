@@ -1,5 +1,6 @@
 ﻿import { Archetype } from "./Archetype";
-import { HydrationRule, RelationType } from "../Enumerations";
+import { HydrationRule } from "../Enum/HydrationRule";
+import { RelationType } from "../Enum/RelationType";
 
 // One to Many
 // @param childType The target rows that are linked to this scheme's archetype

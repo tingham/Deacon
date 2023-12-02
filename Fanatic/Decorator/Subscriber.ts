@@ -1,5 +1,5 @@
 ﻿import { Archetype } from "../Model/Archetype";
-import { HydrationRule } from "../Enumerations";
+import { HydrationRule } from "../Enum/HydrationRule";
 
 // Many to Many with a join table
 // @param subscriptionType The target row that is linked to this row

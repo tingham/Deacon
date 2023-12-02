@@ -1,4 +1,4 @@
-import winston from 'winston'
+import winston, { transport } from 'winston'
 import chalk from 'chalk'
 
 export class Log {
@@ -13,7 +13,12 @@ if (!this.instance) {
   }
 
   constructor() {
-    this.Root = winston.createLogger({ level: 'info', format: winston.format.cli(), transports: [new winston.transports.Console()] })
+    // Why is Watson output not showing up in the Visual Studio devenv console?
+    let transports = new Array<winston.transport>()
+    // Force watson to output to the stdout stream
+    transports.push(new winston.transports.Stream({ stream: process.stdout }))
+    transports.push(new winston.transports.Console())
+    this.Root = winston.createLogger({ level: 'info', format: winston.format.cli(), transports })
   }
 
   public static warn(location: string, message: any): void {

@@ -3,7 +3,7 @@ import { Entity } from "./ViewModelEntities/Entity"
 import path, { basename } from "path"
 import { Field } from "./ViewModelEntities/Field"
 import { existsSync, readFileSync } from "fs"
-import { ViewRenderError } from "../Sword/Errors/Exception"
+import { ViewRenderError } from "../Sword/Error/Exception"
 
 const TEMPLATES_DIRECTORY_ROOT = path.join(process.cwd(), `Data/Templates/`)
 

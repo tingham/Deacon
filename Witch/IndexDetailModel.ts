@@ -1,4 +1,4 @@
-﻿import { SortKeys } from "../Sword/Constant";
+﻿import { SortKeys } from "../Sword/Inspect/Constant";
 import { IndexModel } from "./IndexModel";
 import { DetailModel } from "./DetailModel";
 import { InterfaceConstructor } from "./ModelInstanceObserver";

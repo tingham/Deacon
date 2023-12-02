@@ -1,5 +1,5 @@
 import { ServerResponse, IncomingMessage } from "http"
-import { Log } from "../Sword/Log"
+import { Log } from "../Sword/Inspect/Log"
 import { extname } from "node:path/posix"
 
 // Response

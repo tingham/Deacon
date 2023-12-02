@@ -1,145 +1,123 @@
-﻿import { InvalidTypeAssignmentException } from "../../Sword/Errors/Exception";
-import { Log } from "../../Sword/Log";
+﻿import { IDriver, MyDriver, SerializingField } from "..";
+import { MixinDirective } from "../../Sword/Enum/MixinDirective";
+import { NotImplementedException } from "../../Sword/Error/Exception";
+import { IDrivable } from "../Interface/IDrivable";
 
-// Archetype is a class provided to the api by a class decorator labeled @Archetype
-// The Archetype decorator requires the following parameters:
-// 1. The name of the table that the class represents
-// 2. The name of the field in the table that is the primary key
-// 3. A boolean flag that indicates whether or not to attach a standard field set to the table/class (CreatedAt, UpdatedAt, Deleted, etc.)
-// An factor that grants @Archetype the ability to be constructed with parameters
-export interface IArchtetypeConstructor<T> {
-  new(table: string, primaryKey: string, standardFields: boolean): T
+// A set of symbols that, if identified as the class of a current subclass, will be ignored when adding fields to the class
+const DisallowedSymbols = [Symbol("Archetype"), Symbol("AbstractArchetype")]
+
+// The base constructor for all Archetype classes
+type ArchetypeConstructor<T> = abstract new(...args: any[]) => T;
+
+/**
+ * The foundation of the Archetype system
+ **/
+abstract class AbstractArchetype {
+  // Fields have been hoisted to the static level so that their metadata is centralized and can be used to create sql statements
+  public static Fields: {[key: symbol]: SerializingField[]} = {};
+  public static Singular: string = "Archetype";
+  public static Plural: string = "Archetypes";
+  public static Key: string = "Id";
+  public static Table: string = "Archetype";
+  public static Mixin: MixinDirective = MixinDirective.None;
+
+  // Add a field to the static field collection for the class as long as the direct constructor is not a disallowed symbol
+  public static AddField(forClass: symbol, field: SerializingField) {
+    throw new NotImplementedException()
+  }
+
+  private initialArguments: any[] = []
+
+  // A default constructor
+  constructor(...args: any[]) {
+    this.initialArguments = args || []
+  }
 }
 
-export interface IArchetypeBaseFields {
-  CreatedAt?: Date
-  UpdatedAt?: Date
-  Deleted?: boolean
-}
-
-class ArchetypeStatic {
-  private static _table: string
-  protected static set table(value: string) { this._table = value.toLowerCase() }
-  public static get Table(): string { return this._table }
-  public get Table(): string { return (this.constructor as typeof Archetype).Table }
-
-  public static _primaryKey: string
-  public static get PrimaryKey(): string { return this._primaryKey }
-  public get PrimaryKey(): string { return (this.constructor as typeof Archetype).PrimaryKey }
-
-  public static CreateStatement(): string { return "" }
-  public static Statements?: any
-}
-
-export interface IMagicMethodable {
-  [key: `Add${string}`]: (...params: any[]) => any
-}
-
-// A decorator for a class that mixes in the IMagicMethodable interface so that collections within a Scheme get `Set${target.constructor.Plural}` and `Get${target.constructor.Plural}` methods
-export function Magic(itemType: typeof Archetype) {
-  return function (target: any, context?: ClassDecoratorContext) {
-    target.prototype[`Add${itemType.Plural}`] = function (...params: any[]) {
-      if (params.length === 1 && params[0] instanceof Array) {
-        for (const item of params[0]) {
-          Log.info("Magic.Set", { item })
-        }
-      } else {
-        for (const item of params) {
-          Log.info("Magic.Set", { item })
-        }
+function ArchetypeMixin<T extends ArchetypeConstructor<object>>(Ctor: T) {
+  abstract class ConcreteArchetype extends Ctor {
+    // @private
+    public static Fields: { [key: symbol]: SerializingField[] } = {};
+    public static AddField(forClass: symbol, field: SerializingField) {
+      if (DisallowedSymbols.includes(forClass)) { return }
+      if (!this.Fields[forClass]) {
+        this.Fields[forClass] = [];
       }
-    };
+      this.Fields[forClass].push(field);
+    }
+    public static GetFields(forClass: symbol) {
+      return this.Fields[forClass] || []
+    }
+    constructor(...args: any[]) {
+      super(...args)
+    }
+  }
+  // You have no visibility of the sub-class at this stage in the object lifecycle; so we have to use a @ decorator to gain access to the higher-order features of the class
+  const initialProperties = Object.getOwnPropertyNames(Ctor.prototype)
+  for (const property of initialProperties) {
+    if (property === "constructor") { continue }
+    // For merging two classes together
+    // Object.defineProperty(ConcreteArchetype.prototype, property, Object.getOwnPropertyDescriptor(Ctor.prototype, property)!)
+  }
+  return ConcreteArchetype
+}
+
+
+export class Archetype extends ArchetypeMixin(AbstractArchetype) implements IDrivable {
+  public static DriverClass: typeof MyDriver = MyDriver
+  public static get Driver(): IDriver {
+    return this.DriverClass.Instance
+  }
+  public get Driver(): IDriver {
+    return Archetype.Driver
+  }
+  public static async Query(sql: string): Promise<any> {
+    return this.Driver.query(sql)
+  }
+  public async Query(sql: string): Promise<any> {
+    return Archetype.Query(sql)
+  }
+  public static async Execute(sql: string): Promise<any> {
+    return this.Driver.execute(sql)
+  }
+  public async Execute(sql: string): Promise<any> {
+    return Archetype.Execute(sql)
+  }
+
+  constructor(...args: any[]) {
+    super(...args)
+    for (const prop of Object.getOwnPropertyNames(AbstractArchetype)) {
+      if (prop === "constructor") { continue }
+      Object.defineProperty(this, prop, Object.getOwnPropertyDescriptor(AbstractArchetype, prop)!)
+    }
   }
 }
 
-// A base class definition so that @Archetype can be used as a class decorator
-// It also grants @Archetype the ability to attach a standard field set to the table/class (CreatedAt, UpdatedAt, Deleted, etc.)
-// curiously recurring template pattern
-export class Archetype extends ArchetypeStatic {
-  public static Singular: string = "Archetype"
-  public static Plural: string = "Archetypes"
-
-  // Takes a field collection with values and sets local properties to the values
-  public Populate(fields: Map<string, any>) {
-    for (const field of Object.entries(fields)) {
-      this.setProperty(field[0], field[1])
+/**
+ * A manager for the Archetype system
+ **/
+export class ArchetypeRegistry {
+  // Singleton pattern
+  private static instance: ArchetypeRegistry
+  public static get Instance() {
+    if (!ArchetypeRegistry.instance) {
+      ArchetypeRegistry.instance = new ArchetypeRegistry()
     }
+    return ArchetypeRegistry.instance
   }
+  private constructor() { }
 
-  private setProperty(name: string, value: any) {
-    let anyThis = this as any
-    // Compare the stored data in the propery to the value
-    // On Type
-    let existingPropertyType = typeof(anyThis.hasOwnProperty(name) ? typeof(anyThis[name]) : null)
-    let newPropertyType = typeof(value)
-    let molestedValue: any
-    if (!(existingPropertyType === newPropertyType)) {
-      try {
-        molestedValue = this.convertValue(value, existingPropertyType)
-      } catch (error: any) {
-        error.message.append(`\nUnable to assign to ${name} in ${anyThis.constructor.name}`)
-        throw error
-      }
-    } else {
-      molestedValue = value
-    }
-    // Set the property
-    anyThis[name] = molestedValue
+  // A collection of all the Archetype classes that have been registered
+  private archetypes: Map<string, ArchetypeConstructor<Archetype>> = new Map<string, typeof Archetype>()
+  public Register(archetype: typeof Archetype) {
+    this.archetypes.set(archetype.constructor.name, archetype)
   }
-
-  // I don't think this is the right place for value handling but maybe? It's a start
-  // Takes an unstructued value and attempts to convert it to the specified type
-  private convertValue(value: any, type: string): any {
-    switch (type) {
-      case "string":
-        if (value && value.toString) {
-          return value.toString()
-        }
-      case "number":
-        if (Number.isNaN(value)) {
-          return Number(value)
-        }
-        throw new InvalidTypeAssignmentException(`${value} is not a ${type}`)
-      case "boolean":
-        // All values are true-ish or false-ish
-        return Boolean(value)
-      case "date":
-        // Validate that the value can become a date
-        let testDate = new Date(value)
-        if (testDate.toString() !== "Invalid Date") {
-          return testDate
-        }
-      case "object":
-        try {
-          let encoded = JSON.stringify(value)
-          let decoded = JSON.parse(encoded)
-          return decoded
-        } catch (error) {}
-    }
-    throw new InvalidTypeAssignmentException(`${value} is not a ${type}`)
+  public Deregister(archetype: Archetype) {
+    this.archetypes.delete(archetype.constructor.name)
   }
-
-  public static create<T extends typeof Archetype>(this: typeof Archetype & (new () => T)) {
-    const r = new this()
-    return r as InstanceType<T>
-  }
-  public static MaidServices(instance: any) {
-    console.log("Maid Services", typeof(instance))
+  // If both are registered and the same, return true
+  public Is(a: Archetype, b: Archetype) {
+    return this.archetypes.get(a.constructor.name) === this.archetypes.get(b.constructor.name)
   }
 }
 
-interface Context {
-  name: string,
-  metadata: Record<PropertyKey, unknown>
-}
-
-//@Archetypist("Hoo", "id")
-//class Hoo extends Archetype {
-//  @Field("VARCHAR(255)")
-//  public Nosey?: string
-
-//  @Field("JSON")
-//  public Parker?: any
-//}
-
-//console.log(Hoo.Statements)

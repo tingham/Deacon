@@ -1,4 +1,4 @@
-import { List } from "../../Sword/List"
+import { List } from "../../Sword/Collection/List"
 import { Entity } from "./Entity"
 import { Field } from "./Field"
 

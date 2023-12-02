@@ -1,5 +1,6 @@
 ﻿import { Archetype } from "../Model/Archetype";
-import { HydrationRule, RelationType } from "../Enumerations";
+import { HydrationRule } from "../Enum/HydrationRule";
+import { RelationType } from "../Enum/RelationType";
 import { Relationship } from "../Model/Relationship";
 
 export function Children(ChildType: typeof Archetype, LoadingRule: HydrationRule) {

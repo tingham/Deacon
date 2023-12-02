@@ -47,3 +47,5 @@ export class CSSError extends Exception {
     return cssError
   }
 }
+
+export class ArchetypeComplianceException extends Exception { }

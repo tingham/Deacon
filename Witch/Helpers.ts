@@ -1,5 +1,5 @@
 import ejs from "ejs";
-import { Log } from "../Sword/Log";
+import { Log } from "../Sword/Inspect/Log";
 
 type AnyFunction = (...args: any[]) => any;
 

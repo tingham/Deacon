@@ -1,11 +1,10 @@
 import { Request, Response, Route, RouteMethod, PathMaskStyle, Pew, Turnstyle} from '../Pulpit/index';
-import { VTCH, DetailModel, IndexDetailModel, Action, Entity, IndexDetailFlag } from '../Witch/index';
-import { IDriver, IDriverObserver, IMagicMethodable, MyDriver, Scheme } from "../Fanatic/index"
-import { ApplicationModel, Component, Document, Scene } from "./Archetypes"
+import { Scheme } from "../Fanatic/index"
+import { HDocument, Scene } from "./Archetypes"
 import { ApplicationScheme } from "./ApplicationScheme";
-import {Log} from "../Sword/Log"
+import {Log} from "../Sword/Inspect/Log"
 import { VTCHNode } from '../Witch/Stock';
-import { GenerateRandomInstance } from '../Sword/Generator';
+import { GenerateRandomInstance } from '../Sword/Generate/Generator';
 import { DocumentScheme, Documents } from './Schemes';
 import { Fanatic } from '../Fanatic/Model/Fanatic';
 import { Database } from './Database';
@@ -13,7 +12,7 @@ import { Database } from './Database';
 export class Application  extends Pew {
   public db: Database
   public Schemes: Array<Scheme> = new Array<Scheme>()
-  public AppDocumentScheme: DocumentScheme & IMagicMethodable = new DocumentScheme() as DocumentScheme & IMagicMethodable
+  public AppDocumentScheme: DocumentScheme = new DocumentScheme() as DocumentScheme
   public Scheme?: ApplicationScheme
 
   constructor() {
@@ -22,9 +21,9 @@ export class Application  extends Pew {
     // The application scheme contains the main controller logic for the application
     this.Scheme = new ApplicationScheme()
 
-    this.AppDocumentScheme.Root = new Document()
+    this.AppDocumentScheme.Root = new HDocument()
 
-    this.AppDocumentScheme.AddScenes([new Scene()])
+    // this.AppDocumentScheme.AddScenes([new Scene()])
     // This will error in edit time
     // this.AppDocumentScheme.BobJones([new Scene(), new Scene()])
     // This will error in runtime
@@ -32,9 +31,10 @@ export class Application  extends Pew {
     Log.info("Application", this.AppDocumentScheme)
 
     this.db = new Database(this)
-
     this.db.Bless(ApplicationScheme)
     this.db.Bless(DocumentScheme)
+
+    let document = DocumentScheme.Instance("19b0d457-8fe2-11ee-bcc8-c87f546a3c87")
 
     // this.AppDocumentScheme.Addarchetype(this.AppDocumentScheme.Root)
   }

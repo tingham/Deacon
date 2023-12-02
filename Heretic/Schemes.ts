@@ -1,17 +1,20 @@
-import { Children, HydrationRule, Magic, Scheme, SchemeManager, Schemer } from "../Fanatic";
-import { Document, Scene } from "./Archetypes";
+import { Children, HydrationRule, Scheme, SchemeManager, Schemer, Findable, Archetype } from "../Fanatic";
+import { HDocument, Scene } from "./Archetypes";
 
-@Magic(Scene)
+let doc = new HDocument()
+doc.Name = "New Document"
+
 export class DocumentScheme extends Scheme implements IFaulting<DocumentScheme> {
   public FaultingKeypaths: Set<keyof DocumentScheme> = new Set<keyof DocumentScheme>(["Root", "Name", "Description", "Scenes"])
 
-  public static RootArchetype = Document
+  public static readonly RootArchetype: typeof Archetype = HDocument
 
-  public Root?: Document | undefined;
+  public Root = new HDocument();
+
   public IsDirty = false;
 
   public get Name(): string | undefined {
-    return this.Root?.Name
+    return this.Root.Name
   }
   public set Name(value: string) {
     if (this.Root) {
@@ -30,7 +33,7 @@ export class DocumentScheme extends Scheme implements IFaulting<DocumentScheme> 
     }
   }
 
-  public get Scenes(): Array<Scene> | undefined {
+  public get Scenes(): Array<typeof Scene> | undefined {
     if (this.scenes == undefined) {
       this.Fault(["Scenes"])
     }
@@ -38,10 +41,48 @@ export class DocumentScheme extends Scheme implements IFaulting<DocumentScheme> 
   }
 
   @Children(Scene, HydrationRule.Lazy)
-  private scenes?: Array<Scene>
+  private scenes = new Array<typeof Scene>()
 
   public async Fault(keypath: (keyof DocumentScheme)[]): Promise<void> {
+    // Notify observers that a fault has been raised
+
+    // Load the data from the database
+
+    // Notify observers that the fault has been resolved
     return
+  }
+
+  public async FaultResolved(keypath: (keyof DocumentScheme)[], withData: any): Promise<void> {
+    return
+  }
+
+  public async FaultRaised(keypath: (keyof DocumentScheme)[]): Promise<void> {
+    return
+  }
+
+  public static async Instance(id: string): Promise<DocumentScheme> {
+    let instance = new DocumentScheme()
+
+    let db = DocumentScheme.Database
+
+    if (db) {
+      // TODO: Find a way in Archetypist to produce the Statements object with type info preserved
+      //let findQuery = DocumentScheme.RootArchetype.Statements.FindById("19b0d457-8fe2-11ee-bcc8-c87f546a3c87")
+      //Log.info(`DocumentScheme:Find Query`, findQuery)
+
+    //  const finder: Findable<Required<Document>> = DocumentScheme.RootArchetype.Jones.Find as Findable<Required<Document>>
+
+    //  let secondFindQuery = finder.FindByName("New Document")
+    //  Log.info(`DocumentScheme:Second Find Query`, secondFindQuery)
+
+    //  let data = await db.Driver.query(id)
+    //  if (data) {
+    //    console.log(data)
+    //  }
+      //(DocumentScheme.RootArchetype as any).NativeSelect("19b0d457-8fe2-11ee-bcc8-c87f546a3c87")
+    }
+
+    return instance
   }
 }
 

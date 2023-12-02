@@ -3,7 +3,7 @@ import { Route, RouteMethod } from "./Routing"
 import { MemorySessionManager, Request } from "./Request"
 import { Response } from "./Response"
 import { PathMaskStyle } from "./Processing"
-import { Log } from "../Sword/Log"
+import { Log } from "../Sword/Inspect/Log"
 import { existsSync, readFileSync } from "fs"
 
 export enum Turnstyle {

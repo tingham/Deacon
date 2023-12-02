@@ -1,5 +1,5 @@
 ﻿import ejs from "ejs";
-import { InvalidInstance, UnregisteredRenderer, ViewRenderError } from "../Sword/Errors/Exception";
+import { InvalidInstance, UnregisteredRenderer, ViewRenderError } from "../Sword/Error/Exception";
 import { ViewModel } from "./ViewModel";
 import { Helpers } from "./Helpers";
 import { isContext } from "vm";

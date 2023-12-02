@@ -1,4 +1,4 @@
-﻿import { ImprintIdentityOrphaned } from "../Sword/Errors/Exception";
+﻿import { ImprintIdentityOrphaned } from "../Sword/Error/Exception";
 
 /**
  * @class Action

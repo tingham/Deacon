@@ -9,8 +9,9 @@ One simple example of the separation of concerns is demonstrated here in a code 
 
 import { Archetype } from "./Archetype"
 import { IDriver } from "./Driver"
-import { CompoundOperator, Operator } from "../Enumerations"
-import { DriverNotConnectedException, Exception, InvalidArgumentsException, InvalidDriverException } from "../../Sword/Errors/Exception"
+import { Operator } from "../Enum/Operator"
+import { CompoundOperator } from "../Enum/CompoundOperator"
+import { DriverNotConnectedException, Exception, InvalidArgumentsException, InvalidDriverException } from "../../Sword/Error/Exception"
 import { ManagedQueryOptions } from "./ManagedQueryOptions"
 import { Result } from "./Result"
 import { WhereOption } from "./WhereOption"
@@ -57,12 +58,6 @@ export abstract class Fanatic {
       return this.GetFromQuery(Type, params[0], params[1])
     }
     throw new InvalidArgumentsException()
-  }
-
-  public async ReallyComplicated<T extends Archetype>(actual: T) {
-    if (actual && actual.Table) {
-      console.table([Object.entries(actual)])
-    }
   }
 
   public async GetFromId<T extends Archetype>(Type: new () => T, id: string, options?: ManagedQueryOptions): Promise<Result<T>> {
