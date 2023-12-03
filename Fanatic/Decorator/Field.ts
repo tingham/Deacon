@@ -15,9 +15,9 @@ export interface FieldDecoratorOptions {
 // Is there a way to limit decorator functions to only be valid for sub-classes of a given class?
 export function Field(options: FieldDecoratorOptions) {
   return function (target: any, property: string) {
-    const classSymbol = Symbol(target.name)
-    if (classSymbol === Symbol("Archetype")) {
-      return;
+    let classSymbol = target.name // Symbol(target.name)
+    if (classSymbol == undefined || classSymbol == "Archetype") {
+      classSymbol = target.constructor.name
     }
     let field = SerializingField.FromDecoratedProperty(property, options)
     if (options.DatabaseType === "JSON") {

@@ -66,6 +66,10 @@ export class DocumentScheme extends Scheme implements IFaulting<DocumentScheme> 
     let db = DocumentScheme.Database
 
     if (db) {
+
+      let scene = await (Scene as Required<typeof Scene>).FindByName("Test Scene 1")
+      console.log(scene)
+
       // TODO: Find a way in Archetypist to produce the Statements object with type info preserved
       //let findQuery = DocumentScheme.RootArchetype.Statements.FindById("19b0d457-8fe2-11ee-bcc8-c87f546a3c87")
       //Log.info(`DocumentScheme:Find Query`, findQuery)

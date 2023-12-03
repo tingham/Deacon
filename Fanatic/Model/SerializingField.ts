@@ -20,7 +20,7 @@ export class SerializingField {
   public getter?: InlineGetter;
   public setter?: InlineSetter;
 
-  public static FromDecoratedProperty(propertyKey: string | symbol, parameters: SerializingFieldOptions): SerializingField {
+  public static FromDecoratedProperty(propertyKey: string, parameters: SerializingFieldOptions): SerializingField {
     let instance = new SerializingField();
     instance.Name = propertyKey.toString();
     if (parameters.hasOwnProperty("DatabaseType")) {

@@ -43,7 +43,7 @@ export function Archetypist(parameters: ArchetypistParameters) {
     const properties = ClassHelper.GetProperties(target)
 
     // Get the class symbol
-    const classSymbol = Symbol(target.name)
+    const classSymbol = target.name // Symbol(target.name)
 
     // Get the fields of the class
     let fields = target.GetFields(classSymbol)

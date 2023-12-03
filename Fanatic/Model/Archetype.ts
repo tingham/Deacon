@@ -14,7 +14,7 @@ type ArchetypeConstructor<T> = abstract new(...args: any[]) => T;
  **/
 abstract class AbstractArchetype {
   // Fields have been hoisted to the static level so that their metadata is centralized and can be used to create sql statements
-  public static Fields: {[key: symbol]: SerializingField[]} = {};
+  public static Fields: {[key: string]: SerializingField[]} = {};
   public static Singular: string = "Archetype";
   public static Plural: string = "Archetypes";
   public static Key: string = "Id";
@@ -22,7 +22,7 @@ abstract class AbstractArchetype {
   public static Mixin: MixinDirective = MixinDirective.None;
 
   // Add a field to the static field collection for the class as long as the direct constructor is not a disallowed symbol
-  public static AddField(forClass: symbol, field: SerializingField) {
+  public static AddField(forClass: string, field: SerializingField) {
     throw new NotImplementedException()
   }
 
@@ -37,15 +37,15 @@ abstract class AbstractArchetype {
 function ArchetypeMixin<T extends ArchetypeConstructor<object>>(Ctor: T) {
   abstract class ConcreteArchetype extends Ctor {
     // @private
-    public static Fields: { [key: symbol]: SerializingField[] } = {};
-    public static AddField(forClass: symbol, field: SerializingField) {
-      if (DisallowedSymbols.includes(forClass)) { return }
+    public static Fields: { [key: string]: SerializingField[] } = {};
+    public static AddField(forClass: string, field: SerializingField) {
+      //if (DisallowedSymbols.includes(forClass)) { return }
       if (!this.Fields[forClass]) {
         this.Fields[forClass] = [];
       }
       this.Fields[forClass].push(field);
     }
-    public static GetFields(forClass: symbol) {
+    public static GetFields(forClass: string) {
       return this.Fields[forClass] || []
     }
     constructor(...args: any[]) {

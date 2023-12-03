@@ -2,6 +2,7 @@ import { Archetypist, ArchetypistParameters } from "../Fanatic/Decorator/Archety
 import { Field, FieldDecoratorOptions } from "../Fanatic/Decorator/Field"
 import { Archetype } from "../Fanatic/Model/Archetype"
 import { MethodMixin, QueryMixin } from "../Fanatic/Model/Method"
+import { MixinDirective } from "../Sword"
 
 class Vector3 {
   constructor(public x: number, public y: number, public z: number) {
@@ -45,21 +46,21 @@ export const User = UserArchetype as UserType
 //UserAPI.FindAllById("19b0d457-8fe2-11ee-bcc8-c87f546a3c87")
 
 // The Document Archetype
-@Archetypist({ Table: "HDocument", Key: "Id" } as ArchetypistParameters)
-export class HDocumentArchetype extends BaseRecordType {
+@Archetypist({ Table: "Document", Key: "Id", Mixin: MixinDirective.Method | MixinDirective.Query } as ArchetypistParameters)
+export class DocumentArchetype extends BaseRecordType {
   @Field({ DatabaseType: "VARCHAR(36)" } as FieldDecoratorOptions)
-  public UserId?: string
+  public UserId: string = ""
   @Field({ DatabaseType: "VARCHAR(255)" } as FieldDecoratorOptions)
-  public Name?: string
+  public Name: string = ""
   @Field({ DatabaseType: "TEXT" } as FieldDecoratorOptions)
-  public Description?: string
+  public Description: string = ""
 }
-
-type HDocumentType = typeof HDocumentArchetype & MethodMixin<HDocumentArchetype> & QueryMixin<HDocumentArchetype>
-export const HDocument = HDocumentArchetype as HDocumentType
+export const Document = DocumentArchetype as typeof DocumentArchetype & Required<MethodMixin<DocumentArchetype>> & Required<QueryMixin<DocumentArchetype>>
 
 // The Scene Archetype
-@Archetypist({ Table: "Scene", Key: "Id" } as ArchetypistParameters)
+@Archetypist({
+  Table: "Scene", Key: "Id", Mixin: MixinDirective.Method | MixinDirective.Query
+} as ArchetypistParameters)
 export class SceneArchetype extends BaseRecordType {
 
   @Field({ DatabaseType: "VARCHAR(36)" } as FieldDecoratorOptions)
@@ -68,15 +69,13 @@ export class SceneArchetype extends BaseRecordType {
   public static Plural = "Scenes"
   public static Singular = "Scene"
   @Field({ DatabaseType: "VARCHAR(255)" } as FieldDecoratorOptions)
-  public Name?: string
+  public Name: string = ""
   @Field({ DatabaseType: "TEXT" })
-  public Description?: string
+  public Description: string = ""
   @Field({ DatabaseType: "JSON", LogicalType: Vector3 } as FieldDecoratorOptions)
-  public Origin?: Vector3
+  public Origin: Vector3 = new Vector3(0, 0, 0)
 }
-
-type SceneType = typeof SceneArchetype & MethodMixin<SceneArchetype> & QueryMixin<SceneArchetype>
-export const Scene = SceneArchetype as SceneType
+export const Scene = SceneArchetype as typeof SceneArchetype & Required<MethodMixin<SceneArchetype>> & Required<QueryMixin<SceneArchetype>>
 
 // The Element Archetype
 @Archetypist({ Table: "Element", Key: "Id" } as ArchetypistParameters)
@@ -88,8 +87,7 @@ export class ElementArchetype extends BaseRecordType {
   @Field({ DatabaseType: "TEXT" } as FieldDecoratorOptions)
   public Description?: string
 }
-type ElementType = typeof ElementArchetype & MethodMixin<ElementArchetype> & QueryMixin<ElementArchetype>
-export const Element = ElementArchetype as ElementType
+export const Element = ElementArchetype as typeof ElementArchetype & Required<MethodMixin<ElementArchetype>> & Required<QueryMixin<ElementArchetype>>
 
 // The Component Base Class for Component Archetypes which exists so that we can later build a Scheme for the Component Archetype that knows how to get "All Components" or "Components by Type" etc. from a business logic perspective.
 export class Component extends BaseRecordType {
@@ -124,10 +122,9 @@ export class TransformArchetype extends Component {
   @Field({ DatabaseType: "FLOAT" } as FieldDecoratorOptions)
   public Roll?: number
 }
-type TransformType = typeof TransformArchetype & MethodMixin<TransformArchetype> & QueryMixin<TransformArchetype>
-export const Transform = TransformArchetype as TransformType
+export const Transform = TransformArchetype as typeof TransformArchetype & Required<MethodMixin<TransformArchetype>> & Required<QueryMixin<TransformArchetype>>
 
-export enum PrimitiveShapeType {
+export enum PrimitiveType {
   None = "None",
   Cube = "Cube",
   Box = "Box",
@@ -139,11 +136,10 @@ export enum PrimitiveShapeType {
 // The Primitive Component Archetype
 @Archetypist({ Table: "Primitive", Key: "Id" } as ArchetypistParameters)
 export class PrimitiveArchetype extends Component {
-  @Field({ DatabaseType: `ENUM(${Object.values(PrimitiveShapeType).map(v => `'${v}'`).join("'")})` } as FieldDecoratorOptions)
+  @Field({ DatabaseType: `ENUM(${Object.values(PrimitiveType).map(v => `'${v}'`).join("'")})` } as FieldDecoratorOptions)
   public Type?: PrimitiveType
 }
-type PrimitiveType = typeof PrimitiveArchetype & MethodMixin<PrimitiveArchetype> & QueryMixin<PrimitiveArchetype>
-export const Primitive = PrimitiveArchetype as PrimitiveType
+export const Primitive = PrimitiveArchetype as typeof PrimitiveArchetype & Required<MethodMixin<PrimitiveArchetype>> & Required<QueryMixin<PrimitiveArchetype>>
 
 export class ActivityNode {
 }
@@ -156,5 +152,4 @@ export class ApplicationArchetype extends BaseRecordType {
   @Field({ DatabaseType: "JSON" } as FieldDecoratorOptions)
   public Settings?: any
 }
-type ApplicationType = typeof ApplicationArchetype & MethodMixin<ApplicationArchetype> & QueryMixin<ApplicationArchetype>
-export const Application = ApplicationArchetype as ApplicationType
+export const Application = ApplicationArchetype as typeof ApplicationArchetype & Required<MethodMixin<ApplicationArchetype>> & Required<QueryMixin<ApplicationArchetype>>

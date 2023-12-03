@@ -59,39 +59,121 @@ type MethodUnion<T extends string> = FindBy<T> | FindAllBy<T> | Create | Delete 
  * @returns The Archetype class with the functions added
  */
 export type MethodMixin<T> = {
-  [Key in keyof T as MethodUnion<Key extends string ? Key : never>]: (value: any, options?: ManagedQueryOptions) => string;
+  [Key in keyof T as MethodUnion<Key extends string ? Key : never>]: (value: any, options?: ManagedQueryOptions) => T;
 };
 
+// Ensures that @Field decorated properties are added to the static Fields collection of the class
 export function AttachFields(target: typeof Archetype, nativeProperties: Property[], fields: SerializingField[]) {
-  const classSymbol = Symbol(target.name)
-  for (const nativeProeprty of nativeProperties) {
-    let field = fields.find(field => field.Name === nativeProeprty.Name)
+  const classSymbol = target.name
+  for (const nativeProperty of nativeProperties) {
+    let field = fields.find(field => field.Name === nativeProperty.Name)
     if (field) {
-      target.constructor.prototype.GetFields[classSymbol].push(field)
+      if (!target.GetFields(classSymbol).includes(field)) {
+        target.GetFields(classSymbol).push(field)
+      }
     }
   }
 }
 export function AttachMixinQueries(target: typeof Archetype, fields: SerializingField[]) {
   for (const field of fields) {
-    let fn = function (value: any, options?: ManagedQueryOptions) {
-      return `SELECT * FROM ${target.Table} WHERE ${field.Name} = ${value};`
+    let selectBy = function (value: any, options?: ManagedQueryOptions) {
+      return `SELECT * FROM ${target.Table} WHERE ${field.Name} = '${value}' limit 1;`
     }
-    Object.defineProperty(target, `FindBy${field.Name}Query`, { value: fn.bind(target) })
+    Object.defineProperty(target, `FindBy${field.Name}Query`, { value: selectBy.bind(target) })
+
+    let selectAllBy = function (value: any, options?: ManagedQueryOptions) {
+      return `SELECT * FROM ${target.Table} WHERE ${field.Name} = '${value}';`
+    }
+    if (!target.hasOwnProperty(`FindBy${field.Name}Query`)) {
+      Object.defineProperty(target, `FindAllBy${field.Name}Query`, { value: selectAllBy.bind(target) })
+    }
+
   }
+  let createQuery = function (value: { [key: string]: any }, options?: ManagedQueryOptions) {
+    return `INSERT INTO ${target.Table} (${Object.keys(value).join(",")}) VALUES (${Object.values(value).join(",")});`
+  }
+  Object.defineProperty(target, `CreateQuery`, { value: createQuery.bind(target) })
+
+  let updateQuery = function (value: { [key: string]: any }, options?: ManagedQueryOptions) {
+    return `UPDATE ${target.Table} SET ${Object.keys(value).map(key => `${key} = ${value[key]}`).join(",")} WHERE ${target.Key} = ${value[target.Key]};`
+  }
+  Object.defineProperty(target, `SaveQuery`, { value: updateQuery.bind(target) })
+
+  let deleteQuery = function (value: { [key: string]: any }, options?: ManagedQueryOptions) {
+    return `DELETE FROM ${target.Table} WHERE ${target.Key} = ${value[target.Key]} limit 1;`
+  }
+  Object.defineProperty(target, `DeleteQuery`, { value: deleteQuery.bind(target) })
 }
 export function AttachMixinMethods(target: typeof Archetype, fields: SerializingField[]) {
+  if (!target.hasOwnProperty("From")) {
+    (target as any).From = function (value: any) {
+      if (!(value instanceof Array)) {
+        value = [value]
+      }
+      value = value.map((row: any) => {
+        let newInstance = new target()
+        for (const field of fields) {
+          if (field.Name) {
+            (newInstance as any)[field.Name] = row[field.Name]
+          }
+        }
+        return (newInstance as unknown) as typeof target.constructor
+      })
+      if (value.length === 1) {
+        return value[0]
+      }
+      return value
+    }
+  }
   for (const field of fields) {
-    let fn = async function (value: any, options?: ManagedQueryOptions) {
+    let findBy = async function (value: any, options?: ManagedQueryOptions): Promise<typeof target | Array<typeof target> | undefined> {
       // Call to Query function - Which must be there because we can't use the method mixin without the query mixin
       let sqlQuery = (target as any)[`FindBy${field.Name}Query`](value, options)
-
       // TODO: Inject an IDriver into the Archetype class
       if (target.Driver && target.Query) {
-        return await target.Query(sqlQuery)
+        let result = await target.Query(sqlQuery)
+        return (target as any).From(result)
       }
     }
-    Object.defineProperty(target, `FindBy${field.Name}Query`, { value: fn.bind(target) })
+    Object.defineProperty(target, `FindBy${field.Name}`, { value: findBy.bind(target) })
+
+    let findAllBy = async function (value: any, options?: ManagedQueryOptions): Promise<typeof target | Array<typeof target> | undefined> {
+      // Call to Query function - Which must be there because we can't use the method mixin without the query mixin
+      let sqlQuery = (target as any)[`FindAllBy${field.Name}Query`](value, options)
+      if (target.Driver && target.Query) {
+        return (target as any).From(await target.Query(sqlQuery))
+      }
+    }
   }
+  let createMethod = async function (value: { [key: string]: any }, options?: ManagedQueryOptions): Promise<typeof target | Array<typeof target> | undefined> {
+    let sqlQuery = (target as any)[`CreateQuery`](value, options)
+    if (target.Driver && target.Query) {
+      return (target as any).From(await target.Query(sqlQuery))
+    }
+  }
+  Object.defineProperty(target, `Create`, { value: createMethod.bind(target) })
+
+  let saveMethod = async function (value: { [key: string]: any }, options?: ManagedQueryOptions): Promise<typeof target | Array<typeof target> | undefined> {
+    if (!value[target.Key]) {
+      throw new Error(`Cannot delete an object without a key`)
+    }
+    let sqlQuery = (target as any)[`SaveQuery`](value, options)
+    if (target.Driver && target.Query) {
+      return (target as any).From(await target.Query(sqlQuery))
+    }
+  }
+  Object.defineProperty(target, `Save`, { value: saveMethod.bind(target) })
+
+  let deleteMethod = async function (value: { [key: string]: any }, options?: ManagedQueryOptions): Promise<typeof target | Array<typeof target> | undefined> {
+    if (!value[target.Key]) {
+      throw new Error(`Cannot delete an object without a key`)
+    }
+    let sqlQuery = (target as any)[`DeleteQuery`](value, options)
+    if (target.Driver && target.Query) {
+      return (target as any).From(await target.Query(sqlQuery))
+    }
+  }
+  Object.defineProperty(target, `Delete`, { value: deleteMethod.bind(target) })
 
 }
 
