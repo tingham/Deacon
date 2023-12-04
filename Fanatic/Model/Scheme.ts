@@ -1,4 +1,4 @@
-﻿import "reflect-metadata"
+﻿// import "reflect-metadata"
 import { Archetype } from "./Archetype"
 import { NotImplementedException } from "../../Sword/Error/Exception";
 import { WhereOption } from "./WhereOption"

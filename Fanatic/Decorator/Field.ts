@@ -1,21 +1,31 @@
-﻿import { Archetype } from "..";
+﻿import { AbstractArchetype, Archetype } from "..";
 import { Log } from "../../Sword/Inspect/Log";
 import { SerializingField, SerializingFieldOptions } from "../Model/SerializingField";
 
-export interface FieldDecoratorOptions {
-  DatabaseType: string
-  LogicalType?: any
-  DefaultValue?: any
-  Nullable?: boolean
-  Key?: boolean
-  Index?: boolean
-  Unique?: boolean
+export class FieldDecoratorOptions {
+  public Keypath?: string
+  public DatabaseType?: string
+  public LogicalType?: any
+  public DefaultValue?: any
+  public Nullable?: boolean
+  public Key?: boolean
+  public Index?: boolean
+  public Unique?: boolean
+  public Target?: any
+
+  public static Identity: string = "FieldDecoratorOptions"
+  public Identity?: string = FieldDecoratorOptions.Identity
 }
 
 // Is there a way to limit decorator functions to only be valid for sub-classes of a given class?
 export function Field(options: FieldDecoratorOptions) {
   return function (target: any, property: string) {
-    let classSymbol = target.name // Symbol(target.name)
+    let classSymbol = target.constructor.name // Symbol(target.name)
+
+    // By defining fields in this way the Archetypist can interrogate this specific class for its fields. Here we are required to set some sort of guid on the property descriptor so that we can identify it later
+    let nativeProperty = { value: Object.assign({Identity: FieldDecoratorOptions.Identity}, options, { Target: target, Keypath: `${classSymbol}.${property}` }) } as PropertyDescriptor & ThisType<any>
+    Reflect.defineProperty(target, property, nativeProperty)
+
     if (classSymbol == undefined || classSymbol == "Archetype") {
       classSymbol = target.constructor.name
     }

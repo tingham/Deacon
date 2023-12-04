@@ -1,15 +1,15 @@
 import { Children, HydrationRule, Scheme, SchemeManager, Schemer, Findable, Archetype } from "../Fanatic";
-import { HDocument, Scene } from "./Archetypes";
+import { Document, Scene } from "./Archetypes";
 
-let doc = new HDocument()
+let doc = new Document()
 doc.Name = "New Document"
 
 export class DocumentScheme extends Scheme implements IFaulting<DocumentScheme> {
   public FaultingKeypaths: Set<keyof DocumentScheme> = new Set<keyof DocumentScheme>(["Root", "Name", "Description", "Scenes"])
 
-  public static readonly RootArchetype: typeof Archetype = HDocument
+  public static readonly RootArchetype: typeof Archetype = Document
 
-  public Root = new HDocument();
+  public Root = new Document();
 
   public IsDirty = false;
 

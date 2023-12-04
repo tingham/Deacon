@@ -12,7 +12,7 @@ type ArchetypeConstructor<T> = abstract new(...args: any[]) => T;
 /**
  * The foundation of the Archetype system
  **/
-abstract class AbstractArchetype {
+export abstract class AbstractArchetype {
   // Fields have been hoisted to the static level so that their metadata is centralized and can be used to create sql statements
   public static Fields: {[key: string]: SerializingField[]} = {};
   public static Singular: string = "Archetype";

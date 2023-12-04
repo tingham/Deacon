@@ -1,10 +1,8 @@
 import { Request, Response, Route, RouteMethod, PathMaskStyle, Pew, Turnstyle} from '../Pulpit/index';
 import { Scheme } from "../Fanatic/index"
-import { HDocument, Scene } from "./Archetypes"
+import { Document, Scene } from "./Archetypes"
 import { ApplicationScheme } from "./ApplicationScheme";
 import {Log} from "../Sword/Inspect/Log"
-import { VTCHNode } from '../Witch/Stock';
-import { GenerateRandomInstance } from '../Sword/Generate/Generator';
 import { DocumentScheme, Documents } from './Schemes';
 import { Fanatic } from '../Fanatic/Model/Fanatic';
 import { Database } from './Database';
@@ -21,7 +19,7 @@ export class Application  extends Pew {
     // The application scheme contains the main controller logic for the application
     this.Scheme = new ApplicationScheme()
 
-    this.AppDocumentScheme.Root = new HDocument()
+    this.AppDocumentScheme.Root = new Document()
 
     // this.AppDocumentScheme.AddScenes([new Scene()])
     // This will error in edit time
@@ -93,5 +91,39 @@ activity.Attach(RouteMethod.GET, async (request: Request, response: Response, co
   }
   return Turnstyle.Stop
 })
+
+
+function ClassDecorator(options: any) {
+  return function (target: any) {
+    console.log(target, options)
+    // Reflect.defineMetadata("Class", options, target)
+  }
+}
+
+function PropertyDecorator(options: any) {
+  return function (target: any, property: string) {
+    // Reflect.defineMetadata("Property", options, target, property)
+    console.log(target, property, options)
+  }
+}
+
+@ClassDecorator({ Name: "BaseClass", Foo: "Bar" })
+class BaseClass {
+  @PropertyDecorator({ Name: "BaseClass.Id", Foo: "Buz" })
+  public Id: string = "BaseClass"
+}
+
+@ClassDecorator({ Name: "SubClass", Foo: "Biz" })
+class SubClass extends BaseClass {
+  @PropertyDecorator({ Name: "SubClass.Id", Foo: "Buz" })
+  public Id: string = "BaseClass<SubClass>"
+  @PropertyDecorator({ Name: "SubClass.Name", Foo: "Baz" })
+  public Name: string = "SubClass"
+}
+
+interface Something {
+  Name: string
+}
+
 
 appInstance.Start()

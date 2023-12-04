@@ -22,7 +22,7 @@
     "eslint-plugin-css": "^0.8.1",
     "extensionless": "^1.7.3",
     "stylelint": "^15.11.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2"
   },
   "dependencies": {
     "@types/less": "^3.0.6",
