@@ -1,4 +1,5 @@
-﻿import { IDriver, MyDriver, SerializingField } from "..";
+﻿import "reflect-metadata"
+import { IDriver, MyDriver, SerializingField } from "..";
 import { MixinDirective } from "../../Sword/Enum/MixinDirective";
 import { NotImplementedException } from "../../Sword/Error/Exception";
 import { IDrivable } from "../Interface/IDrivable";
@@ -15,16 +16,11 @@ type ArchetypeConstructor<T> = abstract new(...args: any[]) => T;
 export abstract class AbstractArchetype {
   // Fields have been hoisted to the static level so that their metadata is centralized and can be used to create sql statements
   public static Fields: {[key: string]: SerializingField[]} = {};
-  public static Singular: string = "Archetype";
-  public static Plural: string = "Archetypes";
+  //public static Singular: string = "Archetype";
+  //public static Plural: string = "Archetypes";
   public static Key: string = "Id";
   public static Table: string = "Archetype";
   public static Mixin: MixinDirective = MixinDirective.None;
-
-  // Add a field to the static field collection for the class as long as the direct constructor is not a disallowed symbol
-  public static AddField(forClass: string, field: SerializingField) {
-    throw new NotImplementedException()
-  }
 
   private initialArguments: any[] = []
 
@@ -37,17 +33,17 @@ export abstract class AbstractArchetype {
 function ArchetypeMixin<T extends ArchetypeConstructor<object>>(Ctor: T) {
   abstract class ConcreteArchetype extends Ctor {
     // @private
-    public static Fields: { [key: string]: SerializingField[] } = {};
-    public static AddField(forClass: string, field: SerializingField) {
-      //if (DisallowedSymbols.includes(forClass)) { return }
-      if (!this.Fields[forClass]) {
-        this.Fields[forClass] = [];
-      }
-      this.Fields[forClass].push(field);
-    }
-    public static GetFields(forClass: string) {
-      return this.Fields[forClass] || []
-    }
+    //public static Fields: { [key: string]: SerializingField[] } = {};
+    //public static AddField(forClass: string, field: SerializingField) {
+    //  //if (DisallowedSymbols.includes(forClass)) { return }
+    //  if (!this.Fields[forClass]) {
+    //    this.Fields[forClass] = [];
+    //  }
+    //  this.Fields[forClass].push(field);
+    //}
+    //public static GetFields(forClass: string) {
+    //  return this.Fields[forClass] || []
+    //}
     constructor(...args: any[]) {
       super(...args)
     }

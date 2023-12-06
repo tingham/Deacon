@@ -3,49 +3,58 @@ type InlineGetter = (this: any) => any
 type InlineSetter = (this: any, value: any) => void
 
 export type Newable = new (...args: any[]) => any
+export type NonNewable = string | number | boolean
+
 export type SerializingFieldOptions = {
-    [key in keyof SerializingField]: string | boolean | Newable | InlineGetter | InlineSetter;
+    [key in keyof SerializingField]: Newable | NonNewable | InlineGetter | InlineSetter;
 };
 export class SerializingField {
+  public Column?: string;
   public Name?: string;
-  public DatabaseType?: string;
-  public DatabaseDefault?: string;
-  public DatabaseNullable?: boolean;
-  public DatabaseIndex?: boolean;
-  public DatabaseUnique?: boolean;
-  public DatabaseAutoIncrement?: boolean;
-  public DatabasePrimaryKey?: boolean;
+  public Type?: string;
+  public Default?: string;
+  public Nullable?: boolean;
+  public Index?: boolean;
+  public Unique?: boolean;
+  public AutoIncrement?: boolean;
+  public PrimaryKey?: boolean;
 
-  public LogicalType?: Newable
+  public LogicalType?: Newable | NonNewable;
+
   public getter?: InlineGetter;
   public setter?: InlineSetter;
 
   public static FromDecoratedProperty(propertyKey: string, parameters: SerializingFieldOptions): SerializingField {
     let instance = new SerializingField();
     instance.Name = propertyKey.toString();
-    if (parameters.hasOwnProperty("DatabaseType")) {
-      instance.DatabaseType = parameters["DatabaseType"] as string;
+    if (parameters.hasOwnProperty("Column")) {
+      instance.Column = parameters["Column"] as string;
+    } else {
+      instance.Column = propertyKey.toString();
     }
-    if (parameters.hasOwnProperty("DatabaseDefault")) {
-      instance.DatabaseDefault = parameters["DatabaseDefault"] as string;
+    if (parameters.hasOwnProperty("Type")) {
+      instance.Type = parameters["Type"] as string;
     }
-    if (parameters.hasOwnProperty("DatabaseNullable")) {
-      instance.DatabaseNullable = parameters["DatabaseNullable"] as boolean;
+    if (parameters.hasOwnProperty("Default")) {
+      instance.Default = parameters["Default"] as string;
     }
-    if (parameters.hasOwnProperty("DatabaseIndex")) {
-      instance.DatabaseIndex = parameters["DatabaseIndex"] as boolean;
+    if (parameters.hasOwnProperty("Nullable")) {
+      instance.Nullable = parameters["Nullable"] as boolean;
     }
-    if (parameters.hasOwnProperty("DatabaseUnique")) {
-      instance.DatabaseUnique = parameters["DatabaseUnique"] as boolean;
+    if (parameters.hasOwnProperty("Index")) {
+      instance.Index = parameters["Index"] as boolean;
     }
-    if (parameters.hasOwnProperty("DatabaseAutoIncrement")) {
-      instance.DatabaseAutoIncrement = parameters["DatabaseAutoIncrement"] as boolean;
+    if (parameters.hasOwnProperty("Unique")) {
+      instance.Unique = parameters["Unique"] as boolean;
     }
-    if (parameters.hasOwnProperty("DatabasePrimaryKey")) {
-      instance.DatabasePrimaryKey = parameters["DatabasePrimaryKey"] as boolean;
+    if (parameters.hasOwnProperty("AutoIncrement")) {
+      instance.AutoIncrement = parameters["AutoIncrement"] as boolean;
+    }
+    if (parameters.hasOwnProperty("PrimaryKey")) {
+      instance.PrimaryKey = parameters["PrimaryKey"] as boolean;
     }
     if (parameters.hasOwnProperty("LogicalType")) {
-      instance.LogicalType = parameters["LogicalType"] as Newable;
+      instance.LogicalType = parameters["LogicalType"] as Newable | NonNewable;
     }
     if (parameters.hasOwnProperty("getter")) {
       instance.getter = parameters["getter"] as InlineGetter;

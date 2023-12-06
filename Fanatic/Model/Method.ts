@@ -61,19 +61,6 @@ type MethodUnion<T extends string> = FindBy<T> | FindAllBy<T> | Create | Delete 
 export type MethodMixin<T> = {
   [Key in keyof T as MethodUnion<Key extends string ? Key : never>]: (value: any, options?: ManagedQueryOptions) => T;
 };
-
-// Ensures that @Field decorated properties are added to the static Fields collection of the class
-export function AttachFields(target: typeof Archetype, nativeProperties: Property[], fields: SerializingField[]) {
-  const classSymbol = target.name
-  for (const nativeProperty of nativeProperties) {
-    let field = fields.find(field => field.Name === nativeProperty.Name)
-    if (field) {
-      if (!target.GetFields(classSymbol).includes(field)) {
-        target.GetFields(classSymbol).push(field)
-      }
-    }
-  }
-}
 export function AttachMixinQueries(target: typeof Archetype, fields: SerializingField[]) {
   for (const field of fields) {
     let selectBy = function (value: any, options?: ManagedQueryOptions) {

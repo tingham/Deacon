@@ -29,10 +29,11 @@ export class MyDriver extends AbstractDriver implements IDriver {
     super()
   }
 
+  // TODO: Now back to this:
   public async Provision(archetype: typeof Archetype): Promise<void> {
   //  let tableName = archetype.name;
   //  let columns = (archetype.prototype as any)?.StaticFields?.filter((field: any) => field instanceof SerializingField);
-  //  let tableExists = await this.checkTableExists(tableName);
+  let tableExists = await this.checkTableExists(tableName);
 
   //  Log.info("MyDriver:Provisioning", tableName);
   //  Log.info("MyDriver:Provisioning", columns);

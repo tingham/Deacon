@@ -12,19 +12,16 @@ export class FieldDecoratorOptions {
   public Index?: boolean
   public Unique?: boolean
   public Target?: any
-
-  public static Identity: string = "FieldDecoratorOptions"
-  public Identity?: string = FieldDecoratorOptions.Identity
 }
 
 // Is there a way to limit decorator functions to only be valid for sub-classes of a given class?
 export function Field(options: FieldDecoratorOptions) {
+  // @param target The class being modified
   return function (target: any, property: string) {
     let classSymbol = target.constructor.name // Symbol(target.name)
+    let reflectionTarget = target.constructor.prototype
 
     // By defining fields in this way the Archetypist can interrogate this specific class for its fields. Here we are required to set some sort of guid on the property descriptor so that we can identify it later
-    let nativeProperty = { value: Object.assign({Identity: FieldDecoratorOptions.Identity}, options, { Target: target, Keypath: `${classSymbol}.${property}` }) } as PropertyDescriptor & ThisType<any>
-    Reflect.defineProperty(target, property, nativeProperty)
 
     if (classSymbol == undefined || classSymbol == "Archetype") {
       classSymbol = target.constructor.name
@@ -59,7 +56,8 @@ export function Field(options: FieldDecoratorOptions) {
         (this as any)[`_${property}`] = JSON.parse(JSON.stringify(value));
       }
     }
-    target.constructor.AddField(classSymbol, field)
+    let nativeProperty = Object.assign(field, { Target: target, Keypath: `${classSymbol}.${property}` })
+    Reflect.defineMetadata(`${classSymbol}.${property}`, nativeProperty, target.constructor.prototype)
   }
 }
 
